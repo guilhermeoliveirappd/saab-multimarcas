@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/archivo/wdth.css';
+
+/*
+ * ─── Design system SAAB Multimarcas ─────────────────────────────────────────
+ * Paleta provisória: preto, branco e cinzas + UMA cor de destaque.
+ * Para trocar a cor de destaque, altere apenas --color-accent* abaixo.
+ * (Verifique contraste do texto branco sobre o accent: mínimo 4.5:1.)
+ */
+@theme {
+  --color-accent: #c8102e;
+  --color-accent-hover: #a50d26;
+  --color-accent-soft: #fbe9ec;
+
+  --color-ink-950: #0a0a0b;
+  --color-ink-900: #111113;
+  --color-ink-800: #1a1b1e;
+  --color-ink-700: #26282c;
+  --color-ink-600: #3a3d42;
+  --color-ink-500: #5b5f66;
+  --color-ink-400: #868a91;
+  --color-ink-300: #b4b7bc;
+  --color-ink-200: #d9dbde;
+  --color-ink-100: #ececee;
+  --color-ink-50: #f6f6f7;
+
+  --color-success: #15803d;
+  --color-warning: #b45309;
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Archivo Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(10 10 11 / 0.04), 0 8px 24px -12px rgb(10 10 11 / 0.12);
+  --shadow-card-hover: 0 2px 4px rgb(10 10 11 / 0.06), 0 22px 40px -18px rgb(10 10 11 / 0.28);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-up: fade-up 0.7s var(--ease-out-soft) both;
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    @apply bg-white font-sans text-ink-900;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: white;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    letter-spacing: -0.02em;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold tracking-[0.18em] uppercase;
+  }
+  .container-site {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold tracking-wide text-ink-500 uppercase;
+  }
+  .field {
+    @apply h-12 w-full rounded-xl border border-ink-200 bg-white px-4 text-[15px] text-ink-900 transition-colors outline-none placeholder:text-ink-400 hover:border-ink-300 focus:border-ink-900 focus:ring-0 disabled:cursor-not-allowed disabled:bg-ink-50 disabled:text-ink-400;
+  }
+  select.field {
+    @apply appearance-none bg-no-repeat pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235b5f66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 0.9rem center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
