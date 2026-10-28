@@ -36,7 +36,6 @@ export const content = {
   differentials: {
     provisional: true,
     title: 'Por que escolher a SAAB',
-    description: 'O que orienta o nosso atendimento.',
     items: [
       { icon: 'messages', title: 'Atendimento próximo', text: 'Fale direto com a equipe pelo WhatsApp.' },
       { icon: 'search', title: 'Informação clara', text: 'Fotos, ficha técnica e opcionais em um só lugar.' },
@@ -101,12 +100,10 @@ export const content = {
   },
 
   financing: {
-    provisional: true,
-    title: 'Financiamento',
-    description: 'Orientação da equipe para financiar seu próximo veículo.',
-    steps: ['Escolha o veículo no estoque.', 'Fale com a equipe pelo WhatsApp.', 'Receba a orientação sobre documentos.'],
-    disclaimer: 'Sujeito à análise de crédito. O site não faz simulações nem coleta dados.',
-    cta: 'Falar sobre financiamento',
+    title: 'Financie seu próximo carro',
+    description: 'Preencha a ficha em quatro etapas para iniciar a análise com a equipe.',
+    privacyNote: 'Usados só na análise da sua solicitação. Não vão ao WhatsApp nem ficam salvos no navegador.',
+    disclaimer: 'Aprovação sujeita à análise de crédito. Esta página não simula taxas.',
   },
 
   contact: {

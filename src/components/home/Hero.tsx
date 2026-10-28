@@ -1,20 +1,16 @@
-import { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { content } from '@/config/content'
 import { ButtonLink } from '@/components/ui/Button'
-import { Photo, PhotoCredit } from '@/components/ui/Photo'
+import { Photo } from '@/components/ui/Photo'
 import { QuickSearch } from '@/components/vehicles/QuickSearch'
 
 export function Hero() {
   const { hero } = content
-  // Crédito acompanha a foto efetivamente exibida (principal ou alternativa)
-  const [active, setActive] = useState(hero.image)
   return (
     <section aria-labelledby="hero-title" className="relative">
       <div className="relative isolate overflow-hidden bg-ink-950 pt-[72px] lg:pt-20">
         <Photo
           image={hero.image}
-          onActiveChange={(img) => setActive(img ?? { url: '' })}
           alt=""
           sizes="100vw"
           width={1920}
@@ -56,7 +52,6 @@ export function Hero() {
             </ButtonLink>
           </div>
         </div>
-        <PhotoCredit image={active} className="absolute right-4 bottom-28 max-w-[60%] text-right text-white/55 sm:right-6 lg:bottom-32" />
       </div>
 
       <div className="container-site relative z-10 -mt-24 lg:-mt-28">

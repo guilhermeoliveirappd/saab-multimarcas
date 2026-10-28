@@ -48,6 +48,8 @@ export function tradeInMessage(d: TradeInData): string {
   return lines.join('\n')
 }
 
-export function financingMessage(): string {
-  return `Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de informações sobre financiamento.`
+/** Só identifica o veículo — nunca inclui dados pessoais da ficha. */
+export function financingMessage(vehicleName?: string): string {
+  const about = vehicleName ? ` do veículo ${vehicleName}` : ''
+  return `Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de informações sobre o financiamento${about}.`
 }

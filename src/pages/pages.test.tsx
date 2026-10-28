@@ -7,37 +7,37 @@ import SellTradePage from './SellTradePage'
 
 describe('InventoryPage', () => {
   it('applies filters coming from the URL', async () => {
-    renderRoute(<InventoryPage />, { path: '/estoque', route: '/estoque?marca=Toyota' })
+    renderRoute(<InventoryPage />, { path: '/estoque', route: '/estoque?marca=Kia' })
     expect(await screen.findByText(/veículos encontrados/)).toHaveTextContent('2 veículos encontrados')
-    expect(screen.getByRole('link', { name: 'Corolla' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Hilux' })).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Civic' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Sportage' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Carnival' })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: '320i' })).not.toBeInTheDocument()
   })
 
   it('shows the empty state and clears filters', async () => {
     renderRoute(<InventoryPage />, { path: '/estoque', route: '/estoque?precoMin=900000' })
     expect(await screen.findByText('Nenhum veículo encontrado')).toBeInTheDocument()
     await userEvent.click(screen.getAllByRole('button', { name: 'Limpar filtros' })[0])
-    expect(await screen.findByText(/veículos encontrados/)).toHaveTextContent('12 veículos encontrados')
+    expect(await screen.findByText(/veículos encontrados/)).toHaveTextContent('7 veículos encontrados')
   })
 
   it('loads more results incrementally', async () => {
     renderRoute(<InventoryPage />, { path: '/estoque', route: '/estoque' })
     await screen.findByText(/veículos encontrados/)
-    expect(screen.getAllByRole('article')).toHaveLength(9)
+    expect(screen.getAllByRole('article')).toHaveLength(6)
     await userEvent.click(screen.getByRole('button', { name: 'Carregar mais veículos' }))
-    expect(screen.getAllByRole('article')).toHaveLength(12)
+    expect(screen.getAllByRole('article')).toHaveLength(7)
   })
 })
 
 describe('VehicleDetailPage', () => {
   it('renders the vehicle with a contextual WhatsApp link', async () => {
-    renderRoute(<VehicleDetailPage />, { path: '/veiculos/:slug', route: '/veiculos/honda-civic-sport-2021' })
-    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Civic')
+    renderRoute(<VehicleDetailPage />, { path: '/veiculos/:slug', route: '/veiculos/bmw-320i-m-sport-2023' })
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('320i')
     const links = screen.getAllByRole('link', { name: /Tenho interesse/ })
     const href = links[0].getAttribute('href')!
     expect(href).toMatch(/^https:\/\/wa\.me\//)
-    expect(decodeURIComponent(href)).toContain('Honda / Civic / Sport 2.0 CVT / 2020/2021')
+    expect(decodeURIComponent(href)).toContain('BMW / 320i / M Sport 2.0 Turbo / 2023/2023')
     const related = screen.getByRole('heading', { name: 'Veículos relacionados' }).closest('section')!
     expect(within(related).getAllByRole('article')).toHaveLength(3)
   })

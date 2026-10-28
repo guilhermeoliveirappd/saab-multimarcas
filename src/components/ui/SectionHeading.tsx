@@ -22,7 +22,7 @@ export function SectionHeading({ title, description, tone = 'light', action, bad
       <Tag id={id} className={cn('font-display text-[1.6rem] leading-[1.1] font-bold text-balance sm:text-4xl lg:text-[2.6rem]', dark ? 'text-white' : 'text-ink-950')}>
         {title}
       </Tag>
-      <span className="mt-5 h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
+      <span className={cn('mt-5 h-1 w-10 rounded-full', dark ? 'bg-brand-light' : 'bg-accent')} aria-hidden="true" />
       {description && (
         <p className={cn('mt-5 max-w-xl text-[15px] leading-relaxed text-balance sm:text-lg', dark ? 'text-ink-300' : 'text-ink-500')}>{description}</p>
       )}

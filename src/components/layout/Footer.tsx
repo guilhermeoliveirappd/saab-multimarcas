@@ -17,59 +17,51 @@ const services = [
   siteConfig.services.financing && { label: 'Financiamento', to: '/financiamento' },
 ].filter(Boolean) as { label: string; to: string }[]
 
-const linkClass = 'text-[15px] text-white/70 transition-colors duration-200 hover:text-white'
+const linkClass = 'text-[15px] leading-6 text-white/70 transition-colors duration-200 hover:text-white'
 
-function Column({ title, children }: { title: string; children: ReactNode }) {
+/** Coluna com título alinhado à esquerda; todas compartilham o mesmo topo. */
+function Column({ title, className = '', children }: { title: string; className?: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="font-display text-[13px] font-semibold tracking-[0.14em] text-white uppercase">{title}</h2>
+    <div className={className}>
+      <h2 className="font-display text-xs font-semibold tracking-[0.16em] text-white uppercase">{title}</h2>
       <div className="mt-5">{children}</div>
     </div>
   )
 }
 
-/** Item de contato com ícone, alinhado ao centro. */
-function ContactLink({ href, icon, children, external, onClick }: { href?: string; icon: ReactNode; children: ReactNode; external?: boolean; onClick?: () => void }) {
-  const inner = (
-    <>
-      <span className="text-brand-light">{icon}</span>
-      {children}
-    </>
-  )
-  const cls = 'inline-flex items-center justify-center gap-2.5'
-  return href ? (
-    <a href={href} className={`${cls} ${linkClass}`} onClick={onClick} {...(external && { target: '_blank', rel: 'noopener noreferrer' })}>
-      {inner}
-      {external && <span className="sr-only"> (abre em nova aba)</span>}
-    </a>
-  ) : (
-    <span className={`${cls} text-[15px] text-white/70`}>{inner}</span>
+/** Linha de contato: ícone em coluna fixa de 18px, legenda alinhada ao primeiro traço de texto. */
+function ContactItem({ icon, children }: { icon: ReactNode; children: ReactNode }) {
+  return (
+    <li className="grid grid-cols-[18px_1fr] items-start gap-3">
+      <span className="mt-[3px] flex size-[18px] items-center justify-center text-brand-light">{icon}</span>
+      <div className="min-w-0">{children}</div>
+    </li>
   )
 }
 
 export function Footer() {
   const year = new Date().getFullYear()
   const { address, phoneDisplay, email, social } = siteConfig
+  const external = { target: '_blank', rel: 'noopener noreferrer' } as const
 
   return (
-    <footer className="relative isolate overflow-hidden bg-brand-deep text-center text-white/70">
-      <div className="absolute -top-48 left-1/2 -z-10 h-96 w-[56rem] max-w-full -translate-x-1/2 rounded-full bg-brand/30 blur-3xl" aria-hidden="true" />
+    <footer className="relative isolate overflow-hidden bg-brand-deep text-white/70">
+      <div className="absolute -top-48 right-0 -z-10 h-96 w-[40rem] max-w-full rounded-full bg-brand/25 blur-3xl" aria-hidden="true" />
 
-      <div className="container-site grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-10 lg:py-20">
-        {/* 1. Marca */}
-        <div className="flex flex-col items-center sm:col-span-2 lg:col-span-1">
-          <Link to="/" aria-label={`${siteConfig.name} — página inicial`} className="rounded-lg">
+      <div className="container-site grid grid-cols-1 gap-x-12 gap-y-12 py-16 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.75fr)_minmax(0,0.95fr)_minmax(0,1.35fr)] lg:gap-x-14 lg:py-20">
+        {/* Marca */}
+        <div className="sm:col-span-2 lg:col-span-1">
+          <Link to="/" aria-label={`${siteConfig.name} — página inicial`} className="inline-block rounded-lg">
             <Logo tone="light" />
           </Link>
-          <p className="mt-5 max-w-[17rem] text-[15px] leading-relaxed text-balance">
+          <p lang="pt-BR" className="mt-6 max-w-[17.5rem] text-justify text-[15px] leading-7 text-white/70 [text-justify:inter-word]">
             Revenda de veículos multimarcas em {siteConfig.city} ({siteConfig.state}).
           </p>
         </div>
 
-        {/* 2. Navegação */}
         <Column title="Navegação">
           <nav aria-label="Rodapé">
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {mainNav.map((item) => (
                 <li key={item.to}>
                   <Link to={item.to} className={linkClass}>
@@ -81,9 +73,8 @@ export function Footer() {
           </nav>
         </Column>
 
-        {/* 3. Serviços */}
         <Column title="Serviços">
-          <ul className="space-y-3">
+          <ul className="space-y-2.5">
             {services.map((s) => (
               <li key={s.to}>
                 <Link to={s.to} className={linkClass}>
@@ -94,85 +85,95 @@ export function Footer() {
           </ul>
         </Column>
 
-        {/* 4. Contato e redes sociais (somente canais cadastrados) */}
-        <Column title="Contato">
-          <ul className="space-y-3">
-            <li>
-              <ContactLink
+        {/* Contato: somente canais e dados confirmados */}
+        <Column title="Contato" className="sm:col-span-2 lg:col-span-1">
+          <ul className="space-y-3.5">
+            <ContactItem icon={<MapPin size={17} aria-hidden="true" />}>
+              {address.confirmed ? (
+                <address className="text-[15px] leading-6 not-italic">
+                  {address.street}
+                  <br />
+                  {[address.district, siteConfig.city, siteConfig.state].filter(Boolean).join(' — ')}
+                </address>
+              ) : (
+                <span className="text-[15px] leading-6">
+                  {siteConfig.city} — {siteConfig.state}
+                </span>
+              )}
+            </ContactItem>
+            <ContactItem icon={<WhatsAppIcon size={17} />}>
+              <a
                 href={buildWhatsAppUrl(generalMessage(), env.whatsappNumber)}
-                external
-                icon={<WhatsAppIcon size={17} />}
+                {...external}
+                className={linkClass}
                 onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'whatsapp', location: 'footer' } })}
               >
-                WhatsApp
-              </ContactLink>
-            </li>
-            <li>
-              <ContactLink
+                WhatsApp<span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            </ContactItem>
+            <ContactItem icon={<InstagramIcon size={17} />}>
+              <a
                 href={social.instagram}
-                external
-                icon={<InstagramIcon size={17} />}
+                {...external}
+                className={linkClass}
                 onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'instagram', location: 'footer' } })}
               >
                 {social.instagramHandle}
-              </ContactLink>
-            </li>
+                <span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            </ContactItem>
             {social.facebook && (
-              <li>
-                <ContactLink href={social.facebook} external icon={<FacebookIcon size={17} />}>
+              <ContactItem icon={<FacebookIcon size={17} />}>
+                <a href={social.facebook} {...external} className={linkClass}>
                   Facebook
-                </ContactLink>
-              </li>
+                </a>
+              </ContactItem>
             )}
             {social.youtube && (
-              <li>
-                <ContactLink href={social.youtube} external icon={<YouTubeIcon size={17} />}>
+              <ContactItem icon={<YouTubeIcon size={17} />}>
+                <a href={social.youtube} {...external} className={linkClass}>
                   YouTube
-                </ContactLink>
-              </li>
+                </a>
+              </ContactItem>
             )}
             {phoneDisplay && (
-              <li>
-                <ContactLink href={`tel:+${phoneDisplay.replace(/\D/g, '')}`} icon={<Phone size={16} />}>
+              <ContactItem icon={<Phone size={16} aria-hidden="true" />}>
+                <a href={`tel:+${phoneDisplay.replace(/\D/g, '')}`} className={linkClass}>
                   {phoneDisplay}
-                </ContactLink>
-              </li>
+                </a>
+              </ContactItem>
             )}
             {email && (
-              <li>
-                <ContactLink href={`mailto:${email}`} icon={<Mail size={16} />}>
+              <ContactItem icon={<Mail size={16} aria-hidden="true" />}>
+                <a href={`mailto:${email}`} className={linkClass}>
                   {email}
-                </ContactLink>
-              </li>
+                </a>
+              </ContactItem>
             )}
-            <li>
-              <ContactLink icon={<MapPin size={16} />}>
-                {address.confirmed ? `${address.street}, ${siteConfig.city}/${siteConfig.state}` : `${siteConfig.city} · ${siteConfig.state}`}
-              </ContactLink>
-            </li>
           </ul>
         </Column>
       </div>
 
       {/* Faixa inferior */}
       <div className="border-t border-white/10">
-        <div className="container-site flex flex-col items-center gap-3 py-6 text-[13px] text-white/55 lg:flex-row lg:justify-between">
+        <div className="container-site flex flex-col gap-3 py-6 text-[13px] text-white/55 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <p>
             © {year} {siteConfig.name}
             {siteConfig.cnpj && ` · CNPJ ${siteConfig.cnpj}`}
           </p>
-          <p className="flex flex-wrap justify-center gap-x-5 gap-y-1">
+          <p className="flex flex-wrap gap-x-5 gap-y-1">
             <Link to="/politica-de-privacidade" className="transition-colors hover:text-white">
               Política de Privacidade
             </Link>
-            <Link to="/creditos-de-imagens" className="transition-colors hover:text-white">
-              Créditos das imagens
+            {/* Avisos legais (inclui atribuições exigidas por licenças de imagens) */}
+            <Link to="/informacoes-legais" className="transition-colors hover:text-white">
+              Informações legais
             </Link>
           </p>
           <p className="text-white/40">
             Desenvolvido por{' '}
             {siteConfig.agency.url ? (
-              <a href={siteConfig.agency.url} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <a href={siteConfig.agency.url} {...external} className="hover:text-white">
                 {siteConfig.agency.name}
               </a>
             ) : (

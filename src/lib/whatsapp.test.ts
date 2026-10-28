@@ -16,12 +16,12 @@ describe('whatsapp links', () => {
   })
 
   it('identifies the vehicle in the interest message', () => {
-    const civic = demoVehicles.find((v) => v.slug === 'honda-civic-sport-2021')!
-    const msg = vehicleInterestMessage(civic, 'https://site/veiculos/honda-civic-sport-2021')
+    const bmw = demoVehicles.find((v) => v.slug === 'bmw-320i-m-sport-2023')!
+    const msg = vehicleInterestMessage(bmw, 'https://site/veiculos/bmw-320i-m-sport-2023')
     expect(msg).toContain('site da SAAB Multimarcas')
-    expect(msg).toContain('Honda / Civic / Sport 2.0 CVT / 2020/2021')
+    expect(msg).toContain('BMW / 320i / M Sport 2.0 Turbo / 2023/2023')
     expect(msg).toContain('Ele ainda está disponível?')
-    expect(msg).toContain('https://site/veiculos/honda-civic-sport-2021')
+    expect(msg).toContain('https://site/veiculos/bmw-320i-m-sport-2023')
   })
 
   it('structures the trade-in message with the filled fields', () => {

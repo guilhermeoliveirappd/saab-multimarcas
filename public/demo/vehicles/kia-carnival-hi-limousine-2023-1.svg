@@ -3,10 +3,10 @@
 <radialGradient id="bg-0" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#3a3d42"/><stop offset=".55" stop-color="#17181b"/><stop offset="1" stop-color="#0a0a0b"/></radialGradient>
 <linearGradient id="floor-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1c1f"/><stop offset="1" stop-color="#0b0b0c"/></linearGradient>
 <linearGradient id="paint-0" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#4b74b5"/>
-<stop offset=".38" stop-color="#1f3f73"/>
-<stop offset=".72" stop-color="#1f3f73"/>
-<stop offset="1" stop-color="#0d1e3a"/>
+<stop offset="0" stop-color="#9aa1aa"/>
+<stop offset=".38" stop-color="#5d636b"/>
+<stop offset=".72" stop-color="#5d636b"/>
+<stop offset="1" stop-color="#2a2e33"/>
 </linearGradient>
 <linearGradient id="sheen-0" x1="0" y1="0" x2="1" y2="0">
 <stop offset="0" stop-color="#fff" stop-opacity="0"/>
@@ -37,13 +37,13 @@
 <path d="M 95 300 L 92 266 Q 95 240 130 232 L 290 214 Q 350 208 385 196 L 485 148 Q 505 140 535 140 L 665 140 Q 700 142 725 158 L 790 200 Q 860 204 885 212 Q 897 218 897 240 L 897 300 L 802 300 A 72 72 0 0 0 658 300 L 322 300 A 72 72 0 0 0 178 300 Z" fill="url(#paint-0)"/>
 <g clip-path="url(#clip-0)">
 <rect x="0" y="100" width="1000" height="114" fill="url(#sheen-0)"/>
-<rect x="0" y="288" width="1000" height="40" fill="#0d1e3a" fill-opacity=".55"/>
+<rect x="0" y="288" width="1000" height="40" fill="#2a2e33" fill-opacity=".55"/>
 <line x1="132" y1="216" x2="877" y2="212" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
 </g>
 <path d="M 398 202 L 492 157 Q 510 150 538 150 L 662 150 Q 692 152 712 165 L 768 202 Z" fill="url(#glass-0)"/>
-<g clip-path="url(#gclip-0)"><rect x="584" y="120" width="12" height="90" fill="#0d1e3a"/></g>
-<line x1="430" y1="214" x2="426" y2="282" stroke="#0d1e3a" stroke-opacity=".55" stroke-width="1.6"/><line x1="600" y1="214" x2="596" y2="282" stroke="#0d1e3a" stroke-opacity=".55" stroke-width="1.6"/><line x1="760" y1="214" x2="756" y2="282" stroke="#0d1e3a" stroke-opacity=".55" stroke-width="1.6"/>
-<rect x="468" y="228" width="26" height="5" rx="2.5" fill="#0d1e3a" fill-opacity=".7"/><rect x="638" y="228" width="26" height="5" rx="2.5" fill="#0d1e3a" fill-opacity=".7"/>
+<g clip-path="url(#gclip-0)"><rect x="584" y="120" width="12" height="90" fill="#2a2e33"/></g>
+<line x1="430" y1="214" x2="426" y2="282" stroke="#2a2e33" stroke-opacity=".55" stroke-width="1.6"/><line x1="600" y1="214" x2="596" y2="282" stroke="#2a2e33" stroke-opacity=".55" stroke-width="1.6"/><line x1="760" y1="214" x2="756" y2="282" stroke="#2a2e33" stroke-opacity=".55" stroke-width="1.6"/>
+<rect x="468" y="228" width="26" height="5" rx="2.5" fill="#2a2e33" fill-opacity=".7"/><rect x="638" y="228" width="26" height="5" rx="2.5" fill="#2a2e33" fill-opacity=".7"/>
 <path d="M 100 248 Q 120 236 170 232 L 168 244 Q 130 248 100 256 Z" fill="#f3f6f9" opacity=".95"/>
 <path d="M 878 214 Q 893 218 896 232 L 896 244 L 872 236 Z" fill="#b3121d"/>
 <g>

@@ -16,6 +16,10 @@ export type AnalyticsEvent =
   | { name: 'quick_search'; params: { brand?: string; model?: string; price_range?: string } }
   | { name: 'share_click'; params: { vehicle_id: string; method: 'native' | 'clipboard' } }
   | { name: 'trade_in_submit'; params: { intent: string } }
+  // Financiamento: apenas etapa/resultado — NUNCA dados da ficha
+  | { name: 'financing_step'; params: { step: number } }
+  | { name: 'financing_submit'; params: { status: 'sent' | 'disabled' | 'error' } }
+  | { name: 'financing_cta'; params: { vehicle_id: string } }
 
 type DataLayerEntry = Record<string, unknown>
 

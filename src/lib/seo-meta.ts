@@ -28,7 +28,7 @@ export const STATIC_PAGES: Record<string, Omit<PageMeta, 'path'>> = {
   },
   '/financiamento': {
     title: 'Financiamento',
-    description: `Informações sobre financiamento de veículos na ${siteConfig.name}.`,
+    description: `Financie seu próximo carro com a ${siteConfig.name}: preencha a ficha de financiamento em quatro etapas.`,
   },
   '/sobre': {
     title: 'Sobre nós',
@@ -38,9 +38,9 @@ export const STATIC_PAGES: Record<string, Omit<PageMeta, 'path'>> = {
     title: 'Contato',
     description: `Fale com a ${siteConfig.name} pelo WhatsApp ou Instagram.`,
   },
-  '/creditos-de-imagens': {
-    title: 'Créditos das imagens',
-    description: 'Autoria e licenças das fotografias de terceiros usadas no site.',
+  '/informacoes-legais': {
+    title: 'Informações legais',
+    description: 'Informações legais e licenças de conteúdo do site.',
     noindex: true,
   },
   '/politica-de-privacidade': {

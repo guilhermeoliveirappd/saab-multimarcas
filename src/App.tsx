@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import { isSupabaseConfigured } from '@/config/env'
 import { siteConfig } from '@/config/site'
 import { Layout } from '@/components/layout/Layout'
@@ -14,7 +14,7 @@ const FinancingPage = lazy(() => import('@/pages/FinancingPage'))
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
 const ContactPage = lazy(() => import('@/pages/ContactPage'))
 const PrivacyPage = lazy(() => import('@/pages/PrivacyPage'))
-const ImageCreditsPage = lazy(() => import('@/pages/ImageCreditsPage'))
+const LegalInfoPage = lazy(() => import('@/pages/LegalInfoPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 const AdminApp = lazy(() => (isSupabaseConfigured ? import('@/pages/admin/AdminApp') : import('@/pages/admin/AdminUnavailable')))
 
@@ -38,7 +38,8 @@ export default function App() {
             <Route path="sobre" element={<AboutPage />} />
             <Route path="contato" element={<ContactPage />} />
             <Route path="politica-de-privacidade" element={<PrivacyPage />} />
-            <Route path="creditos-de-imagens" element={<ImageCreditsPage />} />
+            <Route path="informacoes-legais" element={<LegalInfoPage />} />
+            <Route path="creditos-de-imagens" element={<Navigate to="/informacoes-legais" replace />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

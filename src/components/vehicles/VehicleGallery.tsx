@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent, type TouchEvent } from
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
 import type { VehicleImage } from '@/types/vehicle'
 import { cn } from '@/lib/cn'
-import { Photo, PhotoCredit } from '@/components/ui/Photo'
+import { Photo } from '@/components/ui/Photo'
 
 interface Props {
   images: VehicleImage[]
@@ -29,11 +29,18 @@ const navButton =
   'absolute top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink-950 shadow-lg backdrop-blur transition-all hover:bg-white'
 
 /** Galeria: foto principal, navegação, miniaturas e ampliação em tela cheia. */
-export function VehicleGallery({ images, title }: Props) {
-  const [index, setIndex] = useState(0)
+export function VehicleGallery({ images: allImages, title }: Props) {
+  const [rawIndex, setIndex] = useState(0)
+  // Fotos que falharam saem da galeria (nada de ilustração no meio do conjunto).
+  // Só se TODAS falharem, a capa exibe a imagem local de reserva.
+  const [failed, setFailed] = useState<string[]>([])
+  const usable = allImages.filter((img) => !failed.includes(img.url)).map((img) => ({ ...img, fallbackUrl: undefined }))
+  const images = usable.length > 0 ? usable : allImages.slice(0, 1)
+  const markFailed = (url: string) => usable.length > 0 && setFailed((f) => (f.includes(url) ? f : [...f, url]))
   const [zoomOpen, setZoomOpen] = useState(false)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const total = images.length
+  const index = Math.min(rawIndex, Math.max(total - 1, 0))
   const go = (next: number) => setIndex((next + total) % total)
   const prev = () => go(index - 1)
   const next = () => go(index + 1)
@@ -64,6 +71,7 @@ export function VehicleGallery({ images, title }: Props) {
           <Photo
             key={current.url}
             image={current}
+            onError={() => markFailed(current.url)}
             alt={label(index)}
             sizes="(min-width: 1024px) 760px, 100vw"
             width={960}
@@ -95,7 +103,6 @@ export function VehicleGallery({ images, title }: Props) {
         )}
       </div>
 
-      <PhotoCredit image={current} className="mt-2 text-center text-ink-400" />
 
       {total > 1 && (
         <ul className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-5 sm:gap-3">
@@ -111,7 +118,7 @@ export function VehicleGallery({ images, title }: Props) {
                   i === index ? 'ring-accent' : 'opacity-70 ring-transparent hover:opacity-100',
                 )}
               >
-                <Photo image={thumbOf(img)} alt="" loading="lazy" width={192} height={120} className="size-full object-cover" />
+                <Photo image={thumbOf(img)} onError={() => markFailed(img.url)} alt="" loading="lazy" width={192} height={120} className="size-full object-cover" />
               </button>
             </li>
           ))}
@@ -143,7 +150,7 @@ export function VehicleGallery({ images, title }: Props) {
               </button>
             </div>
             <div className="relative flex min-h-0 flex-1 items-center justify-center px-2 sm:px-16" {...swipe}>
-              <Photo key={current.url} image={current} alt={label(index)} sizes="100vw" className="max-h-full max-w-full rounded-lg object-contain" />
+              <Photo key={current.url} image={current} onError={() => markFailed(current.url)} alt={label(index)} sizes="100vw" className="max-h-full max-w-full rounded-lg object-contain" />
               {total > 1 && (
                 <>
                   <button type="button" onClick={prev} className={cn(navButton, 'left-2 sm:left-4')} aria-label="Foto anterior">
@@ -156,9 +163,8 @@ export function VehicleGallery({ images, title }: Props) {
               )}
             </div>
             <div className="px-4 pt-3 pb-5 sm:px-6">
-              <PhotoCredit image={current} className="text-center text-white/50" />
               {total > 1 && (
-                <ul className="mx-auto mt-3 flex max-w-xl justify-center gap-2 overflow-x-auto">
+                <ul className="mx-auto flex max-w-xl justify-center gap-2 overflow-x-auto">
                   {images.map((img, i) => (
                     <li key={img.url} className="w-20 shrink-0">
                       <button

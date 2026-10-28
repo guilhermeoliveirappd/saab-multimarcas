@@ -105,26 +105,34 @@ Eventos (`src/lib/analytics.ts`): `contact_click` (WhatsApp/Instagram/mapa, com 
 Só carregam com `VITE_GTM_ID` ou `VITE_GA4_ID` **e** consentimento do visitante (banner exibido apenas se houver ID).
 `contact_click` mede **cliques**, não leads confirmados.
 
-## Imagens
+## Imagens (registro interno de origem e licença)
 
-Fontes (todas carregadas pelo navegador do visitante, com `srcset` responsivo e fallback):
+Nenhum rótulo de crédito aparece sobre as fotos. A atribuição exigida pelas licenças CC BY-SA é publicada em
+`/informacoes-legais` (link "Informações legais" no rodapé), forma admitida pela licença ("URI ou link para recurso com as
+informações"). Registro completo por arquivo: `src/data/stock-photos.ts`.
 
-| Uso | Fonte | Licença | Crédito |
+| Uso | Origem | Licença | Atribuição obrigatória? |
 | --- | --- | --- | --- |
-| Banner (principal) | [Pexels 10945892](https://www.pexels.com/photo/a-parked-blue-bmw-car-10945892/) — BMW azul | Licença Pexels (uso livre, crédito opcional) | Alex Urezkov |
-| Banner (alternativa 1) | [Pexels 17539749](https://www.pexels.com/photo/blue-mercedes-benz-car-parked-on-a-rural-road-17539749/) — Mercedes-AMG azul | Licença Pexels | Pexels |
-| Banner (alternativa 2) | Wikimedia Commons — BMW G20 Portimao Blue (1) | ver página | Damian B Oh |
-| Galerias dos veículos | Wikimedia Commons (`src/data/stock-photos.ts`) | CC0 / CC BY / CC BY-SA | exibido na galeria e em `/creditos-de-imagens` |
+| Banner (principal) | [Pexels 10945892](https://www.pexels.com/photo/a-parked-blue-bmw-car-10945892/) — Alex Urezkov | Licença Pexels | Não |
+| Banner (alternativas) | Pexels 17539749 e 6920503 | Licença Pexels | Não |
+| Galerias dos 7 veículos | Wikimedia Commons — séries numeradas de Damian B Oh (uma sessão = um carro) | CC BY-SA 4.0 | Sim → `/informacoes-legais` |
 
-- **Galerias:** somente fotos do **mesmo carro** (mesma sessão/vídeo, numeração sequencial). Conjuntos usados: BMW 320i
-  (5 fotos), HB20 (4: frente, frente, traseira, interior), Tracker (3: frente, traseira, interior), Nivus (3: frente,
-  frente, interior), Civic (2), Toro (2: frente, traseira), T-Cross (2). Os demais modelos têm 1 foto — sem repetição
-  artificial. Versão e ano dos veículos de exemplo foram alinhados às fotos.
-- **Fallback:** o componente `Photo` tenta a foto, depois as alternativas e por fim a ilustração local (`public/demo/`).
-- **Ampliação:** a galeria tem miniaturas, setas, teclado, gesto de deslizar e tela cheia (diálogo nativo).
-- **Pendente (interno):** confirmar visualmente as cores dos conjuntos sem cor identificada (HB20, Tracker, Nivus,
-  T-Cross, Toro, Corolla, Hilux, Creta, Argo) e autor/licença das fotos marcadas como "ver página".
-- Substitua pelas fotos oficiais: estoque via painel administrativo; banner em `content.hero.image`.
+**Auditoria das galerias (todas do mesmo carro, mesma sessão):**
+
+| Veículo | Fotos | Arquivos | Verificação |
+| --- | --- | --- | --- |
+| BMW 320i M Sport (azul) | 6 | Portimao Blue (1,3,5,10,12,16) | (1)–(6), (10), (12), (16) confirmados; série (1)–(20) |
+| Kia Sportage Signature (branco) | 6 | Snow White Pearl (1,3,6,10,15,20) | (3) confirmado; série (1)–(23) listada na categoria |
+| Tesla Model Y (cinza) | 5 | Stealth Grey (1,3,5,7,8) | todos confirmados |
+| Mercedes-Benz C 300 AMG Line (preto) | 5 | Obsidian Black (1,3,5,7,10) | (1) e (10) confirmados |
+| Hyundai Elantra (branco) | 5 | Avante CN7 white (1,3,5,7,10) | (1) e (10) confirmados |
+| Kia Carnival Hi-Limousine (bege) | 4 | Cotton Beige (2,4,12,22) | todos confirmados |
+| Hyundai Tucson Inspiration (cinza) | 4 | Amazon Gray (4,2,1,3) | (2) e (4) confirmados |
+
+- O ambiente de desenvolvimento não acessa Pexels/Wikimedia: **confira as galerias no site publicado.** Se um arquivo não
+  carregar, a galeria o remove automaticamente (nunca mostra imagem de outro carro); só se todos falharem aparece a
+  ilustração local.
+- Galeria: miniaturas, anterior/próxima, teclado, gesto de deslizar e ampliação em tela cheia.
 
 ## Diretrizes de layout (V2)
 
@@ -139,6 +147,20 @@ Enquanto houver veículos fictícios, o site não deve ser público nem indexado
 - Na Vercel, ative **Settings → Deployment Protection → Vercel Authentication** (ou *Password Protection*) para exigir
   login/senha de quem acessar o link durante a apresentação.
 
+## Financiamento (`/financiamento`)
+
+- **Interface completa:** ficha em 4 etapas (dados pessoais, endereço, dados profissionais, veículo e financiamento),
+  indicador de progresso, máscaras, validação acessível, consentimento e veículo pré-selecionado via
+  `/financiamento?veiculo=<slug>` (o parâmetro só identifica o veículo; os dados vêm do catálogo). `/Financiamento`
+  redireciona para a nova rota.
+- **Envio: NÃO operacional por padrão.** Só envia se `VITE_FINANCING_ENDPOINT` apontar para um backend HTTPS autorizado.
+  Sem ele, o botão mostra "Envio online indisponível — seus dados não foram enviados nem armazenados" e oferece WhatsApp
+  apenas com o nome do veículo. Nada vai para `localStorage`, URL, analytics, console ou WhatsApp.
+- **Minimização:** CPF, RG, CNH, data de nascimento, filiação, tipo/tempo de residência e tempo de emprego existem no
+  registro de campos, mas estão desligados em `FINANCING_FLAGS` (`src/lib/financing.ts`) até validação da SAAB/jurídico.
+- **Para ativar:** backend com validação no servidor, HTTPS, autenticação administrativa, antiabuso, política de retenção,
+  base legal definida (LGPD) e revisão do texto da Política de Privacidade (seção "Ficha de financiamento").
+
 ## Pendências do cliente (interno)
 
 Itens provisórios — nada disso aparece como aviso na interface; blocos sem dado confirmado ficam ocultos:
@@ -147,11 +169,13 @@ Itens provisórios — nada disso aparece como aviso na interface; blocos sem da
 | --- | --- | --- |
 | Estoque real (veículos e fotos) | Painel `/admin` (Supabase) | 12 veículos fictícios com fotos de referência |
 | WhatsApp | `VITE_WHATSAPP_NUMBER` / `site.ts` | Link abre o WhatsApp sem destinatário fixo |
-| Endereço, mapa, horários, telefone, e-mail | `src/config/site.ts` | Exibe só "Presidente Prudente · SP"; demais ocultos |
+| Endereço | `src/config/site.ts` | Confirmado: Av. Joaquim Constantino, nº 1868 — Vila Formosa (CEP não informado) |
+| Horários, telefone, e-mail | `src/config/site.ts` | Ocultos até confirmação |
 | Logotipo oficial e tom exato de azul | `site.ts` (`logo`) e `index.css` (`--color-brand*`) | Logotipo tipográfico + `#1254B8` |
 | História e propósito | `content.aboutPage.history/purpose` | Blocos ocultos |
 | Diferenciais (página Sobre) | `content.differentials` | Textos genéricos a validar |
 | Fotos da fachada/equipe | `content.about.image`, `content.aboutPage.gallery` | Painel com a marca |
-| Créditos de 6 fotos (autor/licença) | `src/data/stock-photos.ts` | Link para a origem no Commons |
+| Fotos do estoque real (substituem as de terceiros e dispensam atribuição) | Painel `/admin` | Fotos CC BY-SA com atribuição em `/informacoes-legais` |
+| Backend da ficha de financiamento | `VITE_FINANCING_ENDPOINT` | Somente interface; envio desativado |
 | Revisão jurídica da Política de Privacidade | `src/pages/PrivacyPage.tsx` | Minuta |
 | Avaliações reais | `src/data/reviews.ts` | Seção oculta |

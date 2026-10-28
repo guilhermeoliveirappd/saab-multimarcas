@@ -1,6 +1,6 @@
 import { Clock, MapPin, MapPinned, Navigation, Phone } from 'lucide-react'
 import { env } from '@/config/env'
-import { siteConfig } from '@/config/site'
+import { formatAddress, mapsLinks, siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
 import { buildWhatsAppUrl, generalMessage } from '@/lib/whatsapp'
 import { InstagramIcon, WhatsAppIcon } from '@/components/ui/BrandIcons'
@@ -24,11 +24,11 @@ export function ContactDetails() {
       value: address.confirmed ? (
         <>
           {address.street}
-          {address.district && `, ${address.district}`} — {siteConfig.city}/{siteConfig.state}
-          {address.zip && ` · CEP ${address.zip}`}
+          <br />
+          {[address.district, siteConfig.city, siteConfig.state].filter(Boolean).join(' — ')}
         </>
       ) : (
-        `${siteConfig.city} · ${siteConfig.state}`
+        formatAddress()
       ),
     },
     ...(businessHours
@@ -85,7 +85,7 @@ export function ContactDetails() {
       {rows.map(({ icon: Icon, label, value }, i) => (
         <div
           key={label}
-          className={`flex flex-col items-center rounded-2xl bg-white p-5 text-center ring-1 ring-ink-100 ${rows.length % 2 === 1 && i === rows.length - 1 ? 'sm:col-span-2' : ''}`}
+          className={`flex flex-col items-center rounded-2xl bg-white p-5 text-center ring-1 ring-ink-100 ${i === 0 || (rows.length % 2 === 0 && i === rows.length - 1) ? 'sm:col-span-2' : ''}`}
         >
           <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
             <Icon size={20} aria-hidden="true" />
@@ -101,12 +101,12 @@ export function ContactDetails() {
 /** Mapa incorporado somente com localização validada; caso contrário, placeholder. */
 export function LocationMap({ className = '' }: { className?: string }) {
   const { address } = siteConfig
-  if (address.confirmed && address.mapsEmbedUrl) {
+  if (address.confirmed) {
     return (
       <div className={`overflow-hidden rounded-[var(--radius-card)] ring-1 ring-ink-100 ${className}`}>
         <iframe
           title={`Mapa com a localização da ${siteConfig.name}`}
-          src={address.mapsEmbedUrl}
+          src={mapsLinks.embed}
           className="size-full min-h-[320px] border-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
@@ -145,12 +145,9 @@ export function LocationBlock({ trackingLocation }: { trackingLocation: string }
         <span className="grid size-12 place-items-center rounded-xl bg-accent-soft text-accent">
           <MapPin size={22} aria-hidden="true" />
         </span>
-        <p className="mt-4 text-lg font-semibold text-balance text-ink-950">
-          {address.street}
-          {address.district && `, ${address.district}`}
-        </p>
-        <p className="mt-1 text-ink-500">
-          {siteConfig.city}/{siteConfig.state}
+        <p className="mt-4 text-lg font-semibold text-balance text-ink-950">{address.street}</p>
+        <p className="mt-1 text-balance text-ink-500">
+          {[address.district, siteConfig.city, siteConfig.state].filter(Boolean).join(' — ')}
           {address.zip && ` · CEP ${address.zip}`}
         </p>
         {businessHours && (
@@ -162,9 +159,8 @@ export function LocationBlock({ trackingLocation }: { trackingLocation: string }
             ))}
           </ul>
         )}
-        {address.mapsLink && (
-          <ButtonAnchor
-            href={address.mapsLink}
+        <ButtonAnchor
+            href={mapsLinks.route}
             target="_blank"
             rel="noopener noreferrer"
             variant="primary"
@@ -174,7 +170,6 @@ export function LocationBlock({ trackingLocation }: { trackingLocation: string }
           >
             <Navigation size={17} aria-hidden="true" /> Como chegar
           </ButtonAnchor>
-        )}
       </div>
       <LocationMap className="min-h-[360px]" />
     </div>

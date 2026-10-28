@@ -7,7 +7,8 @@ import { WhatsAppIcon } from '@/components/ui/BrandIcons'
 /** Atalho flutuante para o WhatsApp (oculto na página do veículo, que tem CTA próprio fixo). */
 export function FloatingWhatsApp() {
   const { pathname } = useLocation()
-  if (pathname.startsWith('/veiculos/')) return null
+  // Oculto onde há CTA próprio fixo (veículo) ou formulário (financiamento)
+  if (pathname.startsWith('/veiculos/') || pathname.toLowerCase().startsWith('/financiamento')) return null
   return (
     <a
       href={buildWhatsAppUrl(generalMessage(), env.whatsappNumber)}

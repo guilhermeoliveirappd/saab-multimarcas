@@ -13,6 +13,8 @@ export const env = {
   supabaseAnonKey: clean(raw.VITE_SUPABASE_ANON_KEY),
   gtmId: clean(raw.VITE_GTM_ID),
   ga4Id: clean(raw.VITE_GA4_ID),
+  /** Backend HTTPS autorizado para receber a ficha de financiamento (opcional) */
+  financingEndpoint: clean(raw.VITE_FINANCING_ENDPOINT),
 }
 
 export const isSupabaseConfigured = Boolean(env.supabaseUrl && env.supabaseAnonKey)

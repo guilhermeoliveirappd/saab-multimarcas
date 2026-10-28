@@ -1,4 +1,4 @@
-import { demoVehicles } from '@/data/demo-vehicles'
+import { fixtureVehicles as demoVehicles } from '@/test/fixtures'
 import {
   EMPTY_FILTERS,
   applyFilters,
@@ -35,7 +35,7 @@ describe('inventory filters', () => {
   })
 
   it('performs multi-token text search across brand, model, version and year', () => {
-    expect(run({ q: 'civic 2021' }).map((v) => v.slug)).toEqual(['honda-civic-sport-2021'])
+    expect(run({ q: 'civic 2021' }).map((v) => v.slug)).toEqual(['honda-civic-exl-2021'])
     expect(run({ q: 'híbrido inexistente' })).toHaveLength(0)
   })
 
@@ -70,7 +70,7 @@ describe('inventory filters', () => {
   })
 
   it('returns related vehicles excluding the current one', () => {
-    const civic = listed.find((v) => v.slug === 'honda-civic-sport-2021')!
+    const civic = listed.find((v) => v.slug === 'honda-civic-exl-2021')!
     const related = getRelatedVehicles(civic, demoVehicles)
     expect(related).toHaveLength(3)
     expect(related.some((v) => v.id === civic.id)).toBe(false)

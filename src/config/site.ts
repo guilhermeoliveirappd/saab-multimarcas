@@ -26,6 +26,15 @@ export interface ServiceFlags {
   financing: boolean
 }
 
+/** Texto único do endereço — usado na exibição e para gerar os links do Google Maps. */
+const ADDRESS_QUERY = 'Avenida Joaquim Constantino, 1868 - Vila Formosa, Presidente Prudente - SP'
+
+/** Links do Google Maps gerados a partir do TEXTO do endereço (sem coordenadas). */
+export const mapsLinks = {
+  route: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ADDRESS_QUERY)}`,
+  embed: `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS_QUERY)}&output=embed`,
+}
+
 export const siteConfig = {
   name: 'SAAB Multimarcas',
   shortName: 'SAAB',
@@ -45,16 +54,14 @@ export const siteConfig = {
   email: null as string | null, // a confirmar
 
   address: {
-    /** `confirmed: false` exibe "Endereço a confirmar" e oculta o mapa */
-    confirmed: false,
-    street: '',
-    district: '',
+    /** Endereço oficial confirmado para o projeto. */
+    confirmed: true,
+    street: 'Avenida Joaquim Constantino, nº\u00a01868',
+    district: 'Vila Formosa',
+    /** CEP ainda não informado — vazio = não exibido */
     zip: '',
-    /** URL de incorporação do Google Maps (iframe src). Só é usada se `confirmed` */
-    mapsEmbedUrl: '',
-    /** Link "Como chegar" no Google Maps */
-    mapsLink: '',
   },
+
 
   /** `null` = horário a confirmar */
   businessHours: null as BusinessHours[] | null,
@@ -70,7 +77,7 @@ export const siteConfig = {
     buy: true,
     sell: true,
     trade: true,
-    financing: false,
+    financing: true,
   } satisfies ServiceFlags,
 
   agency: {
@@ -88,8 +95,15 @@ export const siteConfig = {
   },
 
   inventory: {
-    pageSize: 9,
+    pageSize: 6,
   },
 }
 
 export type SiteConfig = typeof siteConfig
+
+/** Endereço completo no formato oficial (ou só cidade/UF se não confirmado). */
+export function formatAddress(): string {
+  const { address, city, state } = siteConfig
+  if (!address.confirmed) return `${city} — ${state}`
+  return [address.street, address.district, city, state].filter(Boolean).join(' — ')
+}

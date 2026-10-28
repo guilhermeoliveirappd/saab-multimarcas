@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { isSupabaseConfigured } from '@/config/env'
 import { siteConfig } from '@/config/site'
 import { analyticsEnabled } from '@/lib/analytics'
+import { isFinancingSubmissionEnabled } from '@/services/financing'
 import { useSeo } from '@/lib/seo'
 import { STATIC_PAGES } from '@/lib/seo-meta'
 import { PageHeader } from '@/components/ui/PageHeader'
@@ -25,7 +26,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 export default function PrivacyPage() {
   useSeo({ ...STATIC_PAGES['/politica-de-privacidade'], path: '/politica-de-privacidade' })
   const controller = siteConfig.legalName ?? siteConfig.name
-  const hasMap = siteConfig.address.confirmed && Boolean(siteConfig.address.mapsEmbedUrl)
+  const hasMap = siteConfig.address.confirmed
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function PrivacyPage() {
           Proteção de Dados (Lei nº 13.709/2018 — LGPD).
         </p>
 
-        <Section title="1. Dados que coletamos">
+        <Section title="Dados que coletamos">
           <p>
             Este site <strong>não possui cadastro de visitantes</strong> e não armazena dados preenchidos em formulários. No formulário de
             venda ou troca, as informações do veículo são apenas inseridas em uma mensagem do WhatsApp, que você revisa e decide enviar.
@@ -61,7 +62,26 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="2. Contato pelo WhatsApp e Instagram">
+        <Section title="Ficha de financiamento">
+          {isFinancingSubmissionEnabled ? (
+            <>
+              {/* Texto a validar com o jurídico ao ativar o backend (base legal, compartilhamento e retenção) */}
+              <p>
+                Os dados informados na ficha de financiamento (identificação, contato, endereço, dados profissionais e do veículo) são usados
+                exclusivamente para analisar a sua solicitação e podem ser compartilhados com instituições financeiras parceiras para a
+                análise de crédito, mediante a sua solicitação.
+              </p>
+              <p>Os dados são transmitidos por conexão segura e mantidos apenas pelo tempo necessário para essa finalidade.</p>
+            </>
+          ) : (
+            <p>
+              Nesta versão do site, a ficha de financiamento não envia nem armazena os dados preenchidos: eles permanecem apenas na página
+              aberta no seu navegador e são descartados ao sair dela.
+            </p>
+          )}
+        </Section>
+
+        <Section title="Contato pelo WhatsApp e Instagram">
           <p>
             Ao clicar em um botão de WhatsApp ou Instagram, você é direcionado a serviços da Meta Platforms. A conversa iniciada nesses canais
             segue também as políticas de privacidade desses serviços. Utilizamos os dados que você nos envia por esses canais apenas para
@@ -70,12 +90,12 @@ export default function PrivacyPage() {
         </Section>
 
         {hasMap && (
-          <Section title="3. Mapa">
+          <Section title="Mapa">
             <p>A página de localização exibe um mapa do Google Maps, que pode coletar dados conforme a política de privacidade do Google.</p>
           </Section>
         )}
 
-        <Section title={`${hasMap ? 4 : 3}. Cookies e armazenamento local`}>
+        <Section title="Cookies e armazenamento local">
           {analyticsEnabled ? (
             <p>
               Cookies de mensuração só são ativados após você clicar em “Aceitar” no aviso de cookies. Sua escolha fica salva no armazenamento
@@ -87,7 +107,7 @@ export default function PrivacyPage() {
           {isSupabaseConfigured && <p>A área administrativa, restrita à equipe da loja, utiliza armazenamento local para manter a sessão de login.</p>}
         </Section>
 
-        <Section title={`${hasMap ? 5 : 4}. Seus direitos`}>
+        <Section title="Seus direitos">
           <p>
             Você pode solicitar confirmação de tratamento, acesso, correção, anonimização, portabilidade ou eliminação de dados pessoais, bem
             como revogar consentimentos, conforme o art. 18 da LGPD.
@@ -98,7 +118,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title={`${hasMap ? 6 : 5}. Alterações`}>
+        <Section title="Alterações">
           <p>Esta política pode ser atualizada a qualquer momento. A data da última atualização está indicada no topo da página.</p>
         </Section>
       </article>

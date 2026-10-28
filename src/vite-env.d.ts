@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_ANON_KEY?: string
   readonly VITE_GTM_ID?: string
   readonly VITE_GA4_ID?: string
+  readonly VITE_FINANCING_ENDPOINT?: string
 }
 
 interface ImportMeta {

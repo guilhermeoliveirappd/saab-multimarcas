@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
-import { ArrowLeft, Calendar, Check, Cog, Fuel, Gauge, Info, Palette, Share2 } from 'lucide-react'
+import { ArrowLeft, Calendar, Check, Cog, Fuel, Gauge, Info, Landmark, Palette, Share2 } from 'lucide-react'
 import { env } from '@/config/env'
+import { siteConfig } from '@/config/site'
 import { useVehicles } from '@/hooks/vehicles-context'
 import { trackEvent } from '@/lib/analytics'
 import { FUEL_LABELS, TRANSMISSION_LABELS, formatMileage, formatPrice, formatYears, vehicleFullName } from '@/lib/format'
@@ -164,9 +165,22 @@ export default function VehicleDetailPage() {
                     <Info size={18} className="shrink-0" aria-hidden="true" /> Veículo vendido. Veja opções semelhantes abaixo.
                   </p>
                 ) : (
-                  <WhatsAppButton location="vehicle_detail" message={message} vehicle={{ id: v.id, name }} size="lg" className="w-full">
-                    Tenho interesse
-                  </WhatsAppButton>
+                  <>
+                    <WhatsAppButton location="vehicle_detail" message={message} vehicle={{ id: v.id, name }} size="lg" className="w-full">
+                      Tenho interesse
+                    </WhatsAppButton>
+                    {siteConfig.services.financing && (
+                      <ButtonLink
+                        to={`/financiamento?veiculo=${encodeURIComponent(v.slug)}`}
+                        variant="outline-light"
+                        size="lg"
+                        className="w-full"
+                        onClick={() => trackEvent({ name: 'financing_cta', params: { vehicle_id: v.id } })}
+                      >
+                        <Landmark size={18} aria-hidden="true" /> Solicitar financiamento
+                      </ButtonLink>
+                    )}
+                  </>
                 )}
                 <ShareButton vehicleId={v.id} title={name} />
               </div>
