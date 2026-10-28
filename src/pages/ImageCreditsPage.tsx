@@ -17,7 +17,7 @@ export default function ImageCreditsPage() {
 
   return (
     <>
-      <PageHeader title="Créditos das imagens" description="Fotos ilustrativas de terceiros usadas sob licenças livres." breadcrumb={[{ label: 'Créditos das imagens' }]} />
+      <PageHeader title="Créditos das imagens" description="Fotografias de terceiros usadas sob licenças livres." breadcrumb={[{ label: 'Créditos das imagens' }]} />
       <div className="container-site max-w-3xl py-12 lg:py-16">
         {items.length === 0 ? (
           <p className="text-center text-ink-500">Todas as imagens do site são próprias.</p>

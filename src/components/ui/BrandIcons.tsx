@@ -21,3 +21,20 @@ export function InstagramIcon({ size = 20, ...props }: IconProps) {
     </svg>
   )
 }
+
+export function FacebookIcon({ size = 20, ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M15 3.5h-2.2A3.8 3.8 0 0 0 9 7.3V10H6.5v3.5H9v7h3.5v-7h2.6l.6-3.5h-3.2V7.6c0-.6.4-1 1-1H15z" />
+    </svg>
+  )
+}
+
+export function YouTubeIcon({ size = 20, ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
+      <path d="m10.5 9.5 4 2.5-4 2.5z" fill="currentColor" />
+    </svg>
+  )
+}

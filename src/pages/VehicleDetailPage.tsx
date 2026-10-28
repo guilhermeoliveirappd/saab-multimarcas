@@ -14,7 +14,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState, ErrorState, Skeleton } from '@/components/ui/States'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
-import { DemoTag, StatusBadge } from '@/components/vehicles/StatusBadge'
+import { StatusBadge } from '@/components/vehicles/StatusBadge'
 import { VehicleCard, VehicleGrid } from '@/components/vehicles/VehicleCard'
 import { VehicleGallery } from '@/components/vehicles/VehicleGallery'
 
@@ -143,7 +143,7 @@ export default function VehicleDetailPage() {
       <article className="container-site py-10 pb-32 lg:py-14 lg:pb-14">
         <div className="grid gap-10 lg:grid-cols-[1.55fr_1fr] lg:gap-14">
           <div className="min-w-0">
-            <VehicleGallery images={v.images} title={name} overlay={v.isDemo && <DemoTag />} />
+            <VehicleGallery images={v.images} title={name} />
           </div>
 
           <aside className="text-center lg:sticky lg:top-28 lg:self-start">
@@ -158,7 +158,6 @@ export default function VehicleDetailPage() {
             <div className="mt-6 rounded-[var(--radius-card)] bg-ink-950 p-6 text-white">
               <p className="text-xs tracking-wide text-ink-400 uppercase">Preço</p>
               <p className={`mt-1 font-display text-4xl font-extrabold tracking-tight ${sold ? 'text-ink-500 line-through' : ''}`}>{formatPrice(v.price)}</p>
-              {v.isDemo && <p className="mt-2 text-xs text-brand-light">Anúncio de exemplo — fora do estoque da SAAB.</p>}
               <div className="mt-6 space-y-3">
                 {sold ? (
                   <p className="flex items-center justify-center gap-2 rounded-xl bg-white/5 p-4 text-sm text-ink-300">

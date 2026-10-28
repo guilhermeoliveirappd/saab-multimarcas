@@ -4,7 +4,6 @@ import { STATIC_PAGES } from '@/lib/seo-meta'
 import { financingMessage } from '@/lib/whatsapp'
 import { ButtonLink } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
-import { ProvisionalBadge } from '@/components/ui/ProvisionalBadge'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 
 /** Página informativa — a rota só existe quando `siteConfig.services.financing` é true. */
@@ -13,7 +12,7 @@ export default function FinancingPage() {
   const f = content.financing
   return (
     <>
-      <PageHeader title={f.title} description={f.description} breadcrumb={[{ label: f.title }]} badge={f.provisional && <ProvisionalBadge />} />
+      <PageHeader title={f.title} description={f.description} breadcrumb={[{ label: f.title }]} />
       <div className="container-site max-w-3xl py-14 text-center lg:py-20">
         <h2 className="font-display text-2xl font-bold text-ink-950">Como funciona</h2>
         <ol className="mt-6 space-y-4">

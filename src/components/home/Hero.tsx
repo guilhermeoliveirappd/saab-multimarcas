@@ -2,7 +2,6 @@ import { ArrowRight } from 'lucide-react'
 import { content } from '@/config/content'
 import { ButtonLink } from '@/components/ui/Button'
 import { Photo, PhotoCredit } from '@/components/ui/Photo'
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { QuickSearch } from '@/components/vehicles/QuickSearch'
 
 export function Hero() {
@@ -29,24 +28,27 @@ export function Hero() {
           <div className="flex max-w-4xl animate-fade-up flex-col items-center">
             <h1
               id="hero-title"
-              className="font-display text-[clamp(1.5rem,6.6vw,4.75rem)] leading-[1.05] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
+              className="font-display text-[clamp(1.6rem,7vw,4.75rem)] leading-[1.06] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
             >
               {hero.headline.map((line) => (
                 <span key={line} className="block whitespace-nowrap">
-                  {line}
+                  {/* Ajuste óptico: o ponto final da Plus Jakarta Sans tem recuo largo em pesos altos */}
+                  {line.endsWith('.') ? (
+                    <>
+                      {line.slice(0, -1)}
+                      <span className="-ml-[0.09em]">.</span>
+                    </>
+                  ) : (
+                    line
+                  )}
                 </span>
               ))}
             </h1>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-balance text-ink-100 sm:max-w-xl sm:text-lg">{hero.subheadline}</p>
-            <div className="mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
-              <ButtonLink to="/estoque" size="lg" variant="primary" className="w-full sm:w-auto">
-                {hero.primaryCta}
-                <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
-              </ButtonLink>
-              <WhatsAppButton location="hero" size="lg" variant="outline-light" className="w-full backdrop-blur-sm sm:w-auto">
-                {hero.secondaryCta}
-              </WhatsAppButton>
-            </div>
+            <p className="mt-6 max-w-md text-base leading-relaxed text-balance text-white/85 sm:max-w-xl sm:text-lg">{hero.subheadline}</p>
+            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-9 px-9">
+              {hero.primaryCta}
+              <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
+            </ButtonLink>
           </div>
         </div>
         <PhotoCredit image={hero.image} className="absolute right-4 bottom-28 max-w-[60%] text-right text-white/55 sm:right-6 lg:bottom-32" />

@@ -6,7 +6,7 @@ import { TRANSMISSION_LABELS, formatMileage, formatPrice, formatYears } from '@/
 import { cn } from '@/lib/cn'
 import { Photo } from '@/components/ui/Photo'
 import { Skeleton } from '@/components/ui/States'
-import { DemoTag, StatusBadge } from './StatusBadge'
+import { StatusBadge } from './StatusBadge'
 
 interface Props {
   vehicle: Vehicle
@@ -40,7 +40,6 @@ export function VehicleCard({ vehicle: v, priority = false, headingLevel: Headin
         )}
         <div className="absolute top-3 left-3 flex flex-wrap gap-2">
           {v.status !== 'disponivel' && <StatusBadge status={v.status} className="bg-white/95" />}
-          {v.isDemo && <DemoTag />}
         </div>
       </div>
 

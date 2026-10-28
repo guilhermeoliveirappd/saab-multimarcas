@@ -2,13 +2,12 @@ import { Clock, MapPin, MapPinned, Phone } from 'lucide-react'
 import { env } from '@/config/env'
 import { siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
+import { buildWhatsAppUrl, generalMessage } from '@/lib/whatsapp'
 import { InstagramIcon, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { ButtonAnchor } from '@/components/ui/Button'
 import { content } from '@/config/content'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
-
-const Pending = () => <span className="text-ink-400 italic">a confirmar</span>
 
 function formatWhatsApp(digits: string): string {
   const m = digits.match(/^55(\d{2})(\d{4,5})(\d{4})$/)
@@ -18,10 +17,11 @@ function formatWhatsApp(digits: string): string {
 /** Lista de canais e informações de contato (reutilizada na home e em /contato). */
 export function ContactDetails() {
   const { address, businessHours, social, phoneDisplay } = siteConfig
+  // Só exibe dados confirmados em src/config/site.ts — nada de "a confirmar" na interface
   const rows = [
     {
       icon: MapPin,
-      label: 'Endereço',
+      label: address.confirmed ? 'Endereço' : 'Localização',
       value: address.confirmed ? (
         <>
           {address.street}
@@ -29,32 +29,40 @@ export function ContactDetails() {
           {address.zip && ` · CEP ${address.zip}`}
         </>
       ) : (
-        <>
-          {siteConfig.city}/{siteConfig.state}
-          <br />
-          <Pending />
-        </>
+        `${siteConfig.city} · ${siteConfig.state}`
       ),
     },
-    {
-      icon: Clock,
-      label: 'Horário de funcionamento',
-      value: businessHours ? (
-        <ul>
-          {businessHours.map((h) => (
-            <li key={h.label}>
-              {h.label}: {h.value}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <Pending />
-      ),
-    },
+    ...(businessHours
+      ? [
+          {
+            icon: Clock,
+            label: 'Horário de funcionamento',
+            value: (
+              <ul>
+                {businessHours.map((h) => (
+                  <li key={h.label}>
+                    {h.label}: {h.value}
+                  </li>
+                ))}
+              </ul>
+            ),
+          },
+        ]
+      : []),
     {
       icon: WhatsAppIcon,
       label: 'WhatsApp',
-      value: env.whatsappNumber ? formatWhatsApp(env.whatsappNumber) : <Pending />,
+      value: (
+        <a
+          href={buildWhatsAppUrl(generalMessage(), env.whatsappNumber)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-ink-300 underline-offset-4 hover:decoration-ink-950"
+          onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'whatsapp', location: 'contact_details' } })}
+        >
+          {env.whatsappNumber ? formatWhatsApp(env.whatsappNumber) : 'Iniciar conversa'}
+        </a>
+      ),
     },
     ...(phoneDisplay ? [{ icon: Phone, label: 'Telefone', value: phoneDisplay }] : []),
     {
@@ -75,8 +83,11 @@ export function ContactDetails() {
   ]
   return (
     <dl className="grid gap-3 sm:grid-cols-2">
-      {rows.map(({ icon: Icon, label, value }) => (
-        <div key={label} className="flex flex-col items-center rounded-2xl bg-white p-5 text-center ring-1 ring-ink-100">
+      {rows.map(({ icon: Icon, label, value }, i) => (
+        <div
+          key={label}
+          className={`flex flex-col items-center rounded-2xl bg-white p-5 text-center ring-1 ring-ink-100 ${rows.length % 2 === 1 && i === rows.length - 1 ? 'sm:col-span-2' : ''}`}
+        >
           <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
             <Icon size={20} aria-hidden="true" />
           </span>
@@ -105,7 +116,7 @@ export function LocationMap({ className = '' }: { className?: string }) {
     )
   }
   return (
-    <div className={`relative grid min-h-[320px] place-items-center overflow-hidden rounded-[var(--radius-card)] bg-ink-950 text-center ${className}`}>
+    <div className={`relative grid min-h-[320px] place-items-center overflow-hidden rounded-[var(--radius-card)] bg-brand-deep text-center ${className}`}>
       <div
         className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:40px_40px]"
         aria-hidden="true"
@@ -115,7 +126,6 @@ export function LocationMap({ className = '' }: { className?: string }) {
           <MapPinned size={24} aria-hidden="true" />
         </span>
         <p className="mt-5 font-display text-xl font-bold text-white">{siteConfig.city} · {siteConfig.state}</p>
-        <p className="mt-2 text-sm text-ink-300">Mapa disponível após confirmar o endereço.</p>
       </div>
     </div>
   )

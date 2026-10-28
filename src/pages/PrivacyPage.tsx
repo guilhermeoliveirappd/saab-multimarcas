@@ -5,7 +5,6 @@ import { analyticsEnabled } from '@/lib/analytics'
 import { useSeo } from '@/lib/seo'
 import { STATIC_PAGES } from '@/lib/seo-meta'
 import { PageHeader } from '@/components/ui/PageHeader'
-import { ProvisionalBadge } from '@/components/ui/ProvisionalBadge'
 
 /**
  * Política de Privacidade — MINUTA editável.
@@ -34,7 +33,6 @@ export default function PrivacyPage() {
         title="Política de Privacidade"
         description={`Última atualização: ${LAST_UPDATE}`}
         breadcrumb={[{ label: 'Política de Privacidade' }]}
-        badge={<ProvisionalBadge label="Minuta — revisão jurídica pendente" />}
       />
       <article className="container-site max-w-3xl py-12 lg:py-16">
         <p className="leading-relaxed text-ink-600">

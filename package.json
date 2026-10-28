@@ -15,8 +15,8 @@
     "generate:demo-images": "tsx scripts/generate-demo-images.ts"
   },
   "dependencies": {
-    "@fontsource-variable/archivo": "^5.3.0",
-    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@supabase/supabase-js": "^2.118.0",
     "lucide-react": "^1.62.0",
     "react": "^19.3.1",

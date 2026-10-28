@@ -40,7 +40,7 @@ export const STATIC_PAGES: Record<string, Omit<PageMeta, 'path'>> = {
   },
   '/creditos-de-imagens': {
     title: 'Créditos das imagens',
-    description: 'Autoria e licenças das fotografias ilustrativas usadas no site.',
+    description: 'Autoria e licenças das fotografias de terceiros usadas no site.',
     noindex: true,
   },
   '/politica-de-privacidade': {
@@ -60,7 +60,7 @@ export function vehicleMeta(v: Vehicle): Omit<PageMeta, 'path'> {
   const parts = [formatYears(v), formatMileage(v.mileage), TRANSMISSION_LABELS[v.transmission], FUEL_LABELS[v.fuel], formatPrice(v.price)]
   return {
     title: name,
-    description: `${name} — ${parts.join(' · ')}. ${v.isDemo ? 'Anúncio de demonstração.' : `Fale com a ${siteConfig.name} pelo WhatsApp.`}`,
+    description: `${name} — ${parts.join(' · ')}. Fale com a ${siteConfig.name} pelo WhatsApp.`,
     // Ilustrações SVG não são aceitas por redes sociais; usa a imagem padrão
     image: v.images[0]?.url && !v.images[0].url.endsWith('.svg') ? v.images[0].url : undefined,
     type: 'product',

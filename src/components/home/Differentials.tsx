@@ -1,6 +1,5 @@
 import { Handshake, MapPin, MessagesSquare, Search, type LucideIcon } from 'lucide-react'
 import { content } from '@/config/content'
-import { ProvisionalBadge } from '@/components/ui/ProvisionalBadge'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
 const ICONS: Record<string, LucideIcon> = { messages: MessagesSquare, search: Search, handshake: Handshake, map: MapPin }
@@ -15,7 +14,6 @@ export function Differentials() {
           tone="dark"
           title={d.title}
           description={d.description}
-          badge={d.provisional && <ProvisionalBadge tone="dark" />}
           className="mb-14"
         />
         <ul className="grid gap-px overflow-hidden rounded-[var(--radius-card)] bg-white/10 sm:grid-cols-2 lg:grid-cols-4">

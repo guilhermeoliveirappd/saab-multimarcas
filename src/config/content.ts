@@ -4,9 +4,9 @@
  * Diretriz de layout (V2): textos centralizados e cada bloco com NO MÁXIMO
  * duas linhas no desktop e no mobile — mantenha os textos curtos.
  *
- * `provisional: true` indica texto demonstrativo que ainda depende de
- * validação do cliente (exibe o selo "Conteúdo provisório" quando
- * `siteConfig.showProvisionalMarkers` estiver ativo).
+ * `provisional: true` é apenas DOCUMENTAÇÃO INTERNA: o texto ainda depende de
+ * validação do cliente. Nada disso é exibido na interface (ver README,
+ * seção "Pendências do cliente").
  */
 import { HERO_PHOTO } from '../data/stock-photos'
 
@@ -16,7 +16,6 @@ export const content = {
     headline: ['Seu próximo carro.', 'Sua próxima conquista.'],
     subheadline: 'Explore nosso estoque e encontre o veículo ideal para você.',
     primaryCta: 'Explorar estoque',
-    secondaryCta: 'Falar com a SAAB',
     /**
      * Foto do banner. Substitua por uma foto oficial (ex.: { url: '/media/hero.jpg' }),
      * idealmente 2400px de largura, WebP/AVIF.
@@ -38,7 +37,7 @@ export const content = {
   differentials: {
     provisional: true,
     title: 'Por que escolher a SAAB',
-    description: 'Diferenciais demonstrativos, a validar com a SAAB.',
+    description: 'O que orienta o nosso atendimento.',
     items: [
       { icon: 'messages', title: 'Atendimento próximo', text: 'Fale direto com a equipe pelo WhatsApp.' },
       { icon: 'search', title: 'Informação clara', text: 'Fotos, ficha técnica e opcionais em um só lugar.' },
@@ -70,7 +69,7 @@ export const content = {
   about: {
     provisional: true,
     title: 'Revenda multimarcas em Presidente Prudente',
-    summary: 'Resumo institucional a ser enviado pela SAAB.',
+    summary: 'Conheça a SAAB e encontre o carro certo para o seu momento.',
     cta: 'Conheça a SAAB',
     /** Substitua por foto real da fachada ou da equipe (ex.: '/media/fachada.jpg') */
     image: null as string | null,
@@ -80,15 +79,10 @@ export const content = {
   aboutPage: {
     provisional: true,
     title: 'Sobre a SAAB Multimarcas',
-    intro: 'História, propósito e diferenciais da SAAB — a receber.',
-    history: {
-      title: 'Nossa história',
-      text: 'Fundação, trajetória e marcos da empresa — a receber.',
-    },
-    purpose: {
-      title: 'Nosso propósito',
-      text: 'Propósito e valores a definir com a SAAB.',
-    },
+    intro: 'Revenda de veículos multimarcas em Presidente Prudente (SP).',
+    /** História e propósito: preencher com o texto oficial. `null` = bloco oculto. */
+    history: null as { title: string; text: string } | null,
+    purpose: null as { title: string; text: string } | null,
     gallery: [] as { src: string; alt: string }[],
   },
 

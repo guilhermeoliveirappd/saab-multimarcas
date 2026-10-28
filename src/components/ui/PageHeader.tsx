@@ -35,7 +35,7 @@ export function PageHeader({ title, description, breadcrumb = [], children, badg
           </ol>
         </nav>
         {badge && <div className="mt-6">{badge}</div>}
-        <h1 className="mt-4 max-w-3xl font-display text-[1.9rem] leading-[1.08] font-extrabold text-balance text-ink-950 sm:text-5xl">{title}</h1>
+        <h1 className="mt-4 max-w-3xl font-display text-[1.9rem] leading-[1.08] font-bold text-balance text-ink-950 sm:text-5xl">{title}</h1>
         <span className="mt-5 h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
         {description && <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-balance text-ink-500 sm:text-lg">{description}</p>}
         {children}

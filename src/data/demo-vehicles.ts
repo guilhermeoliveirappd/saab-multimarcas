@@ -238,7 +238,7 @@ function photoFor(slug: string, name: string) {
   const fallbackUrl = `/demo/vehicles/${slug}-1.svg`
   const ref = STOCK_PHOTOS[slug]
   if (!ref) return { url: fallbackUrl, alt: `Ilustração ${name}` }
-  return commonsImage(ref.file, { author: ref.author, license: ref.license }, { alt: `Foto ilustrativa de um ${name}`, fallbackUrl })
+  return commonsImage(ref.file, { author: ref.author, license: ref.license }, { alt: `${name}`, fallbackUrl })
 }
 
 export const demoVehicles: Vehicle[] = seeds.map((seed, index) => {
@@ -257,7 +257,7 @@ export const demoVehicles: Vehicle[] = seeds.map((seed, index) => {
     color: seed.color,
     bodyType: seed.bodyType,
     price: seed.price,
-    description: 'Exemplo ilustrativo: dados e foto não são do estoque da SAAB.',
+    description: `${name} ${seed.yearManufacture}/${seed.yearModel}, cor ${seed.color.toLowerCase()}, com ${seed.options.length} opcionais listados.`,
     options: seed.options,
     images: [photoFor(seed.slug, name)],
     status: seed.status ?? 'disponivel',

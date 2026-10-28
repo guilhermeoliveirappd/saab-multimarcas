@@ -10,7 +10,6 @@ import { buildWhatsAppUrl, tradeInMessage, type TradeInData } from '@/lib/whatsa
 import { WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { Button } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
-import { ProvisionalBadge } from '@/components/ui/ProvisionalBadge'
 
 const CURRENT_YEAR = new Date().getFullYear()
 type Errors = Partial<Record<keyof TradeInData, string>>
@@ -85,7 +84,6 @@ export default function SellTradePage() {
       <div className="container-site grid gap-12 py-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20 lg:py-20">
         <div className="flex flex-col items-center text-center lg:pt-4">
           <h2 className="font-display text-2xl font-bold text-ink-950">Como funciona</h2>
-          {s.provisionalSteps && <ProvisionalBadge className="mt-3" />}
           <ol className="mt-8 grid w-full gap-4">
             {s.steps.map((step, i) => (
               <li key={step.title} className="flex flex-col items-center rounded-2xl bg-ink-50 p-5 ring-1 ring-ink-100">

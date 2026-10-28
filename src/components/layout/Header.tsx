@@ -5,7 +5,6 @@ import { mainNav } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/cn'
 import { InstagramIcon } from '@/components/ui/BrandIcons'
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { Logo } from './Logo'
 
 export function Header() {
@@ -82,9 +81,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className="hidden sm:block">
-            <WhatsAppButton location="header" size="md" />
-          </div>
           <button
             ref={menuButtonRef}
             type="button"
@@ -129,8 +125,7 @@ export function Header() {
             ))}
           </ul>
         </nav>
-        <div className="container-site space-y-3 border-t border-ink-100 py-6">
-          <WhatsAppButton location="mobile_menu" size="lg" className="w-full" />
+        <div className="container-site border-t border-ink-100 py-6">
           <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2 text-sm font-medium text-ink-600">
             <InstagramIcon size={18} /> {siteConfig.social.instagramHandle}
           </a>

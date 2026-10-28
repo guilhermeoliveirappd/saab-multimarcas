@@ -14,7 +14,7 @@ export default function AdminUnavailable() {
         <h1 className="mt-6 font-display text-2xl font-bold text-ink-950">Painel administrativo indisponível</h1>
         <p className="mt-3 leading-relaxed text-ink-500">
           O gerenciador de estoque depende do backend (Supabase), que ainda não foi configurado neste ambiente. Nenhuma alteração pode ser feita
-          até a configuração — o catálogo público está exibindo apenas veículos de demonstração.
+          até a configuração.
         </p>
         <div className="mt-6 rounded-2xl bg-ink-50 p-5 text-left text-sm text-ink-600 ring-1 ring-ink-100">
           <p className="flex items-center gap-2 font-semibold text-ink-900">

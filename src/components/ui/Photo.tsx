@@ -34,7 +34,7 @@ export function PhotoCredit({ image, className = '' }: { image: VehicleImage; cl
   if (!c) return null
   return (
     <p className={`text-[11px] leading-snug ${className}`}>
-      Foto ilustrativa ·{' '}
+      Foto:{' '}
       <a href={c.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-80">
         {c.author ?? 'Wikimedia Commons'}
       </a>

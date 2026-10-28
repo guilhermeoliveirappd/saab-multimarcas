@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/inter/wght.css';
-@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource-variable/plus-jakarta-sans/wght.css';
+@import '@fontsource-variable/dm-sans/wght.css';
 
 /*
  * ─── Design system SAAB Multimarcas ─────────────────────────────────────────
@@ -13,7 +13,10 @@
   --color-brand: #1254b8;
   --color-brand-hover: #0e4496;
   --color-brand-soft: #e8f0fc;
-  --color-brand-light: #6b9de6;
+  --color-brand-light: #8fb6f0;
+  /* Azul profundo (rodapé e superfícies escuras da marca) */
+  --color-brand-deep: #0a2350;
+  --color-brand-night: #071a3d;
 
   --color-accent: var(--color-brand);
   --color-accent-hover: var(--color-brand-hover);
@@ -36,8 +39,9 @@
   --color-success: #15803d;
   --color-warning: #b45309;
 
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Archivo Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  /* Tipografia: Plus Jakarta Sans (títulos) + DM Sans (textos) */
+  --font-sans: 'DM Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Plus Jakarta Sans Variable', 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
 
   --radius-card: 1.25rem;
   --shadow-card: 0 1px 2px rgb(10 10 11 / 0.04), 0 8px 24px -12px rgb(10 10 11 / 0.12);
@@ -66,7 +70,8 @@
     scroll-padding-top: 6rem;
   }
   body {
-    @apply bg-white font-sans text-ink-900;
+    @apply bg-white font-sans text-[15px] text-ink-900 sm:text-base;
+    letter-spacing: -0.005em;
   }
   :focus-visible {
     outline: 2px solid var(--color-accent);
@@ -82,11 +87,10 @@
 @layer components {
   .font-display {
     font-family: var(--font-display);
-    font-stretch: 112%;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.028em;
   }
   .eyebrow {
-    @apply text-xs font-semibold tracking-[0.18em] uppercase;
+    @apply text-[11px] font-semibold tracking-[0.16em] uppercase;
   }
   .container-site {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;

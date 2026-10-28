@@ -3,9 +3,9 @@
 Website institucional + catálogo digital de veículos da **SAAB Multimarcas** (Presidente Prudente/SP).
 Desenvolvido por **NESX Performance & Growth**.
 
-> ⚠️ **Catálogo de exemplo.** Sem Supabase configurado, o catálogo exibe **12 veículos de exemplo** (faixa no topo e selo
-> "Exemplo"), com fotos reais de referência dos modelos — **não são carros do estoque da SAAB**. Institucional, endereço,
-> telefone, horários e logotipo **ainda não foram validados** pelo cliente.
+> 🔒 **Documentação interna — dados provisórios.** A interface não exibe avisos de demonstração (V3), mas o conteúdo
+> ainda é provisório: sem Supabase, o catálogo mostra **12 veículos fictícios** com fotos de referência dos modelos
+> (Wikimedia Commons), e não o estoque da SAAB. Use somente em **pré-visualização privada** (ver "Pré-visualização privada").
 
 ## Stack
 
@@ -118,5 +118,30 @@ Só carregam com `VITE_GTM_ID` ou `VITE_GA4_ID` **e** consentimento do visitante
 
 ## Diretrizes de layout (V2)
 
-Textos centralizados e cada bloco com **no máximo duas linhas** (desktop e mobile). Mantenha os textos de
+Tipografia: **Plus Jakarta Sans** (títulos) + **DM Sans** (textos), auto-hospedadas via Fontsource. Textos centralizados e cada bloco com **no máximo duas linhas** (desktop e mobile). Mantenha os textos de
 `src/config/content.ts` curtos. Exceções intencionais: a Política de Privacidade (texto jurídico) e o painel administrativo.
+
+## Pré-visualização privada
+
+Enquanto houver veículos fictícios, o site não deve ser público nem indexado:
+
+- `VITE_ALLOW_INDEXING` diferente de `true` ⇒ `noindex` em todas as páginas e `robots.txt` bloqueando rastreadores (padrão).
+- Na Vercel, ative **Settings → Deployment Protection → Vercel Authentication** (ou *Password Protection*) para exigir
+  login/senha de quem acessar o link durante a apresentação.
+
+## Pendências do cliente (interno)
+
+Itens provisórios — nada disso aparece como aviso na interface; blocos sem dado confirmado ficam ocultos:
+
+| Item | Onde preencher | Situação na interface |
+| --- | --- | --- |
+| Estoque real (veículos e fotos) | Painel `/admin` (Supabase) | 12 veículos fictícios com fotos de referência |
+| WhatsApp | `VITE_WHATSAPP_NUMBER` / `site.ts` | Link abre o WhatsApp sem destinatário fixo |
+| Endereço, mapa, horários, telefone, e-mail | `src/config/site.ts` | Exibe só "Presidente Prudente · SP"; demais ocultos |
+| Logotipo oficial e tom exato de azul | `site.ts` (`logo`) e `index.css` (`--color-brand*`) | Logotipo tipográfico + `#1254B8` |
+| História e propósito | `content.aboutPage.history/purpose` | Blocos ocultos |
+| Diferenciais (página Sobre) | `content.differentials` | Textos genéricos a validar |
+| Fotos da fachada/equipe | `content.about.image`, `content.aboutPage.gallery` | Painel com a marca |
+| Créditos de 6 fotos (autor/licença) | `src/data/stock-photos.ts` | Link para a origem no Commons |
+| Revisão jurídica da Política de Privacidade | `src/pages/PrivacyPage.tsx` | Minuta |
+| Avaliações reais | `src/data/reviews.ts` | Seção oculta |

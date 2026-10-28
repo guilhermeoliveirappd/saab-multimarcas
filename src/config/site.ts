@@ -73,12 +73,6 @@ export const siteConfig = {
     financing: false,
   } satisfies ServiceFlags,
 
-  /**
-   * Quando `true`, blocos com conteúdo provisório recebem um selo
-   * "Conteúdo provisório". Desligue somente quando todo o texto for validado.
-   */
-  showProvisionalMarkers: true,
-
   agency: {
     name: 'NESX Performance & Growth',
     url: null as string | null,

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button'
 
 /** Busca rápida da home: opções derivadas do estoque, envia para /estoque com filtros. */
 export function QuickSearch({ className }: { className?: string }) {
-  const { vehicles, status, source } = useVehicles()
+  const { vehicles, status } = useVehicles()
   const navigate = useNavigate()
   const id = useId()
   const [brand, setBrand] = useState('')
@@ -39,11 +39,6 @@ export function QuickSearch({ className }: { className?: string }) {
     >
       <div className="mb-5 flex flex-col items-center gap-1 text-center">
         <h2 className="font-display text-lg font-bold text-ink-950">{content.quickSearch.title}</h2>
-        {!loading && (
-          <p className="text-xs text-ink-400">
-            {listed.length} {source === 'demo' ? 'modelos de exemplo' : 'veículos no estoque'}
-          </p>
-        )}
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
         <div>
