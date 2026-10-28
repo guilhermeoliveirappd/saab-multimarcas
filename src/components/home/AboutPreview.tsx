@@ -38,7 +38,6 @@ export function AboutPreview() {
         <SectionHeading
           id="about-title"
           title={a.title}
-          description={a.summary}
           action={
             <ButtonLink to="/sobre" variant="primary" size="lg">
               {a.cta} <ArrowRight size={18} aria-hidden="true" />

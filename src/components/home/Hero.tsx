@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { content } from '@/config/content'
 import { ButtonLink } from '@/components/ui/Button'
@@ -6,11 +7,14 @@ import { QuickSearch } from '@/components/vehicles/QuickSearch'
 
 export function Hero() {
   const { hero } = content
+  // Crédito acompanha a foto efetivamente exibida (principal ou alternativa)
+  const [active, setActive] = useState(hero.image)
   return (
     <section aria-labelledby="hero-title" className="relative">
       <div className="relative isolate overflow-hidden bg-ink-950 pt-[72px] lg:pt-20">
         <Photo
           image={hero.image}
+          onActiveChange={(img) => setActive(img ?? { url: '' })}
           alt=""
           sizes="100vw"
           width={1920}
@@ -20,8 +24,9 @@ export function Hero() {
           className="absolute inset-0 -z-20 size-full object-cover object-center"
         />
         {/* Véus para garantir contraste do texto branco sobre qualquer foto */}
-        <div className="absolute inset-0 -z-10 bg-ink-950/60" aria-hidden="true" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(10,10,11,.55)_0%,rgba(10,10,11,.15)_70%)]" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-ink-950/45" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_55%_at_center,rgba(10,10,11,.6)_0%,rgba(10,10,11,0)_100%)]" aria-hidden="true" />
+        <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-ink-950/70 to-transparent" aria-hidden="true" />
         <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
 
         <div className="container-site flex min-h-[560px] flex-col items-center justify-center pt-12 pb-36 text-center sm:min-h-[620px] lg:min-h-[700px] lg:pb-44">
@@ -51,7 +56,7 @@ export function Hero() {
             </ButtonLink>
           </div>
         </div>
-        <PhotoCredit image={hero.image} className="absolute right-4 bottom-28 max-w-[60%] text-right text-white/55 sm:right-6 lg:bottom-32" />
+        <PhotoCredit image={active} className="absolute right-4 bottom-28 max-w-[60%] text-right text-white/55 sm:right-6 lg:bottom-32" />
       </div>
 
       <div className="container-site relative z-10 -mt-24 lg:-mt-28">

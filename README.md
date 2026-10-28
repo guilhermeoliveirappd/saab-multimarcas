@@ -107,14 +107,24 @@ Só carregam com `VITE_GTM_ID` ou `VITE_GA4_ID` **e** consentimento do visitante
 
 ## Imagens
 
-- **Fotos de referência (V2):** cada modelo de exemplo e o banner usam uma fotografia real do **Wikimedia Commons**
-  (licenças CC0 / CC BY / CC BY-SA), carregada pelo navegador do visitante via `Special:FilePath` com `srcset` responsivo.
-  Créditos exibidos na galeria, no banner e na página `/creditos-de-imagens` (exigência das licenças). Confira autor e
-  licença em cada página de origem antes da publicação definitiva.
-- **Fallback:** se uma foto remota falhar, o componente `Photo` troca automaticamente pela ilustração local
-  (`public/demo/`), então nenhuma imagem aparece quebrada.
-- Substitua pelas fotos oficiais: estoque via painel administrativo; banner em `content.hero.image`; fachada em
-  `content.about.image`; galeria institucional em `content.aboutPage.gallery`.
+Fontes (todas carregadas pelo navegador do visitante, com `srcset` responsivo e fallback):
+
+| Uso | Fonte | Licença | Crédito |
+| --- | --- | --- | --- |
+| Banner (principal) | [Pexels 10945892](https://www.pexels.com/photo/a-parked-blue-bmw-car-10945892/) — BMW azul | Licença Pexels (uso livre, crédito opcional) | Alex Urezkov |
+| Banner (alternativa 1) | [Pexels 17539749](https://www.pexels.com/photo/blue-mercedes-benz-car-parked-on-a-rural-road-17539749/) — Mercedes-AMG azul | Licença Pexels | Pexels |
+| Banner (alternativa 2) | Wikimedia Commons — BMW G20 Portimao Blue (1) | ver página | Damian B Oh |
+| Galerias dos veículos | Wikimedia Commons (`src/data/stock-photos.ts`) | CC0 / CC BY / CC BY-SA | exibido na galeria e em `/creditos-de-imagens` |
+
+- **Galerias:** somente fotos do **mesmo carro** (mesma sessão/vídeo, numeração sequencial). Conjuntos usados: BMW 320i
+  (5 fotos), HB20 (4: frente, frente, traseira, interior), Tracker (3: frente, traseira, interior), Nivus (3: frente,
+  frente, interior), Civic (2), Toro (2: frente, traseira), T-Cross (2). Os demais modelos têm 1 foto — sem repetição
+  artificial. Versão e ano dos veículos de exemplo foram alinhados às fotos.
+- **Fallback:** o componente `Photo` tenta a foto, depois as alternativas e por fim a ilustração local (`public/demo/`).
+- **Ampliação:** a galeria tem miniaturas, setas, teclado, gesto de deslizar e tela cheia (diálogo nativo).
+- **Pendente (interno):** confirmar visualmente as cores dos conjuntos sem cor identificada (HB20, Tracker, Nivus,
+  T-Cross, Toro, Corolla, Hilux, Creta, Argo) e autor/licença das fotos marcadas como "ver página".
+- Substitua pelas fotos oficiais: estoque via painel administrativo; banner em `content.hero.image`.
 
 ## Diretrizes de layout (V2)
 

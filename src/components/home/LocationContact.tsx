@@ -1,4 +1,4 @@
-import { Clock, MapPin, MapPinned, Phone } from 'lucide-react'
+import { Clock, MapPin, MapPinned, Navigation, Phone } from 'lucide-react'
 import { env } from '@/config/env'
 import { siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
@@ -7,7 +7,6 @@ import { InstagramIcon, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { ButtonAnchor } from '@/components/ui/Button'
 import { content } from '@/config/content'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 
 function formatWhatsApp(digits: string): string {
   const m = digits.match(/^55(\d{2})(\d{4,5})(\d{4})$/)
@@ -131,33 +130,63 @@ export function LocationMap({ className = '' }: { className?: string }) {
   )
 }
 
+/**
+ * Bloco de localização (home e "Onde estamos"): só dados de localização.
+ * Com endereço confirmado: endereço, horário, botão de rota e mapa.
+ * Sem confirmação: apenas o painel com a cidade — nada inventado.
+ */
+export function LocationBlock({ trackingLocation }: { trackingLocation: string }) {
+  const { address, businessHours } = siteConfig
+  if (!address.confirmed) return <LocationMap className="mx-auto min-h-[280px] max-w-4xl sm:min-h-[320px]" />
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-[1fr_1.3fr]">
+      <div className="flex flex-col items-center justify-center rounded-[var(--radius-card)] bg-white p-8 text-center ring-1 ring-ink-100">
+        <span className="grid size-12 place-items-center rounded-xl bg-accent-soft text-accent">
+          <MapPin size={22} aria-hidden="true" />
+        </span>
+        <p className="mt-4 text-lg font-semibold text-balance text-ink-950">
+          {address.street}
+          {address.district && `, ${address.district}`}
+        </p>
+        <p className="mt-1 text-ink-500">
+          {siteConfig.city}/{siteConfig.state}
+          {address.zip && ` · CEP ${address.zip}`}
+        </p>
+        {businessHours && (
+          <ul className="mt-4 space-y-1 text-sm text-ink-600">
+            {businessHours.map((h) => (
+              <li key={h.label}>
+                {h.label}: {h.value}
+              </li>
+            ))}
+          </ul>
+        )}
+        {address.mapsLink && (
+          <ButtonAnchor
+            href={address.mapsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="primary"
+            size="lg"
+            className="mt-6"
+            onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'maps', location: trackingLocation } })}
+          >
+            <Navigation size={17} aria-hidden="true" /> Como chegar
+          </ButtonAnchor>
+        )}
+      </div>
+      <LocationMap className="min-h-[360px]" />
+    </div>
+  )
+}
+
 export function LocationContact() {
-  const { address } = siteConfig
   return (
     <section aria-labelledby="location-title" className="bg-ink-50 py-20 lg:py-28">
       <div className="container-site">
-        <SectionHeading id="location-title" title={content.location.title} description={content.location.description} className="mb-12" />
-        <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-        <div className="flex flex-col">
-          <ContactDetails />
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <WhatsAppButton location="home_location" size="lg" />
-            {address.confirmed && address.mapsLink && (
-              <ButtonAnchor
-                href={address.mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="outline"
-                size="lg"
-                onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'maps', location: 'home_location' } })}
-              >
-                Como chegar
-              </ButtonAnchor>
-            )}
-          </div>
-        </div>
-        <LocationMap className="min-h-[360px] lg:min-h-full" />
-        </div>
+        <SectionHeading id="location-title" title={content.location.title} className="mb-12" />
+        <LocationBlock trackingLocation="home_location" />
       </div>
     </section>
   )

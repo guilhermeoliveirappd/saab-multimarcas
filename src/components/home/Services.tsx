@@ -29,7 +29,7 @@ export function Services() {
   return (
     <section aria-labelledby="services-title" className="bg-ink-50 py-20 lg:py-28">
       <div className="container-site">
-        <SectionHeading id="services-title" title={s.title} description={s.description} className="mb-14" />
+        <SectionHeading id="services-title" title={s.title} className="mb-12" />
         <ul className={`mx-auto grid max-w-md gap-6 lg:max-w-none ${cards.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
           {cards.map(({ key, icon: Icon, title, text, cta, to, href }) => {
             const inner = (

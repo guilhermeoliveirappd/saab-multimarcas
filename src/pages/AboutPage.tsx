@@ -1,11 +1,9 @@
-import { ArrowRight } from 'lucide-react'
 import { content } from '@/config/content'
 import { useSeo } from '@/lib/seo'
 import { STATIC_PAGES } from '@/lib/seo-meta'
 import { BrandPanel } from '@/components/home/AboutPreview'
 import { Differentials } from '@/components/home/Differentials'
-import { ContactDetails, LocationMap } from '@/components/home/LocationContact'
-import { ButtonLink } from '@/components/ui/Button'
+import { LocationBlock } from '@/components/home/LocationContact'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
@@ -41,15 +39,7 @@ export default function AboutPage() {
 
       <section aria-labelledby="about-location" className="container-site py-16 lg:py-24">
         <SectionHeading id="about-location" title="Onde estamos" className="mb-10" />
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="flex flex-col items-center">
-            <ContactDetails />
-            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-6">
-              Conheça nosso estoque <ArrowRight size={18} aria-hidden="true" />
-            </ButtonLink>
-          </div>
-          <LocationMap className="min-h-[360px]" />
-        </div>
+        <LocationBlock trackingLocation="about_location" />
       </section>
     </>
   )

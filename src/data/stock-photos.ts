@@ -1,13 +1,17 @@
 import type { ImageCredit, VehicleImage } from '../types/vehicle'
 
 /**
- * Fotografias reais de referência dos modelos de EXEMPLO, hospedadas no
- * Wikimedia Commons sob licenças livres (CC0 / CC BY / CC BY-SA). Não são
- * fotos do estoque da SAAB: servem apenas para ilustrar o modelo.
+ * Fotografias reais de terceiros usadas nos veículos de EXEMPLO e no banner.
+ * (Documentação interna: não são fotos do estoque da SAAB.)
  *
- * Os créditos (autor + licença + link) são exibidos no site, como exigem as
- * licenças. Antes de usar em produção, confira cada página de origem.
- * Substitua por fotos oficiais do estoque assim que disponíveis.
+ * Fontes e licenças:
+ * - Wikimedia Commons (CC0 / CC BY / CC BY-SA): crédito obrigatório — exibido
+ *   na galeria e em /creditos-de-imagens.
+ * - Pexels (Licença Pexels: uso livre, crédito opcional — mantido por cortesia).
+ *
+ * Regra das galerias: cada galeria usa SOMENTE fotos do mesmo carro (mesma
+ * sessão/vídeo de origem, numeração sequencial), nunca de carros diferentes.
+ * Modelos sem um conjunto confiável ficam com uma única foto.
  */
 
 const COMMONS_WIDTHS = [500, 960, 1280, 1920] as const
@@ -35,32 +39,104 @@ export function commonsImage(
   }
 }
 
-interface PhotoRef {
-  file: string
+const PEXELS_WIDTHS = [960, 1280, 1920, 2560] as const
+
+export const pexelsUrl = (id: number, width: number): string =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${width}`
+
+export function pexelsImage(id: number, slug: string, author: string | null, alt: string): VehicleImage {
+  return {
+    url: pexelsUrl(id, 1920),
+    srcSet: PEXELS_WIDTHS.map((w) => `${pexelsUrl(id, w)} ${w}w`).join(', '),
+    alt,
+    credit: { author: author ?? 'Pexels', license: 'Licença Pexels', sourceUrl: `https://www.pexels.com/photo/${slug}-${id}/` },
+  }
+}
+
+export interface PhotoSet {
+  /** Arquivos do Commons do MESMO carro, na ordem da galeria (capa primeiro) */
+  files: string[]
   author: string | null
   license: string | null
 }
 
-/** Uma foto de referência por modelo de exemplo (chave = slug do veículo). */
-export const STOCK_PHOTOS: Record<string, PhotoRef> = {
-  'honda-civic-exl-2021': { file: 'Honda_Civic_(2021)_sedan_Sport_DSC_7057.jpg', author: null, license: 'CC BY-SA 4.0' },
-  'toyota-corolla-xei-2022': { file: '2020_Toyota_Corolla_SE,_front_2.29.20.jpg', author: 'Kevauto', license: 'CC BY-SA 4.0' },
-  'jeep-compass-longitude-2021': { file: '2021_Jeep_Compass_Limited_4WD_in_Billet_Silver_Metallic,_front_left.jpg', author: null, license: null },
-  'volkswagen-t-cross-highline-2023': { file: 'Volkswagen_T-Cross_(2023)_1X7A2499.jpg', author: null, license: null },
-  'hyundai-hb20-platinum-2023': { file: '2023_Hyundai_HB20_1.0_T-GDi_Platinum_Plus_(Brazil)_front_view.png', author: 'Autosdeprimera', license: 'CC BY' },
-  'chevrolet-onix-premier-2022': { file: '2021_Chevrolet_Onix_1.0T_Premier_(Chile)_front_view.jpg', author: null, license: null },
-  'toyota-hilux-srv-2020': { file: 'Toyota_Hilux_Rogue_2nd_facelift_2020_front.jpg', author: 'EurovisionNim', license: null },
-  'fiat-toro-volcano-2022': { file: 'Fiat_Toro_Volcano_front.jpg', author: 'Diego HC', license: 'CC0 1.0' },
-  'volkswagen-nivus-highline-2022': { file: 'Volkswagen_Nivus_Brazil_front.jpg', author: 'Mateusmatsuda', license: 'CC BY-SA 4.0' },
-  'hyundai-creta-limited-2023': { file: '2022_Hyundai_Creta_1.6_Plus_(Chile)_front_view.jpg', author: null, license: 'CC BY-SA 2.0' },
-  'bmw-320i-m-sport-2020': { file: 'BMW_320i_M_Sport_(G20)_front.jpg', author: 'Tokumeigakarinoaoshima', license: 'CC BY-SA 4.0' },
-  'fiat-argo-drive-2021': { file: 'Fiat_Argo_test_drive_car_in_Punta_del_Este_(front).jpg', author: 'NaBUru38', license: 'CC BY-SA 4.0' },
-  'chevrolet-tracker-premier-2022': { file: 'Chevrolet_Tracker_2021_(front).png', author: 'Autosdeprimera', license: 'CC BY' },
+/** Galerias por veículo de exemplo (chave = slug). */
+export const STOCK_GALLERIES: Record<string, PhotoSet> = {
+  // Mesmo carro azul, numeração sequencial da mesma sessão (Damian B Oh)
+  'bmw-320i-m-sport-2023': {
+    files: [
+      'BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(1).jpg',
+      'BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(4).jpg',
+      'BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(10).jpg',
+      'BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(12).jpg',
+      'BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(16).jpg',
+    ],
+    author: 'Damian B Oh',
+    license: null,
+  },
+  // Mesmo vídeo de origem (Autosdeprimera): frente, frente, traseira e interior
+  'hyundai-hb20-platinum-2023': {
+    files: [
+      '2023_Hyundai_HB20_1.0_T-GDi_Platinum_Plus_(Brazil)_front_view.png',
+      '2023_Hyundai_HB20_1.0_T-GDi_Platinum_Plus_(Brazil)_front_view_02.png',
+      '2023_Hyundai_HB20_1.0_T-GDi_Platinum_Plus_(Brazil)_rear_view.png',
+      '2023_Hyundai_HB20_1.0_T-GDi_Platinum_Plus_(Brazil)_interior_01.png',
+    ],
+    author: 'Autosdeprimera',
+    license: 'CC BY',
+  },
+  // Mesmo vídeo de origem (Autosdeprimera): frente, traseira e interior
+  'chevrolet-tracker-premier-2021': {
+    files: ['Chevrolet_Tracker_2021_(front).png', 'Chevrolet_Tracker_2021_(rear).png', 'Chevrolet_Tracker_2021_(interior).png'],
+    author: 'Autosdeprimera',
+    license: 'CC BY 3.0',
+  },
+  // Mesmo vídeo de origem (Garagem do Jabulas): frente e interior
+  'volkswagen-nivus-highline-2022': {
+    files: [
+      'Volkswagen_Nivus_Highline_(Brazil)_front_view_01.png',
+      'Volkswagen_Nivus_Highline_(Brazil)_front_view_03.png',
+      'Volkswagen_Nivus_Highline_(Brazil)_interior.png',
+    ],
+    author: 'Garagem do Jabulas',
+    license: 'CC BY 3.0',
+  },
+  // Mesmo carro azul, mesma data e local (Stuttgart-Vaihingen)
+  'honda-civic-sport-2021': {
+    files: ['Honda_Civic_(2021)_sedan_Sport_DSC_7057.jpg', 'Honda_Civic_(2021)_sedan_Sport_DSC_7054.jpg'],
+    author: null,
+    license: 'CC BY-SA 4.0',
+  },
+  // Mesmo carro, mesma data e local (Punta del Este) — NaBUru38
+  'fiat-toro-freedom-2022': {
+    files: ['Fiat_Toro_2022_1.8_Freedom_in_Punta_del_Este_(front).jpg', 'Fiat_Toro_2022_1.8_Freedom_in_Punta_del_Este_(rear).jpg'],
+    author: 'NaBUru38',
+    license: 'CC BY-SA 4.0',
+  },
+  // Quadros consecutivos da mesma sessão (Alexander-93)
+  'volkswagen-t-cross-highline-2023': {
+    files: ['Volkswagen_T-Cross_(2023)_1X7A2499.jpg', 'Volkswagen_T-Cross_(2023)_1X7A2500.jpg'],
+    author: 'Alexander-93',
+    license: null,
+  },
+  // Modelos com uma única foto confiável (sem repetição artificial)
+  'toyota-corolla-xei-2022': { files: ['2020_Toyota_Corolla_SE,_front_2.29.20.jpg'], author: 'Kevauto', license: 'CC BY-SA 4.0' },
+  'jeep-compass-longitude-2021': { files: ['2021_Jeep_Compass_Limited_4WD_in_Billet_Silver_Metallic,_front_left.jpg'], author: null, license: null },
+  'chevrolet-onix-premier-2022': { files: ['2021_Chevrolet_Onix_1.0T_Premier_(Chile)_front_view.jpg'], author: null, license: null },
+  'toyota-hilux-srv-2020': { files: ['Toyota_Hilux_Rogue_2nd_facelift_2020_front.jpg'], author: 'EurovisionNim', license: null },
+  'hyundai-creta-limited-2023': { files: ['2022_Hyundai_Creta_1.6_Plus_(Chile)_front_view.jpg'], author: null, license: 'CC BY-SA 2.0' },
+  'fiat-argo-drive-2021': { files: ['Fiat_Argo_test_drive_car_in_Punta_del_Este_(front).jpg'], author: 'NaBUru38', license: 'CC BY-SA 4.0' },
 }
 
-/** Fotografia do banner principal (BMW Série 3 azul). */
-export const HERO_PHOTO = commonsImage(
-  'BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(1).jpg',
-  { author: null, license: null },
-  { alt: 'BMW Série 3 azul', fallbackUrl: '/demo/hero-car.svg', maxWidth: 1920 },
-)
+/**
+ * Banner principal: BMW azul em garagem (Pexels). Se não carregar, tenta as
+ * alternativas na ordem — o banner nunca fica sem fotografia real.
+ */
+export const HERO_PHOTO: VehicleImage = {
+  ...pexelsImage(10945892, 'a-parked-blue-bmw-car', 'Alex Urezkov', 'BMW azul estacionado em garagem'),
+  alternates: [
+    pexelsImage(17539749, 'blue-mercedes-benz-car-parked-on-a-rural-road', null, 'Mercedes-AMG azul em estrada'),
+    commonsImage('BMW_G20_LCI_320i_M_Sport_M_Portimao_Blue_Metallic_(1).jpg', { author: 'Damian B Oh', license: null }, { alt: 'BMW Série 3 azul', maxWidth: 1920 }),
+  ],
+  fallbackUrl: '/demo/hero-car.svg',
+}

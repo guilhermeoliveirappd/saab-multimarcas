@@ -16,12 +16,12 @@ describe('whatsapp links', () => {
   })
 
   it('identifies the vehicle in the interest message', () => {
-    const civic = demoVehicles.find((v) => v.slug === 'honda-civic-exl-2021')!
-    const msg = vehicleInterestMessage(civic, 'https://site/veiculos/honda-civic-exl-2021')
+    const civic = demoVehicles.find((v) => v.slug === 'honda-civic-sport-2021')!
+    const msg = vehicleInterestMessage(civic, 'https://site/veiculos/honda-civic-sport-2021')
     expect(msg).toContain('site da SAAB Multimarcas')
-    expect(msg).toContain('Honda / Civic / EXL 2.0 CVT / 2020/2021')
+    expect(msg).toContain('Honda / Civic / Sport 2.0 CVT / 2020/2021')
     expect(msg).toContain('Ele ainda está disponível?')
-    expect(msg).toContain('https://site/veiculos/honda-civic-exl-2021')
+    expect(msg).toContain('https://site/veiculos/honda-civic-sport-2021')
   })
 
   it('structures the trade-in message with the filled fields', () => {

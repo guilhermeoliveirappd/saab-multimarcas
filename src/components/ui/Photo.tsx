@@ -4,23 +4,40 @@ import type { VehicleImage } from '@/types/vehicle'
 type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'srcSet' | 'alt'> & {
   image: VehicleImage
   alt?: string
+  /** Avisado quando a imagem exibida muda (ex.: alternativa assumiu após erro) */
+  onActiveChange?: (active: VehicleImage | null) => void
 }
 
+/** Sequência de fontes: foto principal → alternativas → imagem local. */
+const sourcesOf = (image: VehicleImage): VehicleImage[] => [
+  image,
+  ...(image.alternates ?? []),
+  ...(image.fallbackUrl ? [{ url: image.fallbackUrl, alt: image.alt }] : []),
+]
+
 /**
- * Imagem com fallback: se a foto remota falhar (rede, link removido), exibe a
- * imagem local `fallbackUrl` — o site nunca mostra imagem quebrada.
+ * Imagem resiliente: se a foto remota falhar (rede, link removido), tenta as
+ * alternativas e por fim a imagem local — o site nunca mostra imagem quebrada.
  */
-export function Photo({ image, alt, onError, ...props }: Props) {
-  const [failed, setFailed] = useState<string | null>(null)
-  const useFallback = failed === image.url && Boolean(image.fallbackUrl)
+export function Photo({ image, alt, onError, onActiveChange, ...props }: Props) {
+  const sources = sourcesOf(image)
+  const [failure, setFailure] = useState<{ url: string; index: number }>({ url: image.url, index: 0 })
+  // Reinicia a sequência quando a imagem muda (ex.: navegação na galeria)
+  const index = failure.url === image.url ? failure.index : 0
+  const current = sources[Math.min(index, sources.length - 1)]
+
   return (
     <img
-      key={useFallback ? 'fallback' : image.url}
-      src={useFallback ? image.fallbackUrl : image.url}
-      srcSet={useFallback ? undefined : image.srcSet}
+      key={current.url}
+      src={current.url}
+      srcSet={current.srcSet}
       alt={alt ?? image.alt ?? ''}
       onError={(e) => {
-        if (!useFallback && image.fallbackUrl) setFailed(image.url)
+        if (index < sources.length - 1) {
+          const next = index + 1
+          setFailure({ url: image.url, index: next })
+          onActiveChange?.(sources[next].credit ? sources[next] : null)
+        }
         onError?.(e)
       }}
       {...props}
@@ -29,8 +46,8 @@ export function Photo({ image, alt, onError, ...props }: Props) {
 }
 
 /** Crédito curto exigido pela licença (autor · licença · link para a origem). */
-export function PhotoCredit({ image, className = '' }: { image: VehicleImage; className?: string }) {
-  const c = image.credit
+export function PhotoCredit({ image, className = '' }: { image: VehicleImage | null; className?: string }) {
+  const c = image?.credit
   if (!c) return null
   return (
     <p className={`text-[11px] leading-snug ${className}`}>

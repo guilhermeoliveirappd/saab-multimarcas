@@ -12,6 +12,7 @@ export default function ImageCreditsPage() {
   const { vehicles } = useVehicles()
   const items: { label: string; image: VehicleImage }[] = [
     { label: 'Banner principal', image: content.hero.image },
+    ...(content.hero.image.alternates ?? []).map((image) => ({ label: 'Banner principal (alternativa)', image })),
     ...vehicles.flatMap((v) => v.images.map((image) => ({ label: `${v.brand} ${v.model}`, image }))),
   ].filter((i) => i.image.credit)
 

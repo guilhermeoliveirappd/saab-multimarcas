@@ -21,7 +21,6 @@ export function FeaturedVehicles() {
         <SectionHeading
           id="featured-title"
           title={copy.title}
-          description={copy.description}
           action={
             <ButtonLink to="/estoque" variant="outline">
               {copy.cta} <ArrowRight size={16} aria-hidden="true" />

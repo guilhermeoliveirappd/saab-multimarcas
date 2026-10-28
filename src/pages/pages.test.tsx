@@ -32,12 +32,12 @@ describe('InventoryPage', () => {
 
 describe('VehicleDetailPage', () => {
   it('renders the vehicle with a contextual WhatsApp link', async () => {
-    renderRoute(<VehicleDetailPage />, { path: '/veiculos/:slug', route: '/veiculos/honda-civic-exl-2021' })
+    renderRoute(<VehicleDetailPage />, { path: '/veiculos/:slug', route: '/veiculos/honda-civic-sport-2021' })
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Civic')
     const links = screen.getAllByRole('link', { name: /Tenho interesse/ })
     const href = links[0].getAttribute('href')!
     expect(href).toMatch(/^https:\/\/wa\.me\//)
-    expect(decodeURIComponent(href)).toContain('Honda / Civic / EXL 2.0 CVT / 2020/2021')
+    expect(decodeURIComponent(href)).toContain('Honda / Civic / Sport 2.0 CVT / 2020/2021')
     const related = screen.getByRole('heading', { name: 'Veículos relacionados' }).closest('section')!
     expect(within(related).getAllByRole('article')).toHaveLength(3)
   })

@@ -1,5 +1,5 @@
 import type { BodyType, Vehicle } from '../types/vehicle'
-import { STOCK_PHOTOS, commonsImage } from './stock-photos'
+import { STOCK_GALLERIES, commonsImage } from './stock-photos'
 
 /**
  * ⚠️ VEÍCULOS DE EXEMPLO — NÃO SÃO O ESTOQUE DA SAAB.
@@ -30,16 +30,16 @@ interface DemoSeed {
 
 const seeds: DemoSeed[] = [
   {
-    slug: 'honda-civic-exl-2021',
+    slug: 'honda-civic-sport-2021',
     brand: 'Honda',
     model: 'Civic',
-    version: 'EXL 2.0 CVT',
+    version: 'Sport 2.0 CVT',
     yearManufacture: 2020,
     yearModel: 2021,
     mileage: 38500,
     transmission: 'cvt',
     fuel: 'flex',
-    color: 'Cinza',
+    color: 'Azul',
     bodyType: 'sedan',
     price: 129900,
     options: ['Ar-condicionado digital', 'Bancos em couro', 'Central multimídia', 'Câmera de ré', 'Piloto automático', 'Rodas de liga leve'],
@@ -71,7 +71,7 @@ const seeds: DemoSeed[] = [
     mileage: 46200,
     transmission: 'automatico',
     fuel: 'flex',
-    color: 'Preto',
+    color: 'Prata',
     bodyType: 'suv',
     price: 134500,
     options: ['Teto solar', 'Bancos em couro', 'Partida sem chave', 'Central multimídia', 'Câmera de ré', 'Rodas de liga leve'],
@@ -119,7 +119,7 @@ const seeds: DemoSeed[] = [
     mileage: 33900,
     transmission: 'automatico',
     fuel: 'flex',
-    color: 'Prata',
+    color: 'Azul',
     bodyType: 'hatch',
     price: 86500,
     options: ['Wi-Fi nativo', 'Central multimídia', 'Ar-condicionado digital', 'Sensor de estacionamento'],
@@ -141,19 +141,19 @@ const seeds: DemoSeed[] = [
     featured: true,
   },
   {
-    slug: 'fiat-toro-volcano-2022',
+    slug: 'fiat-toro-freedom-2022',
     brand: 'Fiat',
     model: 'Toro',
-    version: 'Volcano 2.0 4x4 Diesel',
+    version: 'Freedom 1.8 AT6',
     yearManufacture: 2021,
     yearModel: 2022,
     mileage: 54300,
     transmission: 'automatico',
-    fuel: 'diesel',
+    fuel: 'flex',
     color: 'Branco',
     bodyType: 'picape',
     price: 154900,
-    options: ['Tração 4x4', 'Central multimídia', 'Bancos em couro', 'Sensor de estacionamento'],
+    options: ['Central multimídia', 'Sensor de estacionamento', 'Câmera de ré', 'Controle de estabilidade'],
   },
   {
     slug: 'volkswagen-nivus-highline-2022',
@@ -187,13 +187,13 @@ const seeds: DemoSeed[] = [
     status: 'reservado',
   },
   {
-    slug: 'bmw-320i-m-sport-2020',
+    slug: 'bmw-320i-m-sport-2023',
     brand: 'BMW',
     model: '320i',
     version: 'M Sport 2.0 Turbo',
-    yearManufacture: 2019,
-    yearModel: 2020,
-    mileage: 61200,
+    yearManufacture: 2023,
+    yearModel: 2023,
+    mileage: 18200,
     transmission: 'automatico',
     fuel: 'flex',
     color: 'Azul',
@@ -217,12 +217,12 @@ const seeds: DemoSeed[] = [
     options: ['Central multimídia', 'Ar-condicionado', 'Direção elétrica'],
   },
   {
-    slug: 'chevrolet-tracker-premier-2022',
+    slug: 'chevrolet-tracker-premier-2021',
     brand: 'Chevrolet',
     model: 'Tracker',
     version: 'Premier 1.2 Turbo',
-    yearManufacture: 2022,
-    yearModel: 2022,
+    yearManufacture: 2020,
+    yearModel: 2021,
     mileage: 31000,
     transmission: 'automatico',
     fuel: 'flex',
@@ -234,11 +234,16 @@ const seeds: DemoSeed[] = [
   },
 ]
 
-function photoFor(slug: string, name: string) {
+const VIEW_LABELS = ['foto principal', 'foto 2', 'foto 3', 'foto 4', 'foto 5']
+
+/** Galeria do veículo: só fotos do mesmo carro (ver stock-photos.ts). */
+function galleryFor(slug: string, name: string) {
   const fallbackUrl = `/demo/vehicles/${slug}-1.svg`
-  const ref = STOCK_PHOTOS[slug]
-  if (!ref) return { url: fallbackUrl, alt: `Ilustração ${name}` }
-  return commonsImage(ref.file, { author: ref.author, license: ref.license }, { alt: `${name}`, fallbackUrl })
+  const set = STOCK_GALLERIES[slug]
+  if (!set) return [{ url: fallbackUrl, alt: name }]
+  return set.files.map((file, i) =>
+    commonsImage(file, { author: set.author, license: set.license }, { alt: `${name} — ${VIEW_LABELS[i] ?? `foto ${i + 1}`}`, fallbackUrl }),
+  )
 }
 
 export const demoVehicles: Vehicle[] = seeds.map((seed, index) => {
@@ -259,7 +264,7 @@ export const demoVehicles: Vehicle[] = seeds.map((seed, index) => {
     price: seed.price,
     description: `${name} ${seed.yearManufacture}/${seed.yearModel}, cor ${seed.color.toLowerCase()}, com ${seed.options.length} opcionais listados.`,
     options: seed.options,
-    images: [photoFor(seed.slug, name)],
+    images: galleryFor(seed.slug, name),
     status: seed.status ?? 'disponivel',
     featured: seed.featured ?? false,
     published: true,

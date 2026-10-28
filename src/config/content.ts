@@ -30,7 +30,6 @@ export const content = {
 
   featured: {
     title: 'Veículos em destaque',
-    description: 'Uma seleção de modelos para você conhecer.',
     cta: 'Ver estoque completo',
   },
 
@@ -48,7 +47,6 @@ export const content = {
 
   services: {
     title: 'Compre, venda ou troque',
-    description: 'Escolha o caminho ideal para o seu momento.',
     buy: {
       title: 'Comprar',
       text: 'Filtre o estoque por marca, modelo, ano e preço.',
@@ -69,7 +67,6 @@ export const content = {
   about: {
     provisional: true,
     title: 'Revenda multimarcas em Presidente Prudente',
-    summary: 'Conheça a SAAB e encontre o carro certo para o seu momento.',
     cta: 'Conheça a SAAB',
     /** Substitua por foto real da fachada ou da equipe (ex.: '/media/fachada.jpg') */
     image: null as string | null,
@@ -88,7 +85,6 @@ export const content = {
 
   location: {
     title: 'Venha conhecer a SAAB',
-    description: 'Fale com a equipe e agende sua visita.',
   },
 
   sellTrade: {

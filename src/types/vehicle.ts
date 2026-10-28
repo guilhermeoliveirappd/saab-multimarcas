@@ -23,7 +23,9 @@ export interface VehicleImage {
   alt?: string
   /** Versões responsivas (atributo srcset) */
   srcSet?: string
-  /** Imagem local exibida se `url` falhar ao carregar */
+  /** Fotos alternativas tentadas em ordem se `url` falhar (ex.: banner) */
+  alternates?: VehicleImage[]
+  /** Imagem local exibida se `url` (e alternativas) falharem ao carregar */
   fallbackUrl?: string
   credit?: ImageCredit
 }
