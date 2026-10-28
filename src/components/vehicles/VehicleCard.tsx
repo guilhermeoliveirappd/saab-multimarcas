@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
-import { ArrowUpRight, Calendar, Cog, Gauge } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import type { Vehicle } from '@/types/vehicle'
 import { TRANSMISSION_LABELS, formatMileage, formatPrice, formatYears } from '@/lib/format'
 import { cn } from '@/lib/cn'
+import { Photo } from '@/components/ui/Photo'
 import { Skeleton } from '@/components/ui/States'
 import { DemoTag, StatusBadge } from './StatusBadge'
 
@@ -14,16 +15,19 @@ interface Props {
   headingLevel?: 'h2' | 'h3'
 }
 
+const CARD_SIZES = '(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw'
+
 export function VehicleCard({ vehicle: v, priority = false, headingLevel: Heading = 'h3' }: Props) {
   const cover = v.images[0]
   const href = `/veiculos/${v.slug}`
+  const specs = [formatYears(v), formatMileage(v.mileage), TRANSMISSION_LABELS[v.transmission]]
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)] ring-1 ring-ink-100 transition-all duration-500 ease-out-soft hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]">
+    <article className="group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] bg-white text-center shadow-[var(--shadow-card)] ring-1 ring-ink-100 transition-all duration-500 ease-out-soft hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]">
       <div className="relative aspect-[16/10] overflow-hidden bg-ink-100">
         {cover ? (
-          <img
-            src={cover.url}
-            alt={cover.alt ?? `${v.brand} ${v.model}`}
+          <Photo
+            image={cover}
+            sizes={CARD_SIZES}
             width={960}
             height={600}
             loading={priority ? 'eager' : 'lazy'}
@@ -40,48 +44,33 @@ export function VehicleCard({ vehicle: v, priority = false, headingLevel: Headin
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col items-center px-5 pt-5 pb-6">
         <p className="eyebrow text-ink-400">{v.brand}</p>
-        <Heading className="mt-1.5 font-display text-xl leading-tight font-bold text-ink-950">
+        <Heading className="mt-1 font-display text-xl leading-tight font-bold text-ink-950">
           {/* Link cobre todo o card (padrão de card clicável acessível) */}
           <Link to={href} className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none">
             {v.model}
           </Link>
         </Heading>
-        <p className="mt-1 line-clamp-1 text-sm text-ink-500">{v.version}</p>
+        <p className="mt-1 text-sm text-balance text-ink-500">{v.version}</p>
 
-        <dl className="mt-5 grid grid-cols-3 gap-2 border-y border-ink-100 py-4 text-[13px] text-ink-600">
-          <div className="flex flex-col gap-1">
-            <dt className="flex items-center gap-1 text-ink-400">
-              <Calendar size={13} aria-hidden="true" /> <span>Ano</span>
-            </dt>
-            <dd className="font-semibold text-ink-900">{formatYears(v)}</dd>
-          </div>
-          <div className="flex flex-col gap-1">
-            <dt className="flex items-center gap-1 text-ink-400">
-              <Gauge size={13} aria-hidden="true" /> <span>KM</span>
-            </dt>
-            <dd className="font-semibold text-ink-900">{formatMileage(v.mileage)}</dd>
-          </div>
-          <div className="flex flex-col gap-1">
-            <dt className="flex items-center gap-1 text-ink-400">
-              <Cog size={13} aria-hidden="true" /> <span>Câmbio</span>
-            </dt>
-            <dd className="font-semibold text-ink-900">{TRANSMISSION_LABELS[v.transmission]}</dd>
-          </div>
-        </dl>
+        <ul className="mt-4 flex flex-wrap justify-center gap-1.5" aria-label="Ano, quilometragem e câmbio">
+          {specs.map((s) => (
+            <li key={s} className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold whitespace-nowrap text-ink-700 ring-1 ring-ink-100">
+              {s}
+            </li>
+          ))}
+        </ul>
 
-        <div className="mt-auto flex items-end justify-between gap-3 pt-5">
-          <div>
-            <p className="text-xs text-ink-400">Preço</p>
-            <p className={cn('font-display text-2xl font-bold tracking-tight', v.status === 'vendido' ? 'text-ink-400 line-through' : 'text-ink-950')}>
-              {formatPrice(v.price)}
-            </p>
-          </div>
-          <span className="inline-flex h-10 items-center gap-1.5 rounded-full bg-ink-950 px-4 text-sm font-semibold text-white transition-colors duration-300 group-hover:bg-accent" aria-hidden="true">
-            Ver detalhes <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-        </div>
+        <p className={cn('mt-5 font-display text-2xl font-bold tracking-tight', v.status === 'vendido' ? 'text-ink-400 line-through' : 'text-ink-950')}>
+          {formatPrice(v.price)}
+        </p>
+        <span
+          className="mt-4 inline-flex h-10 items-center gap-1.5 rounded-full bg-accent px-5 text-sm font-semibold text-white transition-colors duration-300 group-hover:bg-accent-hover"
+          aria-hidden="true"
+        >
+          Ver detalhes <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </span>
       </div>
     </article>
   )
@@ -91,11 +80,11 @@ export function VehicleCardSkeleton() {
   return (
     <div className="overflow-hidden rounded-[var(--radius-card)] bg-white ring-1 ring-ink-100" aria-hidden="true">
       <Skeleton className="aspect-[16/10] rounded-none" />
-      <div className="space-y-3 p-6">
+      <div className="flex flex-col items-center space-y-3 p-6">
         <Skeleton className="h-3 w-16" />
         <Skeleton className="h-6 w-2/3" />
         <Skeleton className="h-4 w-1/2" />
-        <Skeleton className="mt-6 h-12 w-full" />
+        <Skeleton className="mt-4 h-7 w-3/4" />
         <Skeleton className="h-8 w-1/3" />
       </div>
     </div>

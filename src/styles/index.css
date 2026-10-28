@@ -4,14 +4,22 @@
 
 /*
  * ─── Design system SAAB Multimarcas ─────────────────────────────────────────
- * Paleta provisória: preto, branco e cinzas + UMA cor de destaque.
- * Para trocar a cor de destaque, altere apenas --color-accent* abaixo.
- * (Verifique contraste do texto branco sobre o accent: mínimo 4.5:1.)
+ * Cor principal da marca: AZUL (provisório #1254B8 até receber o tom exato do
+ * logotipo oficial). Combinada com branco, preto e cinzas.
+ * Para trocar, altere apenas --color-brand* abaixo — os aliases --color-accent*
+ * apontam para elas. Contraste do branco sobre #1254B8: 7:1 (WCAG AAA).
  */
 @theme {
-  --color-accent: #c8102e;
-  --color-accent-hover: #a50d26;
-  --color-accent-soft: #fbe9ec;
+  --color-brand: #1254b8;
+  --color-brand-hover: #0e4496;
+  --color-brand-soft: #e8f0fc;
+  --color-brand-light: #6b9de6;
+
+  --color-accent: var(--color-brand);
+  --color-accent-hover: var(--color-brand-hover);
+  --color-accent-soft: var(--color-brand-soft);
+
+  --color-danger: #c42b2b;
 
   --color-ink-950: #0a0a0b;
   --color-ink-900: #111113;

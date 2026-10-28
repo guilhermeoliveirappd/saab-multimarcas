@@ -17,10 +17,14 @@ export function StatusBadge({ status, className }: { status: VehicleStatus; clas
   )
 }
 
+/** Identifica anúncios de exemplo (não fazem parte do estoque da SAAB). */
 export function DemoTag({ className }: { className?: string }) {
   return (
-    <span className={cn('inline-flex items-center rounded-full bg-amber-300 px-2.5 py-1 text-[11px] font-bold tracking-wide text-ink-950 uppercase', className)}>
-      Demonstração
+    <span
+      className={cn('inline-flex items-center rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-bold tracking-wide text-ink-950 uppercase shadow-sm', className)}
+      title="Anúncio de exemplo — não faz parte do estoque da SAAB"
+    >
+      Exemplo
     </span>
   )
 }

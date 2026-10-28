@@ -120,7 +120,7 @@ export function Header() {
                   to={item.to}
                   end={item.to === '/'}
                   className={({ isActive }) =>
-                    cn('flex items-center justify-between py-4 font-display text-2xl font-bold', isActive ? 'text-accent' : 'text-ink-950')
+                    cn('flex items-center justify-center py-4 font-display text-2xl font-bold', isActive ? 'text-accent' : 'text-ink-950')
                   }
                 >
                   {item.label}

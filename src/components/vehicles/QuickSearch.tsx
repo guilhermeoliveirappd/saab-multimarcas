@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button'
 
 /** Busca rápida da home: opções derivadas do estoque, envia para /estoque com filtros. */
 export function QuickSearch({ className }: { className?: string }) {
-  const { vehicles, status } = useVehicles()
+  const { vehicles, status, source } = useVehicles()
   const navigate = useNavigate()
   const id = useId()
   const [brand, setBrand] = useState('')
@@ -37,13 +37,17 @@ export function QuickSearch({ className }: { className?: string }) {
       aria-label="Busca rápida de veículos"
       className={cn('rounded-[1.5rem] bg-white p-4 shadow-[0_30px_80px_-30px_rgba(0,0,0,.45)] ring-1 ring-ink-100 sm:p-5 lg:p-6', className)}
     >
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-5 flex flex-col items-center gap-1 text-center">
         <h2 className="font-display text-lg font-bold text-ink-950">{content.quickSearch.title}</h2>
-        {!loading && <p className="text-xs text-ink-400">{listed.length} veículos no estoque</p>}
+        {!loading && (
+          <p className="text-xs text-ink-400">
+            {listed.length} {source === 'demo' ? 'modelos de exemplo' : 'veículos no estoque'}
+          </p>
+        )}
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
         <div>
-          <label htmlFor={`${id}-brand`} className="field-label">
+          <label htmlFor={`${id}-brand`} className="field-label text-center">
             Marca
           </label>
           <select
@@ -63,7 +67,7 @@ export function QuickSearch({ className }: { className?: string }) {
           </select>
         </div>
         <div>
-          <label htmlFor={`${id}-model`} className="field-label">
+          <label htmlFor={`${id}-model`} className="field-label text-center">
             Modelo
           </label>
           <select id={`${id}-model`} className="field" value={model} disabled={loading} onChange={(e) => setModel(e.target.value)}>
@@ -74,7 +78,7 @@ export function QuickSearch({ className }: { className?: string }) {
           </select>
         </div>
         <div>
-          <label htmlFor={`${id}-price`} className="field-label">
+          <label htmlFor={`${id}-price`} className="field-label text-center">
             Faixa de preço
           </label>
           <select id={`${id}-price`} className="field" value={rangeId} disabled={loading} onChange={(e) => setRangeId(e.target.value)}>

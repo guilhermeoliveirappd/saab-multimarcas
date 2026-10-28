@@ -64,7 +64,7 @@ export default function SellTradePage() {
       </label>
       <input
         id={`trade-${key}`}
-        className={`field ${errors[key] ? 'border-accent' : ''}`}
+        className={`field ${errors[key] ? 'border-danger' : ''}`}
         value={data[key] ?? ''}
         onChange={set(key)}
         aria-invalid={Boolean(errors[key])}
@@ -72,7 +72,7 @@ export default function SellTradePage() {
         {...props}
       />
       {errors[key] && (
-        <p id={`trade-${key}-error`} className="mt-1.5 text-sm text-accent">
+        <p id={`trade-${key}-error`} className="mt-1.5 text-sm text-danger">
           {errors[key]}
         </p>
       )}
@@ -83,30 +83,26 @@ export default function SellTradePage() {
     <>
       <PageHeader title={s.title} description={s.description} breadcrumb={[{ label: 'Venda ou Troca' }]} />
       <div className="container-site grid gap-12 py-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20 lg:py-20">
-        <div>
-          <div className="flex flex-wrap items-center gap-3">
-            <p className="eyebrow text-ink-500">Como funciona</p>
-            {s.provisionalSteps && <ProvisionalBadge />}
-          </div>
-          <ol className="mt-8 space-y-8">
+        <div className="flex flex-col items-center text-center lg:pt-4">
+          <h2 className="font-display text-2xl font-bold text-ink-950">Como funciona</h2>
+          {s.provisionalSteps && <ProvisionalBadge className="mt-3" />}
+          <ol className="mt-8 grid w-full gap-4">
             {s.steps.map((step, i) => (
-              <li key={step.title} className="flex gap-5">
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-ink-950 font-display font-bold text-white">{i + 1}</span>
-                <div>
-                  <h2 className="font-display text-lg font-bold text-ink-950">{step.title}</h2>
-                  <p className="mt-1 leading-relaxed text-ink-500">{step.text}</p>
-                </div>
+              <li key={step.title} className="flex flex-col items-center rounded-2xl bg-ink-50 p-5 ring-1 ring-ink-100">
+                <span className="grid size-10 place-items-center rounded-full bg-accent font-display font-bold text-white">{i + 1}</span>
+                <h3 className="mt-3 font-display text-lg font-bold text-ink-950">{step.title}</h3>
+                <p className="mt-1 text-ink-500">{step.text}</p>
               </li>
             ))}
           </ol>
         </div>
 
         <form onSubmit={onSubmit} noValidate className="rounded-[1.5rem] bg-white p-6 shadow-[var(--shadow-card-hover)] ring-1 ring-ink-100 sm:p-8" aria-labelledby="trade-form-title">
-          <h2 id="trade-form-title" className="font-display text-2xl font-bold text-ink-950">
+          <h2 id="trade-form-title" className="text-center font-display text-2xl font-bold text-ink-950">
             Dados do seu veículo
           </h2>
           <fieldset className="mt-6">
-            <legend className="field-label">Você deseja</legend>
+            <legend className="field-label w-full text-center">Você deseja</legend>
             <div className="grid grid-cols-2 gap-2">
               {(['vender', 'trocar'] as const).map((intent) => (
                 <label
@@ -137,7 +133,7 @@ export default function SellTradePage() {
             <WhatsAppIcon size={18} />
             {s.button}
           </Button>
-          <p className="mt-4 flex gap-2 text-xs leading-relaxed text-ink-500">
+          <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs leading-relaxed text-balance text-ink-500">
             <ShieldCheck size={16} className="shrink-0" aria-hidden="true" />
             {s.disclaimer}
           </p>

@@ -77,7 +77,7 @@ export default function InventoryPage() {
       <PageHeader
         title="Estoque"
         breadcrumb={[{ label: 'Estoque' }]}
-        description="Filtre por marca, modelo, ano, câmbio e faixa de preço para encontrar o veículo ideal."
+        description="Filtre por marca, modelo, ano, câmbio e preço."
       />
 
       <div className="container-site py-10 lg:py-14">
@@ -139,7 +139,7 @@ export default function InventoryPage() {
             </div>
 
             {/* Contador e chips */}
-            <div className="mt-6 flex flex-wrap items-center gap-2" aria-live="polite">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2 lg:justify-start" aria-live="polite">
               <p className="mr-2 text-sm text-ink-500">
                 {status === 'loading' ? (
                   'Carregando veículos…'
@@ -182,7 +182,7 @@ export default function InventoryPage() {
               ) : results.length === 0 ? (
                 <EmptyState
                   title="Nenhum veículo encontrado"
-                  description="Não encontramos veículos com esses critérios. Ajuste os filtros ou fale com a equipe — podemos ajudar a encontrar o que você procura."
+                  description="Ajuste os filtros ou fale com a equipe pelo WhatsApp."
                   action={
                     <Button variant="dark" onClick={clearAll}>
                       Limpar filtros

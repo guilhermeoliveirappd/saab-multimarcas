@@ -3,8 +3,9 @@
 Website institucional + catálogo digital de veículos da **SAAB Multimarcas** (Presidente Prudente/SP).
 Desenvolvido por **NESX Performance & Growth**.
 
-> ⚠️ **Versão de demonstração.** Sem Supabase configurado, o catálogo exibe **12 veículos fictícios** (com faixa amarela e selos
-> "Demonstração"). Institucional, endereço, telefone, horários e logotipo **ainda não foram validados** pelo cliente.
+> ⚠️ **Catálogo de exemplo.** Sem Supabase configurado, o catálogo exibe **12 veículos de exemplo** (faixa no topo e selo
+> "Exemplo"), com fotos reais de referência dos modelos — **não são carros do estoque da SAAB**. Institucional, endereço,
+> telefone, horários e logotipo **ainda não foram validados** pelo cliente.
 
 ## Stack
 
@@ -38,7 +39,8 @@ npm run dev                  # http://localhost:5173
 | --- | --- |
 | Dados da empresa, WhatsApp, endereço, mapa, horários, redes, logotipo, serviços habilitados | `src/config/site.ts` |
 | Headline, textos comerciais, diferenciais, sobre, venda/troca, financiamento | `src/config/content.ts` |
-| Cor de destaque e tokens visuais | `src/styles/index.css` (`--color-accent*`) |
+| Cor da marca (azul, provisório `#1254B8`) e tokens visuais | `src/styles/index.css` (`--color-brand*`) |
+| Fotos de referência dos modelos de exemplo + foto do banner | `src/data/stock-photos.ts` |
 | Depoimentos reais (seção fica oculta enquanto vazio) | `src/data/reviews.ts` |
 | Veículos de demonstração | `src/data/demo-vehicles.ts` |
 | Política de Privacidade (minuta) | `src/pages/PrivacyPage.tsx` |
@@ -105,7 +107,16 @@ Só carregam com `VITE_GTM_ID` ou `VITE_GA4_ID` **e** consentimento do visitante
 
 ## Imagens
 
-Não foi possível acessar o Instagram nem bancos de imagens a partir do ambiente de desenvolvimento. Por isso, todas as
-imagens atuais são **ilustrações vetoriais originais** geradas por script (sem risco de licença, marca-d'água ou link
-quebrado) e sinalizadas como "Imagem ilustrativa". Substitua por fotos reais (hero em `content.hero.image`, fachada em
-`content.about.image`, galeria em `content.aboutPage.gallery`, veículos via painel).
+- **Fotos de referência (V2):** cada modelo de exemplo e o banner usam uma fotografia real do **Wikimedia Commons**
+  (licenças CC0 / CC BY / CC BY-SA), carregada pelo navegador do visitante via `Special:FilePath` com `srcset` responsivo.
+  Créditos exibidos na galeria, no banner e na página `/creditos-de-imagens` (exigência das licenças). Confira autor e
+  licença em cada página de origem antes da publicação definitiva.
+- **Fallback:** se uma foto remota falhar, o componente `Photo` troca automaticamente pela ilustração local
+  (`public/demo/`), então nenhuma imagem aparece quebrada.
+- Substitua pelas fotos oficiais: estoque via painel administrativo; banner em `content.hero.image`; fachada em
+  `content.about.image`; galeria institucional em `content.aboutPage.gallery`.
+
+## Diretrizes de layout (V2)
+
+Textos centralizados e cada bloco com **no máximo duas linhas** (desktop e mobile). Mantenha os textos de
+`src/config/content.ts` curtos. Exceções intencionais: a Política de Privacidade (texto jurídico) e o painel administrativo.

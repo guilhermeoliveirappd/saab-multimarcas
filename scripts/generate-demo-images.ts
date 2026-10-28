@@ -184,11 +184,8 @@ function carSvg(shape: Shape, color: string, scene: Scene, viewBox = '20 -70 960
 </svg>`
 }
 
-const VIEWS: { scene: Scene; viewBox?: string }[] = [
-  { scene: 'dark' },
-  { scene: 'light' },
-  { scene: 'dark', viewBox: '40 100 448 280' },
-]
+// Apenas a vista lateral: usada como fallback local caso a foto remota falhe
+const VIEWS: { scene: Scene; viewBox?: string }[] = [{ scene: 'dark' }]
 
 let count = 0
 for (const spec of demoImageSpecs) {

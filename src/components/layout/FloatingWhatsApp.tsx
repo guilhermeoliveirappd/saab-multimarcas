@@ -14,7 +14,7 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'whatsapp', location: 'floating_button' } })}
-      className="fixed right-4 bottom-4 z-30 grid size-14 place-items-center rounded-full bg-[#1f9d55] text-white shadow-[0_12px_30px_-10px_rgba(31,157,85,.8)] transition-transform duration-300 hover:scale-105 sm:right-6 sm:bottom-6"
+      className="fixed right-4 bottom-4 z-30 grid size-14 place-items-center rounded-full bg-accent text-white shadow-[0_12px_30px_-10px_var(--color-accent)] hover:bg-accent-hover transition-transform duration-300 hover:scale-105 sm:right-6 sm:bottom-6"
       aria-label="Conversar pelo WhatsApp (abre em nova aba)"
     >
       <WhatsAppIcon size={26} />

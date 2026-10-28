@@ -2,6 +2,7 @@ import { useRef, useState, type KeyboardEvent, type ReactNode, type TouchEvent }
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { VehicleImage } from '@/types/vehicle'
 import { cn } from '@/lib/cn'
+import { Photo, PhotoCredit } from '@/components/ui/Photo'
 
 interface Props {
   images: VehicleImage[]
@@ -35,10 +36,11 @@ export function VehicleGallery({ images, title, overlay }: Props) {
   return (
     <div role="region" aria-roledescription="galeria" aria-label={`Fotos de ${title}`} onKeyDown={onKeyDown}>
       <div className="group relative aspect-[16/10] overflow-hidden rounded-[var(--radius-card)] bg-ink-100" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-        <img
+        <Photo
           key={current.url}
-          src={current.url}
+          image={current}
           alt={current.alt ?? `${title} — foto ${index + 1}`}
+          sizes="(min-width: 1024px) 760px, 100vw"
           width={960}
           height={600}
           fetchPriority={index === 0 ? 'high' : 'auto'}
@@ -70,6 +72,7 @@ export function VehicleGallery({ images, title, overlay }: Props) {
         )}
       </div>
 
+      <PhotoCredit image={current} className="mt-2 text-center text-ink-400" />
       {total > 1 && (
         <ul className="mt-3 grid grid-cols-4 gap-3 sm:grid-cols-5">
           {images.map((img, i) => (
@@ -84,7 +87,7 @@ export function VehicleGallery({ images, title, overlay }: Props) {
                   i === index ? 'ring-ink-950' : 'opacity-70 ring-transparent hover:opacity-100',
                 )}
               >
-                <img src={img.url} alt="" loading="lazy" width={192} height={120} className="size-full object-cover" />
+                <Photo image={{ ...img, url: img.srcSet ? img.srcSet.split(' ')[0] : img.url, srcSet: undefined }} alt="" loading="lazy" width={192} height={120} className="size-full object-cover" />
               </button>
             </li>
           ))}

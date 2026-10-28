@@ -160,7 +160,7 @@ export default function AdminVehicleList() {
                     <Link to={`/admin/veiculos/${v.id}`} className="grid size-10 place-items-center rounded-full ring-1 ring-ink-200 hover:bg-ink-100" aria-label={`Editar ${v.model}`} title="Editar">
                       <Pencil size={16} />
                     </Link>
-                    <button type="button" disabled={busy} onClick={() => void remove(v)} className="grid size-10 place-items-center rounded-full text-accent ring-1 ring-ink-200 hover:bg-red-50" aria-label={`Excluir ${v.model}`} title="Excluir">
+                    <button type="button" disabled={busy} onClick={() => void remove(v)} className="grid size-10 place-items-center rounded-full text-danger ring-1 ring-ink-200 hover:bg-red-50" aria-label={`Excluir ${v.model}`} title="Excluir">
                       <Trash2 size={16} />
                     </button>
                   </div>

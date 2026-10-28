@@ -11,6 +11,7 @@ import { vehicleJsonLd, vehicleMeta } from '@/lib/seo-meta'
 import { vehicleInterestMessage } from '@/lib/whatsapp'
 import { Button, ButtonLink } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState, ErrorState, Skeleton } from '@/components/ui/States'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { DemoTag, StatusBadge } from '@/components/vehicles/StatusBadge'
@@ -123,7 +124,7 @@ export default function VehicleDetailPage() {
     <>
       <div className="border-b border-ink-100 bg-ink-50">
         <nav aria-label="Trilha de navegação" className="container-site py-4">
-          <ol className="flex flex-wrap items-center gap-2 text-xs text-ink-500">
+          <ol className="flex flex-wrap items-center justify-center gap-2 text-xs text-ink-500">
             <li>
               <Link to="/" className="hover:text-ink-950">Início</Link>
             </li>
@@ -145,8 +146,8 @@ export default function VehicleDetailPage() {
             <VehicleGallery images={v.images} title={name} overlay={v.isDemo && <DemoTag />} />
           </div>
 
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="flex flex-wrap items-center gap-2">
+          <aside className="text-center lg:sticky lg:top-28 lg:self-start">
+            <div className="flex flex-wrap items-center justify-center gap-2">
               <StatusBadge status={v.status} />
             </div>
             <p className="eyebrow mt-5 text-ink-400">{v.brand}</p>
@@ -157,11 +158,11 @@ export default function VehicleDetailPage() {
             <div className="mt-6 rounded-[var(--radius-card)] bg-ink-950 p-6 text-white">
               <p className="text-xs tracking-wide text-ink-400 uppercase">Preço</p>
               <p className={`mt-1 font-display text-4xl font-extrabold tracking-tight ${sold ? 'text-ink-500 line-through' : ''}`}>{formatPrice(v.price)}</p>
-              {v.isDemo && <p className="mt-2 text-xs text-amber-300">Valor fictício — anúncio de demonstração.</p>}
+              {v.isDemo && <p className="mt-2 text-xs text-brand-light">Anúncio de exemplo — fora do estoque da SAAB.</p>}
               <div className="mt-6 space-y-3">
                 {sold ? (
-                  <p className="flex gap-2 rounded-xl bg-white/5 p-4 text-sm text-ink-300">
-                    <Info size={18} className="shrink-0" aria-hidden="true" /> Este veículo já foi vendido. Veja opções semelhantes abaixo ou fale com a equipe.
+                  <p className="flex items-center justify-center gap-2 rounded-xl bg-white/5 p-4 text-sm text-ink-300">
+                    <Info size={18} className="shrink-0" aria-hidden="true" /> Veículo vendido. Veja opções semelhantes abaixo.
                   </p>
                 ) : (
                   <WhatsAppButton location="vehicle_detail" message={message} vehicle={{ id: v.id, name }} size="lg" className="w-full">
@@ -175,7 +176,7 @@ export default function VehicleDetailPage() {
             <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] bg-ink-100 ring-1 ring-ink-100">
               {specs.map(({ icon: Icon, label, value }, i) => (
                 <div key={label} className={`bg-white p-4 ${i === specs.length - 1 && specs.length % 2 === 1 ? 'col-span-2' : ''}`}>
-                  <dt className="flex items-center gap-1.5 text-xs text-ink-400">
+                  <dt className="flex items-center justify-center gap-1.5 text-xs text-ink-400">
                     <Icon size={14} aria-hidden="true" /> {label}
                   </dt>
                   <dd className="mt-1 font-semibold text-ink-950">{value}</dd>
@@ -185,40 +186,36 @@ export default function VehicleDetailPage() {
           </aside>
         </div>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[1.55fr_1fr] lg:gap-14">
-          <div className="space-y-12">
-            <section aria-labelledby="desc-title">
-              <h2 id="desc-title" className="font-display text-2xl font-bold text-ink-950">Descrição</h2>
-              <p className="mt-4 leading-relaxed whitespace-pre-line text-ink-600">{v.description || 'Descrição em breve.'}</p>
+        <div className="mx-auto mt-14 max-w-3xl space-y-12 text-center">
+          {v.options.length > 0 && (
+            <section aria-labelledby="options-title">
+              <h2 id="options-title" className="font-display text-2xl font-bold text-ink-950">Opcionais</h2>
+              <ul className="mt-5 flex flex-wrap justify-center gap-2">
+                {v.options.map((o) => (
+                  <li key={o} className="inline-flex items-center gap-2 rounded-full bg-ink-50 py-1.5 pr-4 pl-2 text-sm text-ink-700 ring-1 ring-ink-100">
+                    <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent text-white">
+                      <Check size={12} aria-hidden="true" />
+                    </span>
+                    {o}
+                  </li>
+                ))}
+              </ul>
             </section>
-            {v.options.length > 0 && (
-              <section aria-labelledby="options-title">
-                <h2 id="options-title" className="font-display text-2xl font-bold text-ink-950">Opcionais</h2>
-                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {v.options.map((o) => (
-                    <li key={o} className="flex items-center gap-3 text-ink-700">
-                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-ink-950 text-white">
-                        <Check size={13} aria-hidden="true" />
-                      </span>
-                      {o}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </div>
-          <div>
-            <Link to="/estoque" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-600 hover:text-ink-950">
-              <ArrowLeft size={16} aria-hidden="true" /> Voltar ao estoque
-            </Link>
-          </div>
+          )}
+          <section aria-labelledby="desc-title">
+            <h2 id="desc-title" className="font-display text-2xl font-bold text-ink-950">Descrição</h2>
+            <p className="mx-auto mt-4 max-w-xl leading-relaxed text-balance whitespace-pre-line text-ink-600">{v.description || 'Descrição em breve.'}</p>
+          </section>
+          <Link to="/estoque" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-600 hover:text-ink-950">
+            <ArrowLeft size={16} aria-hidden="true" /> Voltar ao estoque
+          </Link>
         </div>
       </article>
 
       {related.length > 0 && (
         <section aria-labelledby="related-title" className="border-t border-ink-100 bg-ink-50 py-16 lg:py-20">
           <div className="container-site">
-            <h2 id="related-title" className="mb-10 font-display text-3xl font-bold text-ink-950">Veículos relacionados</h2>
+            <SectionHeading id="related-title" title="Veículos relacionados" className="mb-10" />
             <VehicleGrid>
               {related.map((r) => (
                 <VehicleCard key={r.id} vehicle={r} />

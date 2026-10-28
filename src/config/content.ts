@@ -1,26 +1,27 @@
 /**
  * Textos comerciais centralizados. Revise aqui sem tocar nos componentes.
  *
+ * Diretriz de layout (V2): textos centralizados e cada bloco com NO MÁXIMO
+ * duas linhas no desktop e no mobile — mantenha os textos curtos.
+ *
  * `provisional: true` indica texto demonstrativo que ainda depende de
  * validação do cliente (exibe o selo "Conteúdo provisório" quando
  * `siteConfig.showProvisionalMarkers` estiver ativo).
  */
+import { HERO_PHOTO } from '../data/stock-photos'
 
 export const content = {
   hero: {
-    eyebrow: 'Presidente Prudente · SP',
-    headline: 'Seu próximo carro começa com uma boa escolha.',
-    subheadline:
-      'Encontre o veículo ideal para o seu próximo capítulo. Explore nosso estoque e converse com quem entende de boas escolhas.',
+    /** Cada item vira uma linha da headline */
+    headline: ['Seu próximo carro.', 'Sua próxima conquista.'],
+    subheadline: 'Explore nosso estoque e encontre o veículo ideal para você.',
     primaryCta: 'Explorar estoque',
-    secondaryCta: 'Falar com um especialista',
+    secondaryCta: 'Falar com a SAAB',
     /**
-     * Imagem do hero. Substitua por uma fotografia real (ex.: '/media/hero.jpg',
-     * idealmente 2400px de largura, WebP/AVIF). A ilustração atual é provisória.
+     * Foto do banner. Substitua por uma foto oficial (ex.: { url: '/media/hero.jpg' }),
+     * idealmente 2400px de largura, WebP/AVIF.
      */
-    image: '/demo/hero-car.svg',
-    imageAlt: 'Ilustração de um sedã em estúdio escuro',
-    imageIsIllustration: true,
+    image: HERO_PHOTO,
   },
 
   quickSearch: {
@@ -29,69 +30,47 @@ export const content = {
   },
 
   featured: {
-    eyebrow: 'Vitrine',
     title: 'Veículos em destaque',
-    description: 'Uma seleção do nosso estoque atual. Clique para ver fotos, opcionais e condições.',
+    description: 'Uma seleção de modelos para você conhecer.',
     cta: 'Ver estoque completo',
   },
 
   differentials: {
     provisional: true,
-    eyebrow: 'Por que a SAAB',
-    title: 'Uma compra conduzida com atenção aos detalhes',
-    description:
-      'Texto demonstrativo. Os diferenciais definitivos serão definidos com a SAAB antes da publicação.',
+    title: 'Por que escolher a SAAB',
+    description: 'Diferenciais demonstrativos, a validar com a SAAB.',
     items: [
-      {
-        icon: 'messages',
-        title: 'Atendimento próximo',
-        text: 'Converse diretamente com a equipe pelo WhatsApp e tire suas dúvidas sobre cada veículo.',
-      },
-      {
-        icon: 'search',
-        title: 'Estoque com informações claras',
-        text: 'Fotos, versão, quilometragem, câmbio e opcionais reunidos em uma única página por veículo.',
-      },
-      {
-        icon: 'handshake',
-        title: 'Negociação transparente',
-        text: 'Condições apresentadas de forma direta, para você decidir com tranquilidade.',
-      },
-      {
-        icon: 'map',
-        title: 'Loja em Presidente Prudente',
-        text: 'Venha conhecer os veículos pessoalmente e fazer sua avaliação com calma.',
-      },
+      { icon: 'messages', title: 'Atendimento próximo', text: 'Fale direto com a equipe pelo WhatsApp.' },
+      { icon: 'search', title: 'Informação clara', text: 'Fotos, ficha técnica e opcionais em um só lugar.' },
+      { icon: 'handshake', title: 'Negociação transparente', text: 'Condições diretas para você decidir com calma.' },
+      { icon: 'map', title: 'Loja em Prudente', text: 'Conheça os veículos pessoalmente.' },
     ],
   },
 
   services: {
-    eyebrow: 'Soluções',
     title: 'Compre, venda ou troque',
     description: 'Escolha o caminho ideal para o seu momento.',
     buy: {
       title: 'Comprar',
-      text: 'Explore o estoque com filtros por marca, modelo, ano e faixa de preço.',
+      text: 'Filtre o estoque por marca, modelo, ano e preço.',
       cta: 'Ver estoque',
     },
     sell: {
       title: 'Vender',
-      text: 'Envie os dados do seu veículo e receba o contato da equipe para uma avaliação.',
+      text: 'Envie os dados do seu carro e receba uma avaliação.',
       cta: 'Solicitar avaliação',
     },
     trade: {
       title: 'Trocar',
-      text: 'Use o seu veículo atual na negociação do próximo. Converse com a equipe sobre as possibilidades.',
-      cta: 'Simular troca pelo WhatsApp',
+      text: 'Use seu carro atual na negociação do próximo.',
+      cta: 'Falar pelo WhatsApp',
     },
   },
 
   about: {
     provisional: true,
-    eyebrow: 'Sobre a SAAB',
-    title: 'Uma revenda multimarcas em Presidente Prudente',
-    summary:
-      'Texto provisório. Aqui entrará um resumo da história da SAAB Multimarcas, sua forma de trabalhar e o que a diferencia — conteúdo a ser fornecido e validado pelo cliente.',
+    title: 'Revenda multimarcas em Presidente Prudente',
+    summary: 'Resumo institucional a ser enviado pela SAAB.',
     cta: 'Conheça a SAAB',
     /** Substitua por foto real da fachada ou da equipe (ex.: '/media/fachada.jpg') */
     image: null as string | null,
@@ -101,58 +80,48 @@ export const content = {
   aboutPage: {
     provisional: true,
     title: 'Sobre a SAAB Multimarcas',
-    intro:
-      'Conteúdo provisório. Esta página receberá a história, o propósito e os diferenciais comprovados da SAAB Multimarcas.',
+    intro: 'História, propósito e diferenciais da SAAB — a receber.',
     history: {
       title: 'Nossa história',
-      text: 'História da empresa a ser fornecida pelo cliente: ano de fundação, trajetória e marcos relevantes.',
+      text: 'Fundação, trajetória e marcos da empresa — a receber.',
     },
     purpose: {
       title: 'Nosso propósito',
-      text: 'Propósito e valores da empresa a serem definidos em conjunto com a SAAB.',
+      text: 'Propósito e valores a definir com a SAAB.',
     },
     gallery: [] as { src: string; alt: string }[],
   },
 
+  location: {
+    title: 'Venha conhecer a SAAB',
+    description: 'Fale com a equipe e agende sua visita.',
+  },
+
   sellTrade: {
-    eyebrow: 'Venda ou troca',
-    title: 'Seu veículo pode ser o primeiro passo para o próximo.',
-    description:
-      'Informe alguns dados do seu veículo e envie para a nossa equipe pelo WhatsApp. Retornamos com os próximos passos da avaliação.',
+    title: 'Venda ou troque seu veículo',
+    description: 'Preencha os dados e envie pelo WhatsApp para avaliação.',
     provisionalSteps: true,
     steps: [
-      { title: 'Conte sobre o seu veículo', text: 'Preencha marca, modelo, ano e quilometragem.' },
-      { title: 'Envie pelo WhatsApp', text: 'A mensagem é montada automaticamente com os dados informados.' },
-      { title: 'Combine a avaliação', text: 'A equipe retorna para agendar a avaliação presencial.' },
+      { title: 'Conte sobre o carro', text: 'Marca, modelo, ano e quilometragem.' },
+      { title: 'Envie pelo WhatsApp', text: 'A mensagem é montada automaticamente.' },
+      { title: 'Combine a avaliação', text: 'A equipe retorna com os próximos passos.' },
     ],
-    button: 'Solicitar avaliação via WhatsApp',
-    disclaimer:
-      'Os dados não são armazenados pelo site: eles são apenas inseridos na mensagem do WhatsApp, que você revisa antes de enviar.',
+    button: 'Solicitar avaliação',
+    disclaimer: 'Os dados não ficam salvos no site: vão só na mensagem que você envia.',
   },
 
   financing: {
     provisional: true,
     title: 'Financiamento',
-    description:
-      'Conte com a orientação da equipe para entender as possibilidades de financiamento do seu próximo veículo.',
-    steps: [
-      'Escolha o veículo no estoque.',
-      'Fale com a equipe pelo WhatsApp informando que deseja financiar.',
-      'A equipe orienta sobre as próximas etapas e a documentação necessária.',
-    ],
-    disclaimer:
-      'Condições sujeitas à análise de crédito pela instituição financeira. O site não realiza simulações nem coleta dados pessoais.',
+    description: 'Orientação da equipe para financiar seu próximo veículo.',
+    steps: ['Escolha o veículo no estoque.', 'Fale com a equipe pelo WhatsApp.', 'Receba a orientação sobre documentos.'],
+    disclaimer: 'Sujeito à análise de crédito. O site não faz simulações nem coleta dados.',
     cta: 'Falar sobre financiamento',
   },
 
   contact: {
     title: 'Fale com a SAAB',
-    description: 'Atendimento pelo WhatsApp e pelo Instagram. Endereço e horários serão publicados após confirmação.',
-  },
-
-  finalCta: {
-    title: 'Encontrou o carro certo?',
-    text: 'Fale com a equipe da SAAB e tire suas dúvidas.',
+    description: 'Atendimento pelo WhatsApp e pelo Instagram.',
   },
 }
 

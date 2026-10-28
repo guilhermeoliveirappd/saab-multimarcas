@@ -10,9 +10,22 @@ export type VehicleStatus = (typeof VEHICLE_STATUSES)[number]
 export const BODY_TYPES = ['hatch', 'sedan', 'suv', 'picape', 'outro'] as const
 export type BodyType = (typeof BODY_TYPES)[number]
 
+/** Créditos exigidos por licenças Creative Commons (fotos de terceiros). */
+export interface ImageCredit {
+  author: string | null
+  license: string | null
+  /** Página de origem com autor e licença completos */
+  sourceUrl: string
+}
+
 export interface VehicleImage {
   url: string
   alt?: string
+  /** Versões responsivas (atributo srcset) */
+  srcSet?: string
+  /** Imagem local exibida se `url` falhar ao carregar */
+  fallbackUrl?: string
+  credit?: ImageCredit
 }
 
 export interface Vehicle {

@@ -8,7 +8,7 @@ import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
 const cardClass =
-  'group relative flex h-full flex-col rounded-[var(--radius-card)] bg-white p-7 ring-1 ring-ink-100 shadow-[var(--shadow-card)] transition-all duration-500 ease-out-soft hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)] lg:p-8'
+  'group relative flex h-full flex-col items-center text-center rounded-[var(--radius-card)] bg-white p-7 ring-1 ring-ink-100 shadow-[var(--shadow-card)] transition-all duration-500 ease-out-soft hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)] lg:p-8'
 
 export function Services() {
   const s = content.services
@@ -29,17 +29,17 @@ export function Services() {
   return (
     <section aria-labelledby="services-title" className="bg-ink-50 py-20 lg:py-28">
       <div className="container-site">
-        <SectionHeading id="services-title" eyebrow={s.eyebrow} title={s.title} description={s.description} align="center" className="mb-14" />
-        <ul className={`grid gap-6 ${cards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
+        <SectionHeading id="services-title" title={s.title} description={s.description} className="mb-14" />
+        <ul className={`mx-auto grid max-w-md gap-6 lg:max-w-none ${cards.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
           {cards.map(({ key, icon: Icon, title, text, cta, to, href }) => {
             const inner = (
               <>
-                <span className="grid size-14 place-items-center rounded-2xl bg-ink-950 text-white transition-colors duration-500 group-hover:bg-accent">
+                <span className="grid size-14 place-items-center rounded-2xl bg-accent text-white transition-colors duration-500 group-hover:bg-accent-hover">
                   <Icon size={24} aria-hidden="true" />
                 </span>
-                <h3 className="mt-8 font-display text-2xl font-bold text-ink-950">{title}</h3>
-                <p className="mt-3 flex-1 leading-relaxed text-ink-500">{text}</p>
-                <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink-950">
+                <h3 className="mt-6 font-display text-2xl font-bold text-ink-950">{title}</h3>
+                <p className="mt-3 max-w-[17rem] flex-1 leading-relaxed text-balance text-ink-500">{text}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent">
                   {cta}
                   <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </span>

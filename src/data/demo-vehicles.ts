@@ -1,12 +1,13 @@
 import type { BodyType, Vehicle } from '../types/vehicle'
+import { STOCK_PHOTOS, commonsImage } from './stock-photos'
 
 /**
- * ⚠️ DADOS DE DEMONSTRAÇÃO — VEÍCULOS FICTÍCIOS.
+ * ⚠️ VEÍCULOS DE EXEMPLO — NÃO SÃO O ESTOQUE DA SAAB.
  *
- * Não representam o estoque real da SAAB Multimarcas. Servem apenas para
- * testar o catálogo enquanto o Supabase não estiver configurado. Preços,
- * quilometragens e opcionais são ilustrativos. As imagens são ilustrações
- * vetoriais geradas por `scripts/generate-demo-images.mjs`.
+ * Servem apenas para demonstrar o catálogo enquanto o Supabase/estoque oficial
+ * não estiver disponível. Preços, quilometragens e opcionais são ilustrativos.
+ * Fotos: imagens reais de referência do modelo (Wikimedia Commons, ver
+ * `stock-photos.ts`), com ilustração local como fallback.
  */
 
 interface DemoSeed {
@@ -233,7 +234,12 @@ const seeds: DemoSeed[] = [
   },
 ]
 
-const IMAGE_VIEWS = ['Vista lateral', 'Vista lateral em estúdio claro', 'Detalhe da dianteira'] as const
+function photoFor(slug: string, name: string) {
+  const fallbackUrl = `/demo/vehicles/${slug}-1.svg`
+  const ref = STOCK_PHOTOS[slug]
+  if (!ref) return { url: fallbackUrl, alt: `Ilustração ${name}` }
+  return commonsImage(ref.file, { author: ref.author, license: ref.license }, { alt: `Foto ilustrativa de um ${name}`, fallbackUrl })
+}
 
 export const demoVehicles: Vehicle[] = seeds.map((seed, index) => {
   const name = `${seed.brand} ${seed.model} ${seed.version}`
@@ -251,14 +257,9 @@ export const demoVehicles: Vehicle[] = seeds.map((seed, index) => {
     color: seed.color,
     bodyType: seed.bodyType,
     price: seed.price,
-    description:
-      `Veículo FICTÍCIO utilizado apenas para demonstração do catálogo. ${name} ${seed.yearManufacture}/${seed.yearModel} ` +
-      'com informações ilustrativas — não corresponde ao estoque real da SAAB Multimarcas.',
+    description: 'Exemplo ilustrativo: dados e foto não são do estoque da SAAB.',
     options: seed.options,
-    images: IMAGE_VIEWS.map((view, i) => ({
-      url: `/demo/vehicles/${seed.slug}-${i + 1}.svg`,
-      alt: `Ilustração ${name} — ${view.toLowerCase()}`,
-    })),
+    images: [photoFor(seed.slug, name)],
     status: seed.status ?? 'disponivel',
     featured: seed.featured ?? false,
     published: true,

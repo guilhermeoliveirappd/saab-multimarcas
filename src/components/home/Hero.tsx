@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { content } from '@/config/content'
 import { ButtonLink } from '@/components/ui/Button'
+import { Photo, PhotoCredit } from '@/components/ui/Photo'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { QuickSearch } from '@/components/vehicles/QuickSearch'
 
@@ -9,43 +10,46 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative">
       <div className="relative isolate overflow-hidden bg-ink-950 pt-[72px] lg:pt-20">
-        <img
-          src={hero.image}
+        <Photo
+          image={hero.image}
           alt=""
-          width={2400}
-          height={1350}
+          sizes="100vw"
+          width={1920}
+          height={1080}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 -z-20 size-full object-cover object-[75%_center] opacity-90 lg:object-[right_center]"
+          className="absolute inset-0 -z-20 size-full object-cover object-center"
         />
-        {/* Véu para legibilidade do texto sobre a imagem */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink-950 via-ink-950/80 to-ink-950/10" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
+        {/* Véus para garantir contraste do texto branco sobre qualquer foto */}
+        <div className="absolute inset-0 -z-10 bg-ink-950/60" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(10,10,11,.55)_0%,rgba(10,10,11,.15)_70%)]" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
 
-        <div className="container-site flex min-h-[600px] flex-col justify-center pt-16 pb-40 sm:min-h-[640px] lg:min-h-[720px] lg:pb-48">
-          <div className="max-w-2xl animate-fade-up">
-            <p className="eyebrow flex items-center gap-3 text-ink-300">
-              <span className="h-px w-8 bg-accent" aria-hidden="true" />
-              {hero.eyebrow}
-            </p>
-            <h1 id="hero-title" className="mt-6 font-display text-[2.6rem] leading-[0.98] font-extrabold text-balance text-white sm:text-6xl lg:text-7xl">
-              {hero.headline}
+        <div className="container-site flex min-h-[560px] flex-col items-center justify-center pt-12 pb-36 text-center sm:min-h-[620px] lg:min-h-[700px] lg:pb-44">
+          <div className="flex max-w-4xl animate-fade-up flex-col items-center">
+            <h1
+              id="hero-title"
+              className="font-display text-[clamp(1.5rem,6.6vw,4.75rem)] leading-[1.05] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
+            >
+              {hero.headline.map((line) => (
+                <span key={line} className="block whitespace-nowrap">
+                  {line}
+                </span>
+              ))}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-ink-300 sm:text-lg">{hero.subheadline}</p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="/estoque" size="lg" variant="primary">
+            <p className="mt-6 max-w-md text-base leading-relaxed text-balance text-ink-100 sm:max-w-xl sm:text-lg">{hero.subheadline}</p>
+            <div className="mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+              <ButtonLink to="/estoque" size="lg" variant="primary" className="w-full sm:w-auto">
                 {hero.primaryCta}
                 <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
               </ButtonLink>
-              <WhatsAppButton location="hero" size="lg" variant="outline-light">
+              <WhatsAppButton location="hero" size="lg" variant="outline-light" className="w-full backdrop-blur-sm sm:w-auto">
                 {hero.secondaryCta}
               </WhatsAppButton>
             </div>
           </div>
         </div>
-        {hero.imageIsIllustration && (
-          <p className="absolute right-4 bottom-28 text-[10px] tracking-wide text-white/40 uppercase sm:right-6 lg:bottom-32">Imagem ilustrativa</p>
-        )}
+        <PhotoCredit image={hero.image} className="absolute right-4 bottom-28 max-w-[60%] text-right text-white/55 sm:right-6 lg:bottom-32" />
       </div>
 
       <div className="container-site relative z-10 -mt-24 lg:-mt-28">

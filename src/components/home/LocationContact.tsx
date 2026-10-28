@@ -4,6 +4,7 @@ import { siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
 import { InstagramIcon, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { ButtonAnchor } from '@/components/ui/Button'
+import { content } from '@/config/content'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 
@@ -29,7 +30,9 @@ export function ContactDetails() {
         </>
       ) : (
         <>
-          {siteConfig.city}/{siteConfig.state} · endereço <Pending />
+          {siteConfig.city}/{siteConfig.state}
+          <br />
+          <Pending />
         </>
       ),
     },
@@ -71,16 +74,14 @@ export function ContactDetails() {
     },
   ]
   return (
-    <dl className="divide-y divide-ink-100">
+    <dl className="grid gap-3 sm:grid-cols-2">
       {rows.map(({ icon: Icon, label, value }) => (
-        <div key={label} className="flex gap-4 py-5">
-          <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-ink-50 text-ink-900 ring-1 ring-ink-100">
+        <div key={label} className="flex flex-col items-center rounded-2xl bg-white p-5 text-center ring-1 ring-ink-100">
+          <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
             <Icon size={20} aria-hidden="true" />
           </span>
-          <div>
-            <dt className="text-xs font-semibold tracking-wide text-ink-400 uppercase">{label}</dt>
-            <dd className="mt-1 font-medium text-ink-900">{value}</dd>
-          </div>
+          <dt className="mt-3 text-xs font-semibold tracking-wide text-ink-400 uppercase">{label}</dt>
+          <dd className="mt-1 text-[15px] font-medium text-balance text-ink-900">{value}</dd>
         </div>
       ))}
     </dl>
@@ -114,7 +115,7 @@ export function LocationMap({ className = '' }: { className?: string }) {
           <MapPinned size={24} aria-hidden="true" />
         </span>
         <p className="mt-5 font-display text-xl font-bold text-white">{siteConfig.city} · {siteConfig.state}</p>
-        <p className="mt-2 text-sm text-ink-300">O mapa será exibido após a confirmação do endereço.</p>
+        <p className="mt-2 text-sm text-ink-300">Mapa disponível após confirmar o endereço.</p>
       </div>
     </div>
   )
@@ -123,14 +124,13 @@ export function LocationMap({ className = '' }: { className?: string }) {
 export function LocationContact() {
   const { address } = siteConfig
   return (
-    <section aria-labelledby="location-title" className="py-20 lg:py-28">
-      <div className="container-site grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-        <div>
-          <SectionHeading id="location-title" eyebrow="Localização e contato" title="Venha conhecer a SAAB" description="Fale com a equipe e agende sua visita." />
-          <div className="mt-8">
-            <ContactDetails />
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
+    <section aria-labelledby="location-title" className="bg-ink-50 py-20 lg:py-28">
+      <div className="container-site">
+        <SectionHeading id="location-title" title={content.location.title} description={content.location.description} className="mb-12" />
+        <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
+        <div className="flex flex-col">
+          <ContactDetails />
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <WhatsAppButton location="home_location" size="lg" />
             {address.confirmed && address.mapsLink && (
               <ButtonAnchor
@@ -147,6 +147,7 @@ export function LocationContact() {
           </div>
         </div>
         <LocationMap className="min-h-[360px] lg:min-h-full" />
+        </div>
       </div>
     </section>
   )

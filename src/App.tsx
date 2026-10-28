@@ -14,6 +14,7 @@ const FinancingPage = lazy(() => import('@/pages/FinancingPage'))
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
 const ContactPage = lazy(() => import('@/pages/ContactPage'))
 const PrivacyPage = lazy(() => import('@/pages/PrivacyPage'))
+const ImageCreditsPage = lazy(() => import('@/pages/ImageCreditsPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 const AdminApp = lazy(() => (isSupabaseConfigured ? import('@/pages/admin/AdminApp') : import('@/pages/admin/AdminUnavailable')))
 
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="sobre" element={<AboutPage />} />
             <Route path="contato" element={<ContactPage />} />
             <Route path="politica-de-privacidade" element={<PrivacyPage />} />
+            <Route path="creditos-de-imagens" element={<ImageCreditsPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

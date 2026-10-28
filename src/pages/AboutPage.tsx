@@ -8,6 +8,7 @@ import { ContactDetails, LocationMap } from '@/components/home/LocationContact'
 import { ButtonLink } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { ProvisionalBadge } from '@/components/ui/ProvisionalBadge'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 
 export default function AboutPage() {
   useSeo({ ...STATIC_PAGES['/sobre'], path: '/sobre' })
@@ -17,12 +18,9 @@ export default function AboutPage() {
       <PageHeader title={a.title} description={a.intro} breadcrumb={[{ label: 'Sobre Nós' }]} badge={a.provisional && <ProvisionalBadge />} />
 
       <section className="container-site grid gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
-        <div className="space-y-12">
+        <div className="flex flex-col justify-center space-y-12">
           {[a.history, a.purpose].map((block) => (
-            <div key={block.title}>
-              <h2 className="font-display text-3xl font-bold text-ink-950">{block.title}</h2>
-              <p className="mt-4 text-lg leading-relaxed text-ink-500">{block.text}</p>
-            </div>
+            <SectionHeading key={block.title} title={block.title} description={block.text} />
           ))}
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -42,20 +40,17 @@ export default function AboutPage() {
 
       <Differentials />
 
-      <section aria-labelledby="about-location" className="container-site grid gap-12 py-16 lg:grid-cols-2 lg:py-24">
-        <div>
-          <div className="flex flex-wrap items-center gap-3">
-            <h2 id="about-location" className="font-display text-3xl font-bold text-ink-950">Onde estamos</h2>
-            <ProvisionalBadge label="Endereço a confirmar" />
-          </div>
-          <div className="mt-6">
+      <section aria-labelledby="about-location" className="container-site py-16 lg:py-24">
+        <SectionHeading id="about-location" title="Onde estamos" badge={<ProvisionalBadge label="Endereço a confirmar" />} className="mb-10" />
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="flex flex-col items-center">
             <ContactDetails />
+            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-6">
+              Conheça nosso estoque <ArrowRight size={18} aria-hidden="true" />
+            </ButtonLink>
           </div>
-          <ButtonLink to="/estoque" size="lg" variant="dark" className="mt-8">
-            Conheça nosso estoque <ArrowRight size={18} aria-hidden="true" />
-          </ButtonLink>
+          <LocationMap className="min-h-[360px]" />
         </div>
-        <LocationMap className="min-h-[360px]" />
       </section>
     </>
   )

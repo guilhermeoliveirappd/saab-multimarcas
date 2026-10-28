@@ -20,7 +20,6 @@ export function FeaturedVehicles() {
       <div className="container-site">
         <SectionHeading
           id="featured-title"
-          eyebrow={copy.eyebrow}
           title={copy.title}
           description={copy.description}
           action={

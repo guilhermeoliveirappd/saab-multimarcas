@@ -14,4 +14,7 @@ export const mainNav: NavItem[] = [
   { label: 'Contato', to: '/contato' },
 ]
 
-export const legalNav: NavItem[] = [{ label: 'Política de Privacidade', to: '/politica-de-privacidade' }]
+export const legalNav: NavItem[] = [
+  { label: 'Política de Privacidade', to: '/politica-de-privacidade' },
+  { label: 'Créditos das imagens', to: '/creditos-de-imagens' },
+]

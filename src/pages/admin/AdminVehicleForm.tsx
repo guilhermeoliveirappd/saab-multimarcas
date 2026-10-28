@@ -100,7 +100,7 @@ function Field({ label, error, children, hint, className = '' }: { label: string
       <span className="field-label">{label}</span>
       {children}
       {hint && !error && <span className="mt-1 block text-xs text-ink-400">{hint}</span>}
-      {error && <span className="mt-1 block text-xs font-medium text-accent">{error}</span>}
+      {error && <span className="mt-1 block text-xs font-medium text-danger">{error}</span>}
     </label>
   )
 }
@@ -338,7 +338,7 @@ export default function AdminVehicleForm() {
           </label>
         </div>
         {!form.slug && <p className="mt-3 text-xs text-ink-400">Preencha marca, modelo e versão antes de enviar fotos.</p>}
-        {errors.images && <p className="mt-3 text-sm font-medium text-accent">{errors.images}</p>}
+        {errors.images && <p className="mt-3 text-sm font-medium text-danger">{errors.images}</p>}
         {form.images.length > 0 && (
           <ul className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {form.images.map((img, i) => (
@@ -356,7 +356,7 @@ export default function AdminVehicleForm() {
                       <ArrowDown size={14} className="-rotate-90" />
                     </button>
                   </div>
-                  <button type="button" className="grid size-8 place-items-center rounded-full text-accent hover:bg-red-50" onClick={() => void deleteImage(img)} aria-label="Remover foto">
+                  <button type="button" className="grid size-8 place-items-center rounded-full text-danger hover:bg-red-50" onClick={() => void deleteImage(img)} aria-label="Remover foto">
                     <Trash2 size={14} />
                   </button>
                 </div>

@@ -11,7 +11,7 @@ export function Testimonials() {
   return (
     <section aria-labelledby="reviews-title" className="bg-ink-50 py-20 lg:py-28">
       <div className="container-site">
-        <SectionHeading id="reviews-title" eyebrow="Reputação" title="O que dizem nossos clientes" className="mb-12" />
+        <SectionHeading id="reviews-title" title="O que dizem nossos clientes" className="mb-12" />
         <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {reviews.map((r) => (
             <li key={r.sourceUrl + r.author} className="flex flex-col rounded-[var(--radius-card)] bg-white p-7 ring-1 ring-ink-100">

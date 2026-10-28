@@ -53,7 +53,7 @@ function RequireAdmin() {
     return (
       <FullScreenMessage>
         <div className="max-w-md">
-          <ShieldAlert className="mx-auto text-accent" size={32} aria-hidden="true" />
+          <ShieldAlert className="mx-auto text-danger" size={32} aria-hidden="true" />
           <h1 className="mt-4 font-display text-2xl font-bold">Acesso não autorizado</h1>
           <p className="mt-2 text-ink-500">{session.error ?? 'Sua conta não tem permissão para gerenciar o estoque.'}</p>
           <Button variant="dark" className="mt-6" onClick={() => void signOut()}>

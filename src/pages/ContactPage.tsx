@@ -6,6 +6,7 @@ import { ContactDetails, LocationMap } from '@/components/home/LocationContact'
 import { InstagramIcon } from '@/components/ui/BrandIcons'
 import { ButtonAnchor } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { trackEvent } from '@/lib/analytics'
 
@@ -14,7 +15,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader title={content.contact.title} description={content.contact.description} breadcrumb={[{ label: 'Contato' }]}>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <WhatsAppButton location="contact_header" size="lg">
             Conversar no WhatsApp
           </WhatsAppButton>
@@ -30,14 +31,12 @@ export default function ContactPage() {
           </ButtonAnchor>
         </div>
       </PageHeader>
-      <div className="container-site grid gap-12 py-14 lg:grid-cols-[1fr_1.2fr] lg:py-20">
-        <div>
-          <h2 className="font-display text-2xl font-bold text-ink-950">Canais de atendimento</h2>
-          <div className="mt-4">
-            <ContactDetails />
-          </div>
+      <div className="container-site py-14 lg:py-20">
+        <SectionHeading title="Canais de atendimento" className="mb-10" />
+        <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
+          <ContactDetails />
+          <LocationMap className="min-h-[400px]" />
         </div>
-        <LocationMap className="min-h-[400px]" />
       </div>
     </>
   )

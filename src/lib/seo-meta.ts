@@ -38,6 +38,11 @@ export const STATIC_PAGES: Record<string, Omit<PageMeta, 'path'>> = {
     title: 'Contato',
     description: `Fale com a ${siteConfig.name} pelo WhatsApp ou Instagram.`,
   },
+  '/creditos-de-imagens': {
+    title: 'Créditos das imagens',
+    description: 'Autoria e licenças das fotografias ilustrativas usadas no site.',
+    noindex: true,
+  },
   '/politica-de-privacidade': {
     title: 'Política de Privacidade',
     description: `Como a ${siteConfig.name} trata dados pessoais neste site.`,

@@ -106,7 +106,7 @@ async function main() {
   // Sitemap: somente páginas reais (veículos de demonstração nunca entram)
   const today = new Date().toISOString().slice(0, 10)
   const urls = [
-    ...staticPaths.map((p) => ({ loc: p, lastmod: today })),
+    ...staticPaths.filter((p) => !STATIC_PAGES[p].noindex).map((p) => ({ loc: p, lastmod: today })),
     ...vehicles.filter((v) => !v.isDemo && v.status !== 'vendido').map((v) => ({ loc: `/veiculos/${v.slug}`, lastmod: v.createdAt.slice(0, 10) })),
   ]
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

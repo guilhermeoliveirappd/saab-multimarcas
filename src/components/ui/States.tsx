@@ -21,7 +21,7 @@ export function EmptyState({ title, description, action, icon }: { title: string
 export function ErrorState({ message, onRetry }: { message?: string | null; onRetry?: () => void }) {
   return (
     <div role="alert" className="flex flex-col items-center rounded-[var(--radius-card)] border border-red-200 bg-red-50 px-6 py-14 text-center">
-      <AlertCircle className="mb-4 text-accent" size={28} />
+      <AlertCircle className="mb-4 text-danger" size={28} />
       <h3 className="font-display text-xl font-bold text-ink-950">Não foi possível carregar os veículos</h3>
       <p className="mt-2 max-w-md text-ink-600">{message ?? 'Tente novamente em instantes.'}</p>
       {onRetry && (

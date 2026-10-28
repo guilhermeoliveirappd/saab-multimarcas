@@ -22,18 +22,23 @@ export function AboutPreview() {
   const a = content.about
   return (
     <section aria-labelledby="about-title" className="py-20 lg:py-28">
-      <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {a.image ? (
           <img src={a.image} alt={a.imageAlt} loading="lazy" className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover" />
         ) : (
-          <PhotoPlaceholder label="Espaço para foto da fachada ou da equipe — a receber" className="aspect-[4/3]" />
+          <PhotoPlaceholder label="Foto da fachada ou da equipe — a receber" className="aspect-[4/3]" />
         )}
-        <div>
-          <SectionHeading id="about-title" eyebrow={a.eyebrow} title={a.title} description={a.summary} badge={a.provisional && <ProvisionalBadge />} />
-          <ButtonLink to="/sobre" variant="dark" size="lg" className="mt-10">
-            {a.cta} <ArrowRight size={18} aria-hidden="true" />
-          </ButtonLink>
-        </div>
+        <SectionHeading
+          id="about-title"
+          title={a.title}
+          description={a.summary}
+          badge={a.provisional && <ProvisionalBadge />}
+          action={
+            <ButtonLink to="/sobre" variant="primary" size="lg">
+              {a.cta} <ArrowRight size={18} aria-hidden="true" />
+            </ButtonLink>
+          }
+        />
       </div>
     </section>
   )
