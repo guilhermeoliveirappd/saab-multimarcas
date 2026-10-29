@@ -29,7 +29,7 @@ export function Hero() {
           <div className="flex max-w-4xl animate-fade-up flex-col items-center">
             <h1
               id="hero-title"
-              className="font-display text-[clamp(1.6rem,7vw,4.75rem)] leading-[1.06] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
+              className="font-display text-[clamp(1.85rem,8.4vw,5rem)] leading-[1.06] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
             >
               {hero.headline.map((line) => (
                 <span key={line} className="block whitespace-nowrap">

@@ -31,7 +31,18 @@ export function AboutPreview() {
     <section aria-labelledby="about-title" className="py-20 lg:py-28">
       <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {a.image ? (
-          <img src={a.image} alt={a.imageAlt} loading="lazy" className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover" />
+          // Proporção original preservada (sem recorte): largura total, altura automática
+          <img
+            src={a.image.src}
+            srcSet={a.image.srcSet}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            width={a.image.width}
+            height={a.image.height}
+            alt={a.image.alt}
+            loading="lazy"
+            decoding="async"
+            className="h-auto w-full rounded-[var(--radius-card)] shadow-[var(--shadow-card-hover)]"
+          />
         ) : (
           <BrandPanel className="aspect-[4/3]" />
         )}

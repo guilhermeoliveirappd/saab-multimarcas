@@ -13,8 +13,8 @@ import { HERO_PHOTO } from '../data/stock-photos'
 export const content = {
   hero: {
     /** Cada item vira uma linha da headline */
-    headline: ['Seu próximo carro.', 'Sua próxima conquista.'],
-    subheadline: 'Explore nosso estoque e encontre o veículo ideal para você.',
+    headline: ['O carro certo', 'para o seu caminho.'],
+    subheadline: 'Explore nosso estoque e encontre um veículo que combina com você.',
     primaryCta: 'Explorar estoque',
     /**
      * Foto do banner. Substitua por uma foto oficial (ex.: { url: '/media/hero.jpg' }),
@@ -67,9 +67,18 @@ export const content = {
     provisional: true,
     title: 'Revenda multimarcas em Presidente Prudente',
     cta: 'Conheça a SAAB',
-    /** Substitua por foto real da fachada ou da equipe (ex.: '/media/fachada.jpg') */
-    image: null as string | null,
-    imageAlt: 'Fachada da SAAB Multimarcas',
+    /**
+     * Foto real da fachada (fornecida pela SAAB). Proporção original 4:3 preservada.
+     * Para trocar: substitua os arquivos em public/media/ e ajuste width/height.
+     * `null` = exibe o painel com a marca.
+     */
+    image: {
+      src: '/media/fachada-saab-1448.webp',
+      srcSet: '/media/fachada-saab-800.webp 800w, /media/fachada-saab-1448.webp 1448w',
+      width: 1448,
+      height: 1086,
+      alt: 'Fachada da SAAB Multimarcas, com o letreiro "Compra, Venda, Troca, Financia", na Avenida Joaquim Constantino, em Presidente Prudente',
+    } as { src: string; srcSet: string; width: number; height: number; alt: string } | null,
   },
 
   aboutPage: {

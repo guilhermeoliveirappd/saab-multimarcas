@@ -148,10 +148,13 @@ export default function VehicleDetailPage() {
           </div>
 
           <aside className="text-center lg:sticky lg:top-28 lg:self-start">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <StatusBadge status={v.status} />
-            </div>
-            <p className="eyebrow mt-5 text-ink-400">{v.brand}</p>
+            {/* Só sinaliza situações que mudam a negociação (reservado/vendido) */}
+            {v.status !== 'disponivel' && (
+              <div className="mb-5 flex justify-center">
+                <StatusBadge status={v.status} />
+              </div>
+            )}
+            <p className="eyebrow text-ink-400">{v.brand}</p>
             <h1 className="mt-2 font-display text-3xl leading-[1.05] font-extrabold text-ink-950 sm:text-4xl">
               {v.model} <span className="block text-xl font-bold text-ink-500 sm:text-2xl">{v.version}</span>
             </h1>
@@ -199,14 +202,21 @@ export default function VehicleDetailPage() {
           </aside>
         </div>
 
-        <div className="mx-auto mt-14 max-w-3xl space-y-12 text-center">
+        {/* Descrição e opcionais: lado a lado no desktop, empilhados no mobile */}
+        <div className={`mt-12 grid gap-6 lg:mt-14 lg:gap-8 ${v.options.length > 0 ? 'lg:grid-cols-2' : ''}`}>
+          <section aria-labelledby="desc-title" className="rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-ink-100 sm:p-8">
+            <h2 id="desc-title" className="font-display text-xl font-bold text-ink-950 sm:text-2xl">Descrição</h2>
+            <span className="mt-3 block h-1 w-8 rounded-full bg-accent" aria-hidden="true" />
+            <p className="mt-5 leading-relaxed whitespace-pre-line text-ink-600">{v.description || 'Descrição em breve.'}</p>
+          </section>
           {v.options.length > 0 && (
-            <section aria-labelledby="options-title">
-              <h2 id="options-title" className="font-display text-2xl font-bold text-ink-950">Opcionais</h2>
-              <ul className="mt-5 flex flex-wrap justify-center gap-2">
+            <section aria-labelledby="options-title" className="rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-ink-100 sm:p-8">
+              <h2 id="options-title" className="font-display text-xl font-bold text-ink-950 sm:text-2xl">Opcionais</h2>
+              <span className="mt-3 block h-1 w-8 rounded-full bg-accent" aria-hidden="true" />
+              <ul className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
                 {v.options.map((o) => (
-                  <li key={o} className="inline-flex items-center gap-2 rounded-full bg-ink-50 py-1.5 pr-4 pl-2 text-sm text-ink-700 ring-1 ring-ink-100">
-                    <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent text-white">
+                  <li key={o} className="flex items-start gap-2.5 text-[15px] leading-snug text-ink-700">
+                    <span className="mt-px grid size-5 shrink-0 place-items-center rounded-full bg-accent text-white">
                       <Check size={12} aria-hidden="true" />
                     </span>
                     {o}
@@ -215,10 +225,8 @@ export default function VehicleDetailPage() {
               </ul>
             </section>
           )}
-          <section aria-labelledby="desc-title">
-            <h2 id="desc-title" className="font-display text-2xl font-bold text-ink-950">Descrição</h2>
-            <p className="mx-auto mt-4 max-w-xl leading-relaxed text-balance whitespace-pre-line text-ink-600">{v.description || 'Descrição em breve.'}</p>
-          </section>
+        </div>
+        <div className="mt-10 text-center">
           <Link to="/estoque" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-600 hover:text-ink-950">
             <ArrowLeft size={16} aria-hidden="true" /> Voltar ao estoque
           </Link>
