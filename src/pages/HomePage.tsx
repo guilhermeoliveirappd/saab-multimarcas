@@ -1,7 +1,6 @@
 import { env } from '@/config/env'
 import { useSeo } from '@/lib/seo'
 import { STATIC_PAGES, dealerJsonLd } from '@/lib/seo-meta'
-import { AboutPreview } from '@/components/home/AboutPreview'
 import { FeaturedVehicles } from '@/components/home/FeaturedVehicles'
 import { Hero } from '@/components/home/Hero'
 import { LocationContact } from '@/components/home/LocationContact'
@@ -15,7 +14,6 @@ export default function HomePage() {
       <Hero />
       <FeaturedVehicles />
       <Services />
-      <AboutPreview />
       <Testimonials />
       <LocationContact />
     </>

@@ -174,7 +174,7 @@ Itens provisórios — nada disso aparece como aviso na interface; blocos sem da
 | Logotipo oficial e tom exato de azul | `site.ts` (`logo`) e `index.css` (`--color-brand*`) | Logotipo tipográfico + `#1254B8` |
 | História e propósito | `content.aboutPage.history/purpose` | Blocos ocultos |
 | Diferenciais (página Sobre) | `content.differentials` | Textos genéricos a validar |
-| Foto da fachada | `public/media/fachada-saab-*.webp` (`content.about.image`) | **Recebida e aplicada** na seção "Conheça a SAAB" (V6) |
+| Foto da fachada | `public/media/fachada-saab-*.webp` (`content.about.image`) | **Recebida e aplicada** na seção "Venha conhecer a SAAB" da home (V8) |
 | Fotos da equipe/loja (galeria Sobre Nós) | `content.aboutPage.gallery` | Bloco oculto até receber |
 | Fotos do estoque real (substituem as de terceiros e dispensam atribuição) | Painel `/admin` | Fotos CC BY-SA com atribuição em `/informacoes-legais` |
 | Backend da ficha de financiamento | `VITE_FINANCING_ENDPOINT` | Somente interface; envio desativado |

@@ -1,10 +1,11 @@
-import { Clock, MapPin, MapPinned, Navigation, Phone } from 'lucide-react'
+import { ArrowRight, Clock, MapPin, MapPinned, Navigation, Phone } from 'lucide-react'
 import { env } from '@/config/env'
 import { formatAddress, mapsLinks, siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
 import { buildWhatsAppUrl, generalMessage } from '@/lib/whatsapp'
 import { InstagramIcon, WhatsAppIcon } from '@/components/ui/BrandIcons'
-import { ButtonAnchor } from '@/components/ui/Button'
+import { ButtonAnchor, ButtonLink } from '@/components/ui/Button'
+import { BrandPanel } from './BrandPanel'
 import { content } from '@/config/content'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
@@ -176,12 +177,62 @@ export function LocationBlock({ trackingLocation }: { trackingLocation: string }
   )
 }
 
+/**
+ * Home — "Venha conhecer a SAAB": conteúdo (endereço e ações) ao lado da foto
+ * real da fachada. Sem foto cadastrada, exibe o painel com a marca.
+ */
 export function LocationContact() {
+  const { address } = siteConfig
+  const { title, aboutCta, facade } = content.location
   return (
-    <section aria-labelledby="location-title" className="bg-ink-50 py-20 lg:py-28">
-      <div className="container-site">
-        <SectionHeading id="location-title" title={content.location.title} className="mb-12" />
-        <LocationBlock trackingLocation="home_location" />
+    <section aria-labelledby="location-title" className="bg-white py-20 lg:py-28">
+      <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+        <div className="flex flex-col items-center text-center">
+          <SectionHeading id="location-title" title={title} />
+          {address.confirmed && (
+            <address className="mt-6 flex flex-col items-center not-italic">
+              <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
+                <MapPin size={20} aria-hidden="true" />
+              </span>
+              <span className="mt-3 text-lg font-semibold text-ink-950">{address.street}</span>
+              <span className="mt-0.5 text-ink-500">{[address.district, siteConfig.city, siteConfig.state].filter(Boolean).join(' — ')}</span>
+            </address>
+          )}
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            {address.confirmed && (
+              <ButtonAnchor
+                href={mapsLinks.route}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                size="lg"
+                onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'maps', location: 'home_location' } })}
+              >
+                <Navigation size={17} aria-hidden="true" /> Como chegar
+              </ButtonAnchor>
+            )}
+            <ButtonLink to="/sobre" variant="outline" size="lg">
+              {aboutCta} <ArrowRight size={17} aria-hidden="true" />
+            </ButtonLink>
+          </div>
+        </div>
+
+        {facade ? (
+          // Proporção original preservada (sem recorte): fachada e logotipo inteiros
+          <img
+            src={facade.src}
+            srcSet={facade.srcSet}
+            sizes="(min-width: 1280px) 700px, (min-width: 1024px) 55vw, 100vw"
+            width={facade.width}
+            height={facade.height}
+            alt={facade.alt}
+            loading="lazy"
+            decoding="async"
+            className="h-auto w-full rounded-[var(--radius-card)] shadow-[var(--shadow-card-hover)] ring-1 ring-ink-100"
+          />
+        ) : (
+          <BrandPanel className="aspect-[4/3]" />
+        )}
       </div>
     </section>
   )

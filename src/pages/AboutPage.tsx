@@ -1,7 +1,7 @@
 import { content } from '@/config/content'
 import { useSeo } from '@/lib/seo'
 import { STATIC_PAGES } from '@/lib/seo-meta'
-import { BrandPanel } from '@/components/home/AboutPreview'
+import { BrandPanel } from '@/components/home/BrandPanel'
 import { Differentials } from '@/components/home/Differentials'
 import { LocationBlock } from '@/components/home/LocationContact'
 import { PageHeader } from '@/components/ui/PageHeader'

@@ -29,7 +29,7 @@ export function Hero() {
           <div className="flex max-w-4xl animate-fade-up flex-col items-center">
             <h1
               id="hero-title"
-              className="font-display text-[clamp(1.85rem,8.4vw,5rem)] leading-[1.06] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
+              className="font-display text-[clamp(1.375rem,7.15vw,4.6rem)] leading-[1.08] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
             >
               {hero.headline.map((line) => (
                 <span key={line} className="block whitespace-nowrap">
@@ -45,8 +45,7 @@ export function Hero() {
                 </span>
               ))}
             </h1>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-balance text-white/85 sm:max-w-xl sm:text-lg">{hero.subheadline}</p>
-            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-9 px-9">
+            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-10 px-9 lg:mt-12">
               {hero.primaryCta}
               <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
             </ButtonLink>
