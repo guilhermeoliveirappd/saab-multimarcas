@@ -13,16 +13,20 @@ export function buildWhatsAppUrl(message: string, phone: string): string {
 }
 
 export function generalMessage(): string {
-  return `Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de falar com um especialista.`
+  return `Olá! Vim pelo site da ${siteConfig.name} e gostaria de mais informações.`
 }
 
-export function vehicleInterestMessage(
-  v: Pick<Vehicle, 'brand' | 'model' | 'version' | 'yearManufacture' | 'yearModel'>,
-  pageUrl?: string,
-): string {
-  const label = `${v.brand} / ${v.model} / ${v.version} / ${formatYears(v)}`
-  const base = `Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de saber mais sobre o veículo ${label}. Ele ainda está disponível?`
-  return pageUrl ? `${base}\n\n${pageUrl}` : base
+/** Ano exibido na mensagem: "2023" se fabricação = modelo, senão "2022/2023". */
+const yearLabel = (v: Pick<Vehicle, 'yearManufacture' | 'yearModel'>) =>
+  v.yearManufacture === v.yearModel ? String(v.yearModel) : formatYears(v)
+
+/**
+ * Mensagem do CTA do veículo — texto definido pelo cliente:
+ * "Olá! Vi o [MARCA] [MODELO] [VERSÃO] [ANO] no site da Robcar Veículos e
+ * gostaria de mais informações. Ele ainda está disponível?"
+ */
+export function vehicleInterestMessage(v: Pick<Vehicle, 'brand' | 'model' | 'version' | 'yearManufacture' | 'yearModel'>): string {
+  return `Olá! Vi o ${v.brand} ${v.model} ${v.version} ${yearLabel(v)} no site da ${siteConfig.name} e gostaria de mais informações. Ele ainda está disponível?`
 }
 
 export interface TradeInData {
@@ -37,7 +41,7 @@ export interface TradeInData {
 export function tradeInMessage(d: TradeInData): string {
   const km = Number(d.mileage.replace(/\D/g, ''))
   const lines = [
-    `Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de solicitar uma avaliação do meu veículo para ${d.intent === 'vender' ? 'venda' : 'troca'}.`,
+    `Olá! Vim pelo site da ${siteConfig.name} e gostaria de solicitar uma avaliação do meu veículo para ${d.intent === 'vender' ? 'venda' : 'troca'}.`,
     '',
     `• Marca: ${d.brand.trim()}`,
     `• Modelo: ${d.model.trim()}`,
@@ -51,5 +55,5 @@ export function tradeInMessage(d: TradeInData): string {
 /** Só identifica o veículo — nunca inclui dados pessoais da ficha. */
 export function financingMessage(vehicleName?: string): string {
   const about = vehicleName ? ` do veículo ${vehicleName}` : ''
-  return `Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de informações sobre o financiamento${about}.`
+  return `Olá! Vim pelo site da ${siteConfig.name} e gostaria de informações sobre o financiamento${about}.`
 }

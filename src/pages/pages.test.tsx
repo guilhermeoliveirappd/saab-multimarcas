@@ -37,7 +37,8 @@ describe('VehicleDetailPage', () => {
     const links = screen.getAllByRole('link', { name: /Tenho interesse/ })
     const href = links[0].getAttribute('href')!
     expect(href).toMatch(/^https:\/\/wa\.me\//)
-    expect(decodeURIComponent(href)).toContain('BMW / 320i / M Sport 2.0 Turbo / 2023/2023')
+    expect(decodeURIComponent(href)).toContain('Vi o BMW 320i M Sport 2.0 Turbo 2023 no site da Robcar Veículos')
+    expect(href).toMatch(/^https:\/\/wa\.me\/5518997841331\?/)
     const related = screen.getByRole('heading', { name: 'Veículos relacionados' }).closest('section')!
     expect(within(related).getAllByRole('article')).toHaveLength(3)
   })

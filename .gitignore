@@ -7,3 +7,6 @@ dist
 .DS_Store
 coverage
 .vercel
+
+# Fotos originais (não versionar — use npm run photos:*)
+fotos-originais

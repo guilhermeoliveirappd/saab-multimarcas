@@ -6,6 +6,8 @@ const ICONS: Record<string, LucideIcon> = { messages: MessagesSquare, search: Se
 
 export function Differentials() {
   const d = content.differentials
+  // Oculto até a empresa validar os diferenciais (content.differentials.enabled)
+  if (!d.enabled) return null
   return (
     <section aria-labelledby="diff-title" className="relative isolate overflow-hidden bg-brand-deep py-20 text-white lg:py-24">
       <div className="absolute -top-40 left-1/2 -z-10 h-80 w-[48rem] max-w-full -translate-x-1/2 rounded-full bg-brand/35 blur-3xl" aria-hidden="true" />

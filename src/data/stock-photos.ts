@@ -2,7 +2,7 @@ import type { ImageCredit, VehicleImage } from '../types/vehicle'
 
 /**
  * Fotografias reais de terceiros usadas nos veículos de EXEMPLO e no banner.
- * (Documentação interna: não são fotos do estoque da SAAB.)
+ * (Documentação interna: NÃO são fotos do estoque da Robcar — veículos de exemplo.)
  *
  * Fontes e licenças:
  * - Pexels (Licença Pexels): uso livre, sem atribuição obrigatória.
@@ -124,14 +124,15 @@ export const STOCK_GALLERIES: Record<string, PhotoSet> = {
 export const galleryFiles = (set: PhotoSet): string[] => set.numbers.map((n) => `${set.prefix}_(${n}).jpg`)
 
 /**
- * Banner principal: BMW azul em garagem (Pexels). Se não carregar, tenta as
- * alternativas na ordem — o banner nunca fica sem fotografia real.
+ * Banner principal: carro vermelho à noite (Pexels, sem atribuição obrigatória).
+ * Se não carregar, tenta as alternativas vermelhas na ordem e, por fim, a
+ * ilustração local — o banner nunca fica quebrado.
  */
 export const HERO_PHOTO: VehicleImage = {
-  ...pexelsImage(10945892, 'a-parked-blue-bmw-car', 'Alex Urezkov', 'BMW azul estacionado em garagem'),
+  ...pexelsImage(14609318, 'red-car-at-night', null, 'Carro vermelho à noite'),
   alternates: [
-    pexelsImage(17539749, 'blue-mercedes-benz-car-parked-on-a-rural-road', null, 'Mercedes-AMG azul em estrada'),
-    pexelsImage(6920503, 'blue-bmw-car-on-the-road', null, 'BMW azul em rua de Berlim'),
+    pexelsImage(3729464, 'photo-of-red-car-parked', null, 'Carro vermelho estacionado'),
+    pexelsImage(17075639, 'red-sports-bmw-car', null, 'BMW esportivo vermelho'),
   ],
   fallbackUrl: '/demo/hero-car.svg',
 }

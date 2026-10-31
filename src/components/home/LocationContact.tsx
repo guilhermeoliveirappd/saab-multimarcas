@@ -16,7 +16,7 @@ function formatWhatsApp(digits: string): string {
 
 /** Lista de canais e informações de contato (reutilizada na home e em /contato). */
 export function ContactDetails() {
-  const { address, businessHours, social, phoneDisplay } = siteConfig
+  const { address, businessHours, social, phones } = siteConfig
   // Só exibe dados confirmados em src/config/site.ts — nada de "a confirmar" na interface
   const rows = [
     {
@@ -64,7 +64,15 @@ export function ContactDetails() {
         </a>
       ),
     },
-    ...(phoneDisplay ? [{ icon: Phone, label: 'Telefone', value: phoneDisplay }] : []),
+    ...phones.map((phone) => ({
+      icon: Phone,
+      label: phone.label,
+      value: (
+        <a href={`tel:${phone.e164}`} className="underline decoration-ink-300 underline-offset-4 hover:decoration-ink-950">
+          {phone.display}
+        </a>
+      ),
+    })),
     {
       icon: InstagramIcon,
       label: 'Instagram',
@@ -178,14 +186,18 @@ export function LocationBlock({ trackingLocation }: { trackingLocation: string }
 }
 
 /**
- * Home — "Venha conhecer a SAAB": conteúdo (endereço e ações) ao lado da foto
+ * Home — "Venha conhecer a Robcar": conteúdo (endereço e ações) ao lado da foto
  * real da fachada. Sem foto cadastrada, exibe o painel com a marca.
  */
 export function LocationContact() {
   const { address } = siteConfig
   const { title, aboutCta, facade } = content.location
   return (
-    <section aria-labelledby="location-title" className="bg-white py-20 lg:py-28">
+    // Alterna o fundo com a seção anterior (Serviços só aparece com venda/troca confirmadas)
+    <section
+      aria-labelledby="location-title"
+      className={`py-20 lg:py-28 ${siteConfig.services.sell || siteConfig.services.trade ? 'bg-white' : 'bg-ink-50'}`}
+    >
       <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
         <div className="flex flex-col items-center text-center">
           <SectionHeading id="location-title" title={title} />

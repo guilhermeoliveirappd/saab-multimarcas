@@ -1,24 +1,25 @@
 /**
- * Textos comerciais centralizados. Revise aqui sem tocar nos componentes.
+ * Textos comerciais da Robcar Veículos, centralizados. Revise aqui sem tocar
+ * nos componentes.
  *
- * Diretriz de layout (V2): textos centralizados e cada bloco com NO MÁXIMO
- * duas linhas no desktop e no mobile — mantenha os textos curtos.
+ * Diretriz de layout: textos centralizados e cada bloco com NO MÁXIMO duas
+ * linhas no desktop e no mobile — mantenha os textos curtos.
  *
- * `provisional: true` é apenas DOCUMENTAÇÃO INTERNA: o texto ainda depende de
- * validação do cliente. Nada disso é exibido na interface (ver README,
- * seção "Pendências do cliente").
+ * Regra: nenhum diferencial, prazo, garantia ou condição sem confirmação da
+ * Robcar. Blocos dependentes de validação ficam desligados (`enabled: false`)
+ * e as pendências estão no README ("Pendências do cliente").
  */
 import { HERO_PHOTO } from '../data/stock-photos'
+import { brand } from './brand'
+
+type FacadePhoto = { src: string; srcSet: string; width: number; height: number; alt: string }
 
 export const content = {
   hero: {
-    /** Cada item vira uma linha da headline */
-    headline: ['Bons negócios começam', 'com boas escolhas.'],
+    /** Headline PROVISÓRIA (validar com o cliente). Cada item vira uma linha. */
+    headline: ['Seu próximo destino', 'começa na Robcar.'],
     primaryCta: 'Explorar estoque',
-    /**
-     * Foto do banner. Substitua por uma foto oficial (ex.: { url: '/media/hero.jpg' }),
-     * idealmente 2400px de largura, WebP/AVIF.
-     */
+    /** Foto do banner. Para trocar, edite HERO_PHOTO em src/data/stock-photos.ts */
     image: HERO_PHOTO,
   },
 
@@ -32,14 +33,18 @@ export const content = {
     cta: 'Ver estoque completo',
   },
 
+  /**
+   * "Por que escolher" — DESLIGADO até a Robcar validar os diferenciais.
+   * Os itens abaixo são neutros (descrevem o site, não a empresa); revise antes
+   * de ativar. Nunca exibido na home.
+   */
   differentials: {
-    provisional: true,
-    title: 'Por que escolher a SAAB',
+    enabled: false,
+    title: `Por que escolher a ${brand.shortName}`,
     items: [
-      { icon: 'messages', title: 'Atendimento próximo', text: 'Fale direto com a equipe pelo WhatsApp.' },
+      { icon: 'messages', title: 'Atendimento direto', text: 'Fale com a equipe pelo WhatsApp ou telefone.' },
       { icon: 'search', title: 'Informação clara', text: 'Fotos, ficha técnica e opcionais em um só lugar.' },
-      { icon: 'handshake', title: 'Negociação transparente', text: 'Condições diretas para você decidir com calma.' },
-      { icon: 'map', title: 'Loja em Prudente', text: 'Conheça os veículos pessoalmente.' },
+      { icon: 'map', title: `Loja em ${brand.city}`, text: 'Conheça os veículos pessoalmente.' },
     ],
   },
 
@@ -63,9 +68,8 @@ export const content = {
   },
 
   aboutPage: {
-    provisional: true,
-    title: 'Sobre a SAAB Multimarcas',
-    intro: 'Revenda de veículos multimarcas em Presidente Prudente (SP).',
+    title: `Sobre a ${brand.name}`,
+    intro: `Revenda de veículos em ${brand.city} (${brand.state}).`,
     /** História e propósito: preencher com o texto oficial. `null` = bloco oculto. */
     history: null as { title: string; text: string } | null,
     purpose: null as { title: string; text: string } | null,
@@ -73,27 +77,25 @@ export const content = {
   },
 
   location: {
-    title: 'Venha conhecer a SAAB',
+    title: `Venha conhecer a ${brand.shortName}`,
     /** Link para a página Sobre Nós */
-    aboutCta: 'Conheça a SAAB',
+    aboutCta: `Conheça a ${brand.shortName}`,
     /**
-     * Foto real da fachada (fornecida pela SAAB). Proporção original 4:3 preservada.
-     * Para trocar: substitua os arquivos em public/media/ e ajuste width/height.
-     * `null` = exibe o painel com a marca.
+     * Foto real da fachada vermelha da Robcar — AGUARDANDO ARQUIVO.
+     * Ao receber: salve em public/media/fachada-robcar-800.webp e
+     * fachada-robcar-1600.webp (ou rode `npm run photos:fachada`) e preencha:
+     *   { src: '/media/fachada-robcar-1600.webp',
+     *     srcSet: '/media/fachada-robcar-800.webp 800w, /media/fachada-robcar-1600.webp 1600w',
+     *     width: <largura>, height: <altura>,
+     *     alt: 'Fachada da Robcar Veículos na Rua Armando Sales, em Osvaldo Cruz' }
+     * `null` = exibe o painel com o wordmark (nunca uma fachada de outra loja).
      */
-    facade: {
-      src: '/media/fachada-saab-1448.webp',
-      srcSet: '/media/fachada-saab-800.webp 800w, /media/fachada-saab-1448.webp 1448w',
-      width: 1448,
-      height: 1086,
-      alt: 'Fachada da SAAB Multimarcas, com o letreiro "Compra, Venda, Troca, Financia", na Avenida Joaquim Constantino, em Presidente Prudente',
-    } as { src: string; srcSet: string; width: number; height: number; alt: string } | null,
+    facade: null as FacadePhoto | null,
   },
 
   sellTrade: {
     title: 'Venda ou troque seu veículo',
     description: 'Preencha os dados e envie pelo WhatsApp para avaliação.',
-    provisionalSteps: true,
     steps: [
       { title: 'Conte sobre o carro', text: 'Marca, modelo, ano e quilometragem.' },
       { title: 'Envie pelo WhatsApp', text: 'A mensagem é montada automaticamente.' },
@@ -111,8 +113,8 @@ export const content = {
   },
 
   contact: {
-    title: 'Fale com a SAAB',
-    description: 'Atendimento pelo WhatsApp e pelo Instagram.',
+    title: `Fale com a ${brand.shortName}`,
+    description: 'Atendimento por WhatsApp, telefone e Instagram.',
   },
 }
 

@@ -2,7 +2,7 @@
  * Ficha de financiamento — definição de campos, máscaras e validação (puro).
  *
  * Minimização de dados (LGPD): campos sensíveis (CPF, RG, CNH, filiação, data de
- * nascimento) e campos cuja necessidade ainda não foi validada pela SAAB ficam
+ * nascimento) e campos cuja necessidade ainda não foi validada pela Robcar ficam
  * DESLIGADOS por padrão em `FINANCING_FLAGS`. Só ative após validação jurídica
  * e com o backend seguro configurado.
  */
@@ -10,7 +10,7 @@
 export const FINANCING_FLAGS = {
   /** CPF, RG, CNH, data de nascimento e filiação — exige validação jurídica */
   sensitiveFields: false,
-  /** Tipo/tempo de residência e tempo de emprego — aguardando validação da SAAB */
+  /** Tipo/tempo de residência e tempo de emprego — aguardando validação da Robcar */
   pendingValidationFields: false,
 }
 
@@ -28,7 +28,7 @@ export interface FieldDef {
   placeholder?: string
   /** Dado pessoal sensível ou de alto risco — desligado por padrão */
   sensitive?: boolean
-  /** Necessidade ainda não validada pela SAAB — desligado por padrão */
+  /** Necessidade ainda não validada pela Robcar — desligado por padrão */
   pendingValidation?: boolean
 }
 

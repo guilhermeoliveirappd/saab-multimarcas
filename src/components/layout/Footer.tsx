@@ -41,7 +41,7 @@ function ContactItem({ icon, children }: { icon: ReactNode; children: ReactNode 
 
 export function Footer() {
   const year = new Date().getFullYear()
-  const { address, phoneDisplay, email, social } = siteConfig
+  const { address, phones, email, social } = siteConfig
   const external = { target: '_blank', rel: 'noopener noreferrer' } as const
 
   return (
@@ -55,7 +55,7 @@ export function Footer() {
             <Logo tone="light" />
           </Link>
           <p lang="pt-BR" className="mt-6 max-w-[17.5rem] text-justify text-[15px] leading-7 text-white/70 [text-justify:inter-word]">
-            Revenda de veículos multimarcas em {siteConfig.city} ({siteConfig.state}).
+            Revenda de veículos em {siteConfig.city} ({siteConfig.state}).
           </p>
         </div>
 
@@ -136,13 +136,13 @@ export function Footer() {
                 </a>
               </ContactItem>
             )}
-            {phoneDisplay && (
-              <ContactItem icon={<Phone size={16} aria-hidden="true" />}>
-                <a href={`tel:+${phoneDisplay.replace(/\D/g, '')}`} className={linkClass}>
-                  {phoneDisplay}
+            {phones.map((phone) => (
+              <ContactItem key={phone.e164} icon={<Phone size={16} aria-hidden="true" />}>
+                <a href={`tel:${phone.e164}`} className={linkClass} aria-label={`${phone.label}: ${phone.display}`}>
+                  {phone.display}
                 </a>
               </ContactItem>
-            )}
+            ))}
             {email && (
               <ContactItem icon={<Mail size={16} aria-hidden="true" />}>
                 <a href={`mailto:${email}`} className={linkClass}>

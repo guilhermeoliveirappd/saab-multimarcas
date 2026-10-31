@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { env } from '@/config/env'
+import { siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
 import { buildWhatsAppUrl, generalMessage } from '@/lib/whatsapp'
 import { WhatsAppIcon } from './BrandIcons'
@@ -34,7 +35,7 @@ export function WhatsAppButton({ location, message, vehicle, variant = 'primary'
       }
     >
       {icon && <WhatsAppIcon size={18} />}
-      {children ?? 'Fale com a SAAB'}
+      {children ?? `Fale com a ${siteConfig.shortName}`}
       <span className="sr-only"> (abre o WhatsApp em nova aba)</span>
     </a>
   )

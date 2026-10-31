@@ -1,5 +1,5 @@
 -- ═════════════════════════════════════════════════════════════════════════
--- SAAB Multimarcas — catálogo de veículos (V1)
+-- Robcar Veículos — catálogo de veículos (V1)
 -- Tabelas, RLS e Storage. Execute no SQL Editor do Supabase ou via CLI
 -- (`supabase db push`).
 --

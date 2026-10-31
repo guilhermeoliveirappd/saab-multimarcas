@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { ArrowLeft, ArrowRight, Check, ChevronRight, Info, Loader2, ShieldCheck } from 'lucide-react'
 import { content } from '@/config/content'
+import { siteConfig } from '@/config/site'
 import { useVehicles } from '@/hooks/vehicles-context'
 import { trackEvent } from '@/lib/analytics'
 import { cn } from '@/lib/cn'
@@ -273,7 +274,7 @@ export default function FinancingPage() {
                     <Check size={26} aria-hidden="true" />
                   </span>
                   <h2 className="mt-5 font-display text-2xl font-bold text-ink-950">Solicitação enviada</h2>
-                  <p className="mt-2 max-w-sm text-balance text-ink-500">A equipe da SAAB vai analisar sua ficha e entrar em contato.</p>
+                  <p className="mt-2 max-w-sm text-balance text-ink-500">A equipe da {siteConfig.shortName} vai analisar sua ficha e entrar em contato.</p>
                 </div>
               ) : outcome === 'disabled' ? (
                 <div role="status" className="flex flex-col items-center py-8 text-center">

@@ -17,6 +17,7 @@ import { fileURLToPath } from 'node:url'
 import { loadEnv } from 'vite'
 import { siteConfig } from '../src/config/site.ts'
 import { demoVehicles } from '../src/data/demo-vehicles.ts'
+import { fromStock, robcarStock } from '../src/data/robcar-stock.ts'
 import { STATIC_PAGES, absoluteUrl, dealerJsonLd, fullTitle, vehicleJsonLd, vehicleMeta, type PageMeta } from '../src/lib/seo-meta.ts'
 import { VEHICLE_COLUMNS, fromRow, type VehicleRow } from '../src/services/vehicles/mapper.ts'
 import type { Vehicle } from '../src/types/vehicle.ts'
@@ -34,7 +35,11 @@ if (!siteUrl) console.warn('⚠ VITE_SITE_URL não definido: canonical/og:url fi
 async function loadVehicles(): Promise<{ vehicles: Vehicle[]; source: string }> {
   const url = env.VITE_SUPABASE_URL
   const key = env.VITE_SUPABASE_ANON_KEY
-  if (!url || !key) return { vehicles: demoVehicles, source: 'demonstração' }
+  if (!url || !key) {
+    // Mesma regra do site: estoque real da Robcar quando cadastrado; senão, exemplos
+    if (robcarStock.length > 0) return { vehicles: robcarStock.map(fromStock), source: 'estoque Robcar' }
+    return { vehicles: demoVehicles, source: 'exemplos (apresentação privada)' }
+  }
   try {
     const res = await fetch(`${url}/rest/v1/vehicles?select=${VEHICLE_COLUMNS}&published=eq.true`, {
       headers: { apikey: key, Authorization: `Bearer ${key}` },

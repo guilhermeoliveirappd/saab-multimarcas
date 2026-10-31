@@ -1,9 +1,9 @@
 {
-  "name": "saab-multimarcas",
+  "name": "robcar-veiculos",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Website institucional e catálogo digital de veículos — SAAB Multimarcas",
+  "description": "Website institucional e catálogo digital de veículos — Robcar Veículos (Osvaldo Cruz/SP)",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && tsx scripts/prerender.ts",
@@ -12,7 +12,9 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest",
-    "generate:demo-images": "tsx scripts/generate-demo-images.ts"
+    "generate:demo-images": "tsx scripts/generate-demo-images.ts",
+    "photos:estoque": "tsx scripts/optimize-photos.ts estoque",
+    "photos:fachada": "tsx scripts/optimize-photos.ts fachada"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
@@ -38,6 +40,7 @@
     "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17.13.0",
     "jsdom": "^29.1.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",

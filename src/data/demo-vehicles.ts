@@ -2,7 +2,7 @@ import type { BodyType, Vehicle } from '../types/vehicle'
 import { STOCK_GALLERIES, commonsImage, galleryFiles } from './stock-photos'
 
 /**
- * ⚠️ VEÍCULOS DE EXEMPLO — NÃO SÃO O ESTOQUE DA SAAB.
+ * ⚠️ VEÍCULOS DE EXEMPLO — NÃO SÃO O ESTOQUE DA ROBCAR.
  *
  * Servem apenas para demonstrar o catálogo enquanto o Supabase/estoque oficial
  * não estiver disponível. Preços, quilometragens e opcionais são ilustrativos.

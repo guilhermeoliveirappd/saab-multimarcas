@@ -32,7 +32,7 @@ describe('FinancingPage', () => {
     await user.type(screen.getByRole('textbox', { name: 'Endereço' }), 'Rua Exemplo')
     await user.type(screen.getByLabelText('Número'), '10')
     await user.type(screen.getByLabelText('Bairro'), 'Centro')
-    await user.type(screen.getByLabelText('Cidade'), 'Presidente Prudente')
+    await user.type(screen.getByLabelText('Cidade'), 'Osvaldo Cruz')
     await user.selectOptions(screen.getByLabelText('UF'), 'SP')
     await user.click(screen.getByRole('button', { name: 'Continuar' }))
 

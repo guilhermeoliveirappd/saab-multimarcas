@@ -115,7 +115,7 @@ export function dealerJsonLd(siteUrl: string): Record<string, unknown> | null {
       postalCode: a.zip,
       addressCountry: 'BR',
     },
-    ...(siteConfig.phoneDisplay && { telephone: siteConfig.phoneDisplay }),
+    ...(siteConfig.phones[0] && { telephone: siteConfig.phones[0].e164 }),
     sameAs: [siteConfig.social.instagram, siteConfig.social.facebook, siteConfig.social.youtube].filter(Boolean),
   }
 }

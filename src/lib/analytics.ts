@@ -30,7 +30,7 @@ declare global {
   }
 }
 
-export const CONSENT_KEY = 'saab-analytics-consent'
+export const CONSENT_KEY = 'robcar-analytics-consent'
 export const analyticsEnabled = Boolean(env.gtmId || env.ga4Id)
 
 let initialized = false

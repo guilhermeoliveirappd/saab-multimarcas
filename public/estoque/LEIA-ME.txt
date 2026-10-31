@@ -1,0 +1,2 @@
+Fotos otimizadas do estoque real: public/estoque/<slug>/<arquivo>-640.webp e -1280.webp
+Gere com: npm run photos:estoque

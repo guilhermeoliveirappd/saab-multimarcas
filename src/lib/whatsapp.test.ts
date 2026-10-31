@@ -17,11 +17,11 @@ describe('whatsapp links', () => {
 
   it('identifies the vehicle in the interest message', () => {
     const bmw = demoVehicles.find((v) => v.slug === 'bmw-320i-m-sport-2023')!
-    const msg = vehicleInterestMessage(bmw, 'https://site/veiculos/bmw-320i-m-sport-2023')
-    expect(msg).toContain('site da SAAB Multimarcas')
-    expect(msg).toContain('BMW / 320i / M Sport 2.0 Turbo / 2023/2023')
-    expect(msg).toContain('Ele ainda está disponível?')
-    expect(msg).toContain('https://site/veiculos/bmw-320i-m-sport-2023')
+    expect(vehicleInterestMessage(bmw)).toBe(
+      'Olá! Vi o BMW 320i M Sport 2.0 Turbo 2023 no site da Robcar Veículos e gostaria de mais informações. Ele ainda está disponível?',
+    )
+    // Anos de fabricação e modelo diferentes aparecem como "2022/2023"
+    expect(vehicleInterestMessage({ ...bmw, yearManufacture: 2022 })).toContain('M Sport 2.0 Turbo 2022/2023 no site')
   })
 
   it('structures the trade-in message with the filled fields', () => {

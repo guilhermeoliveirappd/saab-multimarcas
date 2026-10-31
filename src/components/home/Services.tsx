@@ -20,11 +20,12 @@ export function Services() {
       key: 'trade',
       icon: Repeat,
       ...s.trade,
-      href: buildWhatsAppUrl(`Olá! Estava navegando pelo site da ${siteConfig.name} e gostaria de usar meu veículo na troca por outro do estoque.`, env.whatsappNumber),
+      href: buildWhatsAppUrl(`Olá! Vim pelo site da ${siteConfig.name} e gostaria de usar meu veículo na troca por outro do estoque.`, env.whatsappNumber),
     },
   ].filter(Boolean) as Array<{ key: string; icon: typeof CarFront; title: string; text: string; cta: string; to?: string; href?: string }>
 
-  if (cards.length === 0) return null
+  // O título "Compre, venda ou troque" só faz sentido com venda/troca confirmadas
+  if (cards.length === 0 || (!flags.sell && !flags.trade)) return null
 
   return (
     <section aria-labelledby="services-title" className="bg-ink-50 py-20 lg:py-28">

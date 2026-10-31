@@ -110,8 +110,7 @@ export default function VehicleDetailPage() {
 
   const v = vehicle
   const name = vehicleFullName(v)
-  const pageUrl = `${siteUrl}/veiculos/${v.slug}`
-  const message = vehicleInterestMessage(v, pageUrl)
+  const message = vehicleInterestMessage(v)
   const sold = v.status === 'vendido'
   const specs = [
     { icon: Calendar, label: 'Ano fab./modelo', value: formatYears(v) },

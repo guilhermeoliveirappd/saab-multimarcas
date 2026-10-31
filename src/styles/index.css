@@ -3,20 +3,28 @@
 @import '@fontsource-variable/dm-sans/wght.css';
 
 /*
- * ─── Design system SAAB Multimarcas ─────────────────────────────────────────
- * Cor principal da marca: AZUL (provisório #1254B8 até receber o tom exato do
- * logotipo oficial). Combinada com branco, preto e cinzas.
- * Para trocar, altere apenas --color-brand* abaixo — os aliases --color-accent*
- * apontam para elas. Contraste do branco sobre #1254B8: 7:1 (WCAG AAA).
+ * ─── Design system Robcar Veículos ──────────────────────────────────────────
+ * Identidade inspirada na fachada vermelha da loja: VERMELHO como cor de ação,
+ * preto/grafite nas áreas de contraste, branco e cinzas neutros.
+ *
+ * Para ajustar a cor da marca (ex.: após conferir a fachada real), altere
+ * apenas --brand-primary e seus derivados abaixo. Os aliases --color-accent*
+ * apontam para --color-brand*. Contraste do branco sobre #B91C1C: 6,5:1 (AA).
  */
+:root {
+  --brand-primary: #b91c1c;
+  --brand-primary-hover: #991b1b;
+}
+
 @theme {
-  --color-brand: #1254b8;
-  --color-brand-hover: #0e4496;
-  --color-brand-soft: #e8f0fc;
-  --color-brand-light: #8fb6f0;
-  /* Azul profundo (rodapé e superfícies escuras da marca) */
-  --color-brand-deep: #0a2350;
-  --color-brand-night: #071a3d;
+  --color-brand: var(--brand-primary);
+  --color-brand-hover: var(--brand-primary-hover);
+  --color-brand-soft: #fdecec;
+  /* Vermelho claro para detalhes sobre fundos escuros (contraste ≥ 4.5:1 no grafite) */
+  --color-brand-light: #f87171;
+  /* Grafite (rodapé, seções escuras) */
+  --color-brand-deep: #17171a;
+  --color-brand-night: #0e0e10;
 
   --color-accent: var(--color-brand);
   --color-accent-hover: var(--color-brand-hover);
