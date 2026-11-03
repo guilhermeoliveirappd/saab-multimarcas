@@ -16,11 +16,11 @@ const DESKTOP_MEDIA = '(min-width: 1024px)'
 function HeroPicture() {
   const { image, imageMobile } = content.hero
   const [failed, setFailed] = useState(false)
-  // Foto deslocada para baixo (top-20 / sm:top-28 / lg:top-12) para o carro
+  // Foto deslocada para baixo (top-20 / sm:top-28 / lg:top-8 / xl:top-12) para o carro
   // ficar abaixo do texto; o topo some em fade sob o cabeçalho. A faixa sob o
   // card de busca (4rem / 5rem) é coberta por fundo escuro.
   const className =
-    'absolute inset-x-0 top-20 -z-20 h-[calc(100%-4rem)] w-full object-cover object-[50%_100%] [mask-image:linear-gradient(to_bottom,transparent,#000_7rem)] sm:top-28 lg:top-12 lg:h-[calc(100%-5rem)]'
+    'absolute inset-x-0 top-20 -z-20 h-[calc(100%-4rem)] w-full object-cover object-[50%_100%] [mask-image:linear-gradient(to_bottom,transparent,#000_7rem)] sm:top-28 lg:top-8 lg:h-[calc(100%-5rem)] xl:top-12'
 
   if (failed) {
     return <img src={image.fallbackUrl} alt="" aria-hidden="true" className={className} />
