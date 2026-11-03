@@ -9,18 +9,20 @@
  * Robcar. Blocos dependentes de validação ficam desligados (`enabled: false`)
  * e as pendências estão no README ("Pendências do cliente").
  */
-import { HERO_PHOTO } from '../data/stock-photos'
+import { HERO_PHOTO, HERO_PHOTO_MOBILE } from '../data/stock-photos'
 import { brand } from './brand'
 
 type FacadePhoto = { src: string; srcSet: string; width: number; height: number; alt: string }
 
 export const content = {
   hero: {
-    /** Headline PROVISÓRIA (validar com o cliente). Cada item vira uma linha. */
-    headline: ['O carro chama atenção.', 'O negócio faz a diferença.'],
+    /** Headline (V11). Cada item vira uma linha no desktop. */
+    headline: ['Seu próximo carro pode estar', 'mais perto do que você imagina.'],
     primaryCta: 'Explorar estoque',
     /** Foto do banner. Para trocar, edite HERO_PHOTO em src/data/stock-photos.ts */
     image: HERO_PHOTO,
+    /** Foto vertical usada abaixo de 1024px (mesma atmosfera da foto do desktop) */
+    imageMobile: HERO_PHOTO_MOBILE,
   },
 
   quickSearch: {

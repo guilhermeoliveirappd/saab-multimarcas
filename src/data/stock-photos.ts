@@ -44,10 +44,16 @@ const PEXELS_WIDTHS = [960, 1280, 1920, 2560] as const
 export const pexelsUrl = (id: number, width: number): string =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${width}`
 
-export function pexelsImage(id: number, slug: string, author: string | null, alt: string): VehicleImage {
+export function pexelsImage(
+  id: number,
+  slug: string,
+  author: string | null,
+  alt: string,
+  widths: readonly number[] = PEXELS_WIDTHS,
+): VehicleImage {
   return {
-    url: pexelsUrl(id, 1920),
-    srcSet: PEXELS_WIDTHS.map((w) => `${pexelsUrl(id, w)} ${w}w`).join(', '),
+    url: pexelsUrl(id, widths.includes(1920) ? 1920 : widths[widths.length - 1]),
+    srcSet: widths.map((w) => `${pexelsUrl(id, w)} ${w}w`).join(', '),
     alt,
     credit: { author: author ?? 'Pexels', license: 'Licença Pexels', sourceUrl: `https://www.pexels.com/photo/${slug}-${id}/` },
   }
@@ -124,16 +130,19 @@ export const STOCK_GALLERIES: Record<string, PhotoSet> = {
 export const galleryFiles = (set: PhotoSet): string[] => set.numbers.map((n) => `${set.prefix}_(${n}).jpg`)
 
 /**
- * Banner principal — fotos HORIZONTAIS verificadas (dimensões e enquadramento
- * conferidos em contact sheet): carro inteiro, sem cortes. Pexels, sem
- * atribuição obrigatória. (As anteriores, 14609318 e 17075639, eram retrato
- * 2:3 e cortavam o carro.) Se não carregar, tenta as alternativas na ordem.
+ * Banner principal (V11). Duas fotos com a mesma atmosfera — SUV branco à
+ * noite — escolhidas pelo enquadramento (conferidas em simulação de corte):
+ * - desktop: horizontal 3:2, céu amplo acima do carro para a headline;
+ * - celular: vertical 2:3, carro inteiro na metade inferior.
+ * O componente usa <picture>: o navegador baixa só a foto do formato da tela.
+ * Pexels, sem atribuição obrigatória.
  */
 export const HERO_PHOTO: VehicleImage = {
-  ...pexelsImage(14277553, 'photo-of-an-expensive-red-car', null, 'Sedã esportivo vermelho em vista três-quartos'),
-  alternates: [
-    pexelsImage(3729464, 'photo-of-red-car-parked', null, 'Mercedes-AMG GT vermelho estacionado'),
-    pexelsImage(30180604, 'iconic-red-sports-car-in-paris-garage', null, 'Esportivo vermelho em garagem'),
-  ],
+  ...pexelsImage(30962201, 'luxury-suv-under-starry-sky-at-night', null, 'SUV branco sob céu estrelado à noite'),
+  fallbackUrl: '/demo/hero-car.svg',
+}
+
+export const HERO_PHOTO_MOBILE: VehicleImage = {
+  ...pexelsImage(19410410, 'white-infiniti-car-at-nigh', null, 'SUV branco estacionado à noite', [640, 960, 1280]),
   fallbackUrl: '/demo/hero-car.svg',
 }

@@ -20,7 +20,7 @@ export default function LegalInfoPage() {
   const { vehicles } = useVehicles()
   const all: { label: string; image: VehicleImage }[] = [
     { label: 'Banner principal', image: content.hero.image },
-    ...(content.hero.image.alternates ?? []).map((image) => ({ label: 'Banner principal', image })),
+    { label: 'Banner principal (celular)', image: content.hero.imageMobile },
     ...vehicles.flatMap((v) => v.images.map((image) => ({ label: `${v.brand} ${v.model}`, image }))),
   ]
   const attributions = all.filter((i) => i.image.credit && /^CC/.test(i.image.credit.license ?? 'CC'))

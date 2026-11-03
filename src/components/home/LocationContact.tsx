@@ -186,6 +186,37 @@ export function LocationBlock({ trackingLocation }: { trackingLocation: string }
 }
 
 /**
+ * Foto da fachada em moldura editorial: recorte levemente horizontal 7:6 (letreiro e
+ * carros preservados; corta só céu e calçada), cantos discretos e um bloco
+ * vermelho deslocado atrás (assimetria).
+ * Tamanho limitado para não competir com o conteúdo ao lado.
+ */
+function FacadeFigure({ facade }: { facade: NonNullable<typeof content.location.facade> }) {
+  return (
+    <figure className="relative mx-auto w-full max-w-[21rem] pr-3 pb-3 sm:max-w-[24rem] lg:mx-0 lg:max-w-none lg:justify-self-end">
+      {/* Bloco de cor deslocado: dá profundidade sem moldura pesada */}
+      <span
+        aria-hidden="true"
+        className="absolute top-6 right-0 bottom-0 left-6 rounded-[4px] bg-brand"
+      />
+      <img
+        src={facade.src}
+        srcSet={facade.srcSet}
+        sizes="(min-width: 1280px) 432px, (min-width: 1024px) 400px, 384px"
+        width={facade.width}
+        height={facade.height}
+        alt={facade.alt}
+        loading="lazy"
+        decoding="async"
+        className="relative aspect-[7/6] w-full rounded-[4px] object-cover object-[50%_30%] shadow-[0_24px_48px_-24px_rgba(10,10,11,.45)] ring-1 ring-black/5"
+      />
+      {/* Filete branco interno: acabamento de moldura fotográfica */}
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 right-3 bottom-3 rounded-[4px] ring-1 ring-white/25 ring-inset" />
+    </figure>
+  )
+}
+
+/**
  * Home — "Venha conhecer a Robcar": conteúdo (endereço e ações) ao lado da foto
  * real da fachada. Sem foto cadastrada, exibe o painel com a marca.
  */
@@ -198,7 +229,7 @@ export function LocationContact() {
       aria-labelledby="location-title"
       className={`py-20 lg:py-28 ${siteConfig.services.sell || siteConfig.services.trade ? 'bg-white' : 'bg-ink-50'}`}
     >
-      <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+      <div className="container-site grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] lg:gap-20 xl:grid-cols-[minmax(0,1fr)_minmax(0,27rem)]">
         <div className="flex flex-col items-center text-center">
           <SectionHeading id="location-title" title={title} />
           {/* Ícone à esquerda, endereço à direita, centralizados verticalmente */}
@@ -235,18 +266,7 @@ export function LocationContact() {
         </div>
 
         {facade ? (
-          // Proporção original preservada (sem recorte): fachada e logotipo inteiros
-          <img
-            src={facade.src}
-            srcSet={facade.srcSet}
-            sizes="(min-width: 1280px) 680px, (min-width: 1024px) 55vw, 100vw"
-            width={facade.width}
-            height={facade.height}
-            alt={facade.alt}
-            loading="lazy"
-            decoding="async"
-            className="h-auto w-full rounded-xl object-contain shadow-[var(--shadow-card)]"
-          />
+          <FacadeFigure facade={facade} />
         ) : (
           <BrandPanel className="aspect-[4/3]" />
         )}
