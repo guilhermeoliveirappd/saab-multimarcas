@@ -70,7 +70,7 @@ repita a mesma foto nem use foto de outro carro.
 | Instagram | https://www.instagram.com/robcar__veiculos/ |
 | Serviços ativos | Venda de veículos do estoque. **Venda/troca do veículo do cliente e financiamento: desligados** até confirmação (`siteConfig.services`) — páginas, menu e CTAs ficam ocultos. |
 | "Por que escolher a Robcar" (Sobre Nós) | Desligado até validação (`content.differentials.enabled`) |
-| Banner | Foto de carro vermelho (Pexels) exibida inteira (`object-contain`) sobre versão desfocada da mesma foto — o carro nunca é cortado. **Conferir no link publicado** (o ambiente de desenvolvimento não acessa o Pexels). |
+| Banner | Foto de carro vermelho (Pexels) exibida inteira (`object-contain`) sobre versão desfocada da mesma foto — o carro nunca é cortado. Conferido no link publicado (desktop e celular). |
 | Fachada | Foto real recebida (V10): `public/media/fachada-robcar-{800,1254}.webp` |
 
 ## Pendências do cliente (interno)
@@ -120,15 +120,14 @@ Veículos de exemplo nunca entram no sitemap nem recebem dados estruturados.
 - `VITE_ALLOW_INDEXING` ≠ `true` (padrão) ⇒ `noindex` + `robots.txt` bloqueando rastreadores.
 - Vercel → **Settings → Deployment Protection** (Vercel Authentication ou senha) durante a apresentação.
 
-## Vercel — endereço do projeto (PENDENTE, fazer no painel)
+## Vercel — endereço do projeto
 
-O ambiente de desenvolvimento não tem acesso à Vercel; nada foi alterado lá. Passos:
+| Item | Situação |
+| --- | --- |
+| Projeto | `robcar-veiculos` (renomeado de `saab-multimarcas`; mesmo projeto e repositório) |
+| Endereço principal | https://robcar-veiculos.vercel.app |
+| `VITE_SITE_URL` | `https://robcar-veiculos.vercel.app` (Production e Preview) |
+| Domínio antigo | `saab-multimarcas.vercel.app` **ainda ligado ao projeto** (exibe o site da Robcar). Remover em Settings → Domains quando autorizado. |
+| Versão anterior | branch `backup/saab-multimarcas-v8` |
 
-1. Confirme o projeto ligado a este repositório (provavelmente `saab-multimarcas`), a equipe e os domínios.
-2. A versão anterior está preservada na branch `backup/saab-multimarcas-v8`.
-3. **Settings → General → Project Name**: `robcar-veiculos` (se ocupado: `robcar-osvaldocruz` ou `robcar-veiculos-oc`).
-4. **Settings → Domains**: confirme o domínio `.vercel.app` gerado; remova domínios antigos que não sejam da Robcar
-   (não redirecione domínios de terceiros).
-5. **Settings → Environment Variables**: `VITE_SITE_URL=https://<novo-endereço>` e redeploy.
-6. Teste: navegação, imagens, WhatsApp (`wa.me/5518997841331`), telefones, rota do mapa, `/sitemap.xml`, Open Graph.
-7. Opcional: renomear o repositório GitHub para `robcar-veiculos` (Settings → General) e reconectar na Vercel se preciso.
+Opcional: renomear o repositório GitHub para `robcar-veiculos` (Settings → General) e reconectar na Vercel se preciso.
