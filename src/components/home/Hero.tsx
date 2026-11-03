@@ -9,30 +9,43 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative">
       <div className="relative isolate overflow-hidden bg-ink-950 pt-[72px] lg:pt-20">
+        {/*
+          Enquadramento sem cortes: a foto é exibida INTEIRA (object-contain) e as
+          bordas são preenchidas por uma versão desfocada e escurecida da mesma foto.
+          Assim o carro nunca é cortado, em qualquer proporção de tela.
+        */}
         <Photo
           image={hero.image}
           alt=""
+          aria-hidden="true"
           sizes="100vw"
+          decoding="async"
+          className="absolute inset-0 -z-30 size-full scale-110 object-cover blur-2xl brightness-[.45]"
+        />
+        <Photo
+          image={hero.image}
+          alt={hero.image.alt ?? ''}
+          sizes="(min-width: 1024px) 1400px, 100vw"
           width={1920}
           height={1080}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 -z-20 size-full object-cover object-center"
+          className="absolute inset-x-0 top-[72px] bottom-24 -z-20 mx-auto h-[calc(100%-72px-6rem)] w-full object-contain object-center [mask-image:radial-gradient(ellipse_75%_70%_at_center,#000_55%,transparent_100%)] lg:top-20 lg:bottom-28 lg:h-[calc(100%-5rem-7rem)] lg:object-bottom lg:[mask-image:radial-gradient(ellipse_70%_80%_at_50%_70%,#000_50%,transparent_100%)]"
         />
-        {/* Véus para garantir contraste do texto branco sobre qualquer foto */}
-        <div className="absolute inset-0 -z-10 bg-ink-950/45" aria-hidden="true" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_55%_at_center,rgba(10,10,11,.6)_0%,rgba(10,10,11,0)_100%)]" aria-hidden="true" />
-        <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-ink-950/70 to-transparent" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
+        {/* Overlay escuro discreto para a legibilidade da headline */}
+        <div className="absolute inset-0 -z-10 bg-ink-950/35" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_45%_at_center,rgba(10,10,11,.55)_0%,rgba(10,10,11,0)_100%)]" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
 
         <div className="container-site flex min-h-[560px] flex-col items-center justify-center pt-12 pb-36 text-center sm:min-h-[620px] lg:min-h-[700px] lg:pb-44">
-          <div className="flex max-w-4xl animate-fade-up flex-col items-center">
+          <div className="flex max-w-6xl animate-fade-up flex-col items-center">
             <h1
               id="hero-title"
-              className="font-display text-[clamp(1.375rem,7.15vw,4.6rem)] leading-[1.08] font-extrabold text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]"
+              className="font-display text-[clamp(2rem,8.6vw,4.25rem)] leading-[1.08] font-extrabold text-balance text-white [text-shadow:0_2px_28px_rgba(0,0,0,.55)] lg:text-[clamp(3rem,4.6vw,4.25rem)]"
             >
               {hero.headline.map((line) => (
-                <span key={line} className="block whitespace-nowrap">
+                // Desktop: 1 frase por linha (2 linhas). Mobile: a frase pode quebrar para manter a fonte grande.
+                <span key={line} className="block lg:whitespace-nowrap">
                   {/* Ajuste óptico: o ponto final da Plus Jakarta Sans tem recuo largo em pesos altos */}
                   {line.endsWith('.') ? (
                     <>

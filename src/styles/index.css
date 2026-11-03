@@ -25,6 +25,8 @@
   /* Grafite (rodapé, seções escuras) */
   --color-brand-deep: #17171a;
   --color-brand-night: #0e0e10;
+  /* Rodapé: fundo sólido quase preto */
+  --color-footer: #141414;
 
   --color-accent: var(--color-brand);
   --color-accent-hover: var(--color-brand-hover);

@@ -70,7 +70,7 @@ export const siteConfig = {
 
   agency: {
     name: 'NESX Performance & Growth',
-    url: null as string | null,
+    url: 'https://www.instagram.com/nesxperformance/' as string | null,
   },
 
   seo: {

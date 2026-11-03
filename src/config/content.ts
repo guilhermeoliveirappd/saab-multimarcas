@@ -17,7 +17,7 @@ type FacadePhoto = { src: string; srcSet: string; width: number; height: number;
 export const content = {
   hero: {
     /** Headline PROVISÓRIA (validar com o cliente). Cada item vira uma linha. */
-    headline: ['Seu próximo destino', 'começa na Robcar.'],
+    headline: ['O carro chama atenção.', 'O negócio faz a diferença.'],
     primaryCta: 'Explorar estoque',
     /** Foto do banner. Para trocar, edite HERO_PHOTO em src/data/stock-photos.ts */
     image: HERO_PHOTO,
@@ -81,16 +81,17 @@ export const content = {
     /** Link para a página Sobre Nós */
     aboutCta: `Conheça a ${brand.shortName}`,
     /**
-     * Foto real da fachada vermelha da Robcar — AGUARDANDO ARQUIVO.
-     * Ao receber: salve em public/media/fachada-robcar-800.webp e
-     * fachada-robcar-1600.webp (ou rode `npm run photos:fachada`) e preencha:
-     *   { src: '/media/fachada-robcar-1600.webp',
-     *     srcSet: '/media/fachada-robcar-800.webp 800w, /media/fachada-robcar-1600.webp 1600w',
-     *     width: <largura>, height: <altura>,
-     *     alt: 'Fachada da Robcar Veículos na Rua Armando Sales, em Osvaldo Cruz' }
+     * Foto real da fachada vermelha da Robcar (fornecida pelo cliente), gerada com
+     * `npm run photos:fachada`. Proporção original 1:1 preservada (sem recorte).
      * `null` = exibe o painel com o wordmark (nunca uma fachada de outra loja).
      */
-    facade: null as FacadePhoto | null,
+    facade: {
+      src: '/media/fachada-robcar-1254.webp',
+      srcSet: '/media/fachada-robcar-800.webp 800w, /media/fachada-robcar-1254.webp 1254w',
+      width: 1254,
+      height: 1254,
+      alt: 'Fachada da Robcar Veículos, com letreiro vermelho e veículos expostos, no número 487 da Rua Armando Sales, em Osvaldo Cruz',
+    } as FacadePhoto | null,
   },
 
   sellTrade: {

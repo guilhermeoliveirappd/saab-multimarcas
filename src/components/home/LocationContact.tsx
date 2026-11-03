@@ -201,13 +201,18 @@ export function LocationContact() {
       <div className="container-site grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
         <div className="flex flex-col items-center text-center">
           <SectionHeading id="location-title" title={title} />
+          {/* Ícone à esquerda, endereço à direita, centralizados verticalmente */}
           {address.confirmed && (
-            <address className="mt-6 flex flex-col items-center not-italic">
-              <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
-                <MapPin size={20} aria-hidden="true" />
+            <address className="mt-7 flex items-center gap-4 text-left not-italic">
+              <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
+                <MapPin size={22} aria-hidden="true" />
               </span>
-              <span className="mt-3 text-lg font-semibold text-ink-950">{address.street}</span>
-              <span className="mt-0.5 text-ink-500">{[address.district, siteConfig.city, siteConfig.state].filter(Boolean).join(' — ')}</span>
+              <span className="flex flex-col">
+                <span className="text-lg leading-snug font-semibold text-ink-950">{address.street}</span>
+                <span className="text-ink-500">
+                  {[address.district, `${siteConfig.city}/${siteConfig.state}`].filter(Boolean).join(' — ')}
+                </span>
+              </span>
             </address>
           )}
           <div className="mt-7 flex flex-wrap justify-center gap-3">
@@ -234,13 +239,13 @@ export function LocationContact() {
           <img
             src={facade.src}
             srcSet={facade.srcSet}
-            sizes="(min-width: 1280px) 700px, (min-width: 1024px) 55vw, 100vw"
+            sizes="(min-width: 1280px) 680px, (min-width: 1024px) 55vw, 100vw"
             width={facade.width}
             height={facade.height}
             alt={facade.alt}
             loading="lazy"
             decoding="async"
-            className="h-auto w-full rounded-[var(--radius-card)] shadow-[var(--shadow-card-hover)] ring-1 ring-ink-100"
+            className="h-auto w-full rounded-xl object-contain shadow-[var(--shadow-card)]"
           />
         ) : (
           <BrandPanel className="aspect-[4/3]" />

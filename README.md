@@ -70,14 +70,14 @@ repita a mesma foto nem use foto de outro carro.
 | Instagram | https://www.instagram.com/robcar__veiculos/ |
 | Serviços ativos | Venda de veículos do estoque. **Venda/troca do veículo do cliente e financiamento: desligados** até confirmação (`siteConfig.services`) — páginas, menu e CTAs ficam ocultos. |
 | "Por que escolher a Robcar" (Sobre Nós) | Desligado até validação (`content.differentials.enabled`) |
-| Banner | Foto de carro vermelho (Pexels, sem atribuição obrigatória) com alternativas e fallback local |
+| Banner | Foto de carro vermelho (Pexels) exibida inteira (`object-contain`) sobre versão desfocada da mesma foto — o carro nunca é cortado. **Conferir no link publicado** (o ambiente de desenvolvimento não acessa o Pexels). |
+| Fachada | Foto real recebida (V10): `public/media/fachada-robcar-{800,1254}.webp` |
 
 ## Pendências do cliente (interno)
 
 | Item | Onde preencher |
 | --- | --- |
 | Fotos e textos reais dos veículos | `fotos-originais/` + `src/data/robcar-stock.ts` |
-| Foto real da fachada vermelha | `npm run photos:fachada` + `content.location.facade` |
 | **Grafia da rua: "Armando Sales" (briefing) × "Armando Salles" (fontes públicas)** e conferência do pino no mapa | `src/config/brand.ts` |
 | Confirmar WhatsApp no celular | `brand.whatsappNumber` |
 | Horário de funcionamento, CNPJ, razão social, e-mail | `brand.ts` / `site.ts` (blocos ocultos enquanto `null`) |

@@ -3,7 +3,7 @@
  *
  *   npm run photos:estoque            → fotos-originais/<slug>/*.{jpg,jpeg,png,webp,heic}
  *                                      → public/estoque/<slug>/<nome>-640.webp e -1280.webp
- *   npm run photos:fachada -- <arq>   → public/media/fachada-robcar-800.webp e -1600.webp
+ *   npm run photos:fachada -- <arq>   → public/media/fachada-robcar-800.webp e -<largura até 1600>.webp
  *
  * - Remove metadados (EXIF/GPS) e corrige a orientação.
  * - Nomes de saída = nome do arquivo original normalizado (ex.: "Frente 1.JPG" → "frente-1").
@@ -30,7 +30,8 @@ async function writeSizes(input: string, outDir: string, base: string, widths: n
   mkdirSync(outDir, { recursive: true })
   const meta = await sharp(input).rotate().metadata()
   for (const w of widths) {
-    const out = join(outDir, `${base}-${w}.webp`)
+    // Nome = largura real (sem ampliar imagens menores que o tamanho pedido)
+    const out = join(outDir, `${base}-${Math.min(w, meta.width ?? w)}.webp`)
     await sharp(input).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 80 }).toFile(out)
   }
   return meta
@@ -64,7 +65,7 @@ async function fachada(file: string | undefined) {
   const meta = await writeSizes(file, resolve(root, 'public/media'), 'fachada-robcar', [800, 1600])
   const ratio = (meta.width ?? 0) / (meta.height ?? 1)
   const w = Math.min(1600, meta.width ?? 1600)
-  console.log(`✓ Fachada gerada. Em content.location.facade use width: ${w}, height: ${Math.round(w / ratio)}`)
+  console.log(`✓ Fachada gerada (fachada-robcar-800.webp e -${w}.webp). Em content.location.facade use width: ${w}, height: ${Math.round(w / ratio)}`)
 }
 
 const [mode, arg] = process.argv.slice(2)

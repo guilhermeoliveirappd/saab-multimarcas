@@ -5,7 +5,6 @@ import { env } from '@/config/env'
 import { mainNav } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 import { trackEvent } from '@/lib/analytics'
-import { buildWhatsAppUrl, generalMessage } from '@/lib/whatsapp'
 import { FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '@/components/ui/BrandIcons'
 import { Logo } from './Logo'
 
@@ -43,10 +42,17 @@ export function Footer() {
   const year = new Date().getFullYear()
   const { address, phones, email, social } = siteConfig
   const external = { target: '_blank', rel: 'noopener noreferrer' } as const
+  // Link direto do WhatsApp (sem mensagem pré-preenchida), conforme solicitado
+  const socialLinks = [
+    { label: 'WhatsApp', href: `https://wa.me/${env.whatsappNumber}`, icon: WhatsAppIcon, channel: 'whatsapp' as const },
+    { label: 'Instagram', href: social.instagram, icon: InstagramIcon, channel: 'instagram' as const },
+    ...(social.facebook ? [{ label: 'Facebook', href: social.facebook, icon: FacebookIcon, channel: null }] : []),
+    ...(social.youtube ? [{ label: 'YouTube', href: social.youtube, icon: YouTubeIcon, channel: null }] : []),
+  ]
 
   return (
-    <footer className="relative isolate overflow-hidden bg-brand-deep text-white/70">
-      <div className="absolute -top-48 right-0 -z-10 h-96 w-[40rem] max-w-full rounded-full bg-brand/25 blur-3xl" aria-hidden="true" />
+    // Fundo sólido, sem gradientes/brilhos: o vermelho aparece só em detalhes
+    <footer className="bg-footer text-white/70">
 
       <div className="container-site grid grid-cols-1 gap-x-12 gap-y-12 py-16 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.75fr)_minmax(0,0.95fr)_minmax(0,1.35fr)] lg:gap-x-14 lg:py-20">
         {/* Marca */}
@@ -93,7 +99,7 @@ export function Footer() {
                 <address className="text-[15px] leading-6 not-italic">
                   {address.street}
                   <br />
-                  {[address.district, siteConfig.city, siteConfig.state].filter(Boolean).join(' — ')}
+                  {[address.district, `${siteConfig.city}/${siteConfig.state}`].filter(Boolean).join(' — ')}
                 </address>
               ) : (
                 <span className="text-[15px] leading-6">
@@ -101,48 +107,16 @@ export function Footer() {
                 </span>
               )}
             </ContactItem>
-            <ContactItem icon={<WhatsAppIcon size={17} />}>
-              <a
-                href={buildWhatsAppUrl(generalMessage(), env.whatsappNumber)}
-                {...external}
-                className={linkClass}
-                onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'whatsapp', location: 'footer' } })}
-              >
-                WhatsApp<span className="sr-only"> (abre em nova aba)</span>
-              </a>
-            </ContactItem>
-            <ContactItem icon={<InstagramIcon size={17} />}>
-              <a
-                href={social.instagram}
-                {...external}
-                className={linkClass}
-                onClick={() => trackEvent({ name: 'contact_click', params: { channel: 'instagram', location: 'footer' } })}
-              >
-                {social.instagramHandle}
-                <span className="sr-only"> (abre em nova aba)</span>
-              </a>
-            </ContactItem>
-            {social.facebook && (
-              <ContactItem icon={<FacebookIcon size={17} />}>
-                <a href={social.facebook} {...external} className={linkClass}>
-                  Facebook
-                </a>
-              </ContactItem>
-            )}
-            {social.youtube && (
-              <ContactItem icon={<YouTubeIcon size={17} />}>
-                <a href={social.youtube} {...external} className={linkClass}>
-                  YouTube
-                </a>
-              </ContactItem>
-            )}
-            {phones.map((phone) => (
-              <ContactItem key={phone.e164} icon={<Phone size={16} aria-hidden="true" />}>
-                <a href={`tel:${phone.e164}`} className={linkClass} aria-label={`${phone.label}: ${phone.display}`}>
-                  {phone.display}
-                </a>
-              </ContactItem>
-            ))}
+            {/* Apenas o telefone fixo é exibido; o celular é usado só no link do WhatsApp */}
+            {phones
+              .filter((phone) => phone.label === 'Telefone')
+              .map((phone) => (
+                <ContactItem key={phone.e164} icon={<Phone size={16} aria-hidden="true" />}>
+                  <a href={`tel:${phone.e164}`} className={linkClass} aria-label={`${phone.label}: ${phone.display}`}>
+                    {phone.display}
+                  </a>
+                </ContactItem>
+              ))}
             {email && (
               <ContactItem icon={<Mail size={16} aria-hidden="true" />}>
                 <a href={`mailto:${email}`} className={linkClass}>
@@ -150,6 +124,23 @@ export function Footer() {
                 </a>
               </ContactItem>
             )}
+          </ul>
+          {/* Redes: ícones lado a lado, clicáveis */}
+          <ul className="mt-6 flex items-center gap-3" aria-label="Redes e mensagens">
+            {socialLinks.map(({ label, href, icon: Icon, channel }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  {...external}
+                  aria-label={`${label} (abre em nova aba)`}
+                  title={label}
+                  onClick={() => channel && trackEvent({ name: 'contact_click', params: { channel, location: 'footer' } })}
+                  className="grid size-10 place-items-center rounded-full bg-white/[0.06] text-white/80 ring-1 ring-white/10 transition-colors duration-200 hover:bg-brand hover:text-white hover:ring-brand"
+                >
+                  <Icon size={18} />
+                </a>
+              </li>
+            ))}
           </ul>
         </Column>
       </div>
@@ -173,8 +164,13 @@ export function Footer() {
           <p className="text-white/40">
             Desenvolvido por{' '}
             {siteConfig.agency.url ? (
-              <a href={siteConfig.agency.url} {...external} className="hover:text-white">
+              <a
+                href={siteConfig.agency.url}
+                {...external}
+                className="text-white/65 underline-offset-4 transition-colors duration-200 hover:text-white hover:underline"
+              >
                 {siteConfig.agency.name}
+                <span className="sr-only"> (abre em nova aba)</span>
               </a>
             ) : (
               siteConfig.agency.name
