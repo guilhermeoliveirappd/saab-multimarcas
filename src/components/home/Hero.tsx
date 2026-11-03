@@ -16,7 +16,10 @@ const DESKTOP_MEDIA = '(min-width: 1024px)'
 function HeroPicture() {
   const { image, imageMobile } = content.hero
   const [failed, setFailed] = useState(false)
-  const className = 'absolute inset-0 -z-20 size-full object-cover object-[50%_100%]'
+  // A foto termina acima da faixa que o card de busca sobrepõe (4rem / 5rem):
+  // o carro fica inteiro à vista e o card apoia sobre o fundo escuro.
+  const className =
+    'absolute inset-x-0 top-0 -z-20 h-[calc(100%-4rem)] w-full object-cover object-[50%_100%] lg:h-[calc(100%-5rem)]'
 
   if (failed) {
     return <img src={image.fallbackUrl} alt="" aria-hidden="true" className={className} />
@@ -49,7 +52,10 @@ export function Hero() {
           className="absolute inset-x-0 top-0 -z-10 h-3/5 bg-gradient-to-b from-ink-950/85 via-ink-950/45 to-transparent"
           aria-hidden="true"
         />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink-950/80 to-transparent" aria-hidden="true" />
+        <div
+          className="absolute inset-x-0 bottom-16 -z-10 h-28 bg-gradient-to-t from-ink-950 to-transparent lg:bottom-20 lg:h-36"
+          aria-hidden="true"
+        />
 
         {/* Altura proporcional à largura: mantém o mesmo enquadramento do carro em qualquer tela */}
         <div className="container-site flex h-[clamp(620px,172vw,760px)] flex-col items-center pt-[calc(72px+2.25rem)] text-center sm:h-[760px] lg:h-[clamp(700px,58vw,940px)] lg:pt-[calc(5rem+2.5rem)]">
