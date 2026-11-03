@@ -39,7 +39,7 @@ npm run dev                  # http://localhost:5173
 | Textos (headline, seções, páginas) | `src/config/content.ts` |
 | Cores da marca | `src/styles/index.css` → `--brand-primary` (provisório `#B91C1C`) |
 | **Estoque real** | `src/data/robcar-stock.ts` |
-| Foto do banner | `src/data/stock-photos.ts` (`HERO_PHOTO`) |
+| Fotos do banner (desktop / celular) | `src/data/stock-photos.ts` (`HERO_PHOTO`, `HERO_PHOTO_MOBILE`) |
 | Logotipo oficial (quando existir) | `siteConfig.logo` em `src/config/site.ts` |
 
 ### Identidade visual (provisória)
@@ -70,8 +70,8 @@ repita a mesma foto nem use foto de outro carro.
 | Instagram | https://www.instagram.com/robcar__veiculos/ |
 | Serviços ativos | Venda de veículos do estoque. **Venda/troca do veículo do cliente e financiamento: desligados** até confirmação (`siteConfig.services`) — páginas, menu e CTAs ficam ocultos. |
 | "Por que escolher a Robcar" (Sobre Nós) | Desligado até validação (`content.differentials.enabled`) |
-| Banner | Foto de carro vermelho (Pexels) exibida inteira (`object-contain`) sobre versão desfocada da mesma foto — o carro nunca é cortado. Conferido no link publicado (desktop e celular). |
-| Fachada | Foto real recebida (V10): `public/media/fachada-robcar-{800,1254}.webp` |
+| Banner | V11: SUV branco à noite — foto horizontal no desktop e vertical no celular (`<picture>`, troca em 1024px), `object-cover` ancorado embaixo; a foto termina acima do card de busca. Headline: "Seu próximo carro pode estar / mais perto do que você imagina." |
+| Fachada | Foto real (`public/media/fachada-robcar-{800,1254}.webp`), exibida em moldura 7:6 com cantos discretos e bloco vermelho deslocado (V11) |
 
 ## Pendências do cliente (interno)
 
@@ -104,7 +104,7 @@ Campos sensíveis (CPF, RG, CNH etc.) desligados em `FINANCING_FLAGS`. Nenhum da
 
 | Uso | Origem | Licença | Atribuição |
 | --- | --- | --- | --- |
-| Banner | Pexels 14277553 (alternativas 3729464, 30180604) — horizontais, conferidas | Licença Pexels | Não obrigatória |
+| Banner | Pexels 30962201 (desktop) e 19410410 (celular) — enquadramento conferido | Licença Pexels | Não obrigatória |
 | Veículos de exemplo | Wikimedia Commons — séries de Damian B Oh (`src/data/stock-photos.ts`) | CC BY-SA 4.0 | Em `/informacoes-legais` |
 
 O ambiente de desenvolvimento não acessa Pexels/Wikimedia — confira as fotos no link publicado.

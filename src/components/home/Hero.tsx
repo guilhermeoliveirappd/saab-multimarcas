@@ -58,7 +58,7 @@ export function Hero() {
         />
 
         {/* Altura proporcional à largura: mantém o mesmo enquadramento do carro em qualquer tela */}
-        <div className="container-site flex h-[clamp(620px,172vw,760px)] flex-col items-center pt-[calc(72px+2.25rem)] text-center sm:h-[760px] lg:h-[clamp(700px,58vw,940px)] lg:pt-[calc(5rem+2.5rem)]">
+        <div className="container-site flex h-[clamp(640px,184vw,780px)] flex-col items-center pt-[calc(72px+1.5rem)] text-center sm:h-[840px] lg:h-[clamp(740px,60vw,940px)] lg:pt-[calc(5rem+2rem)]">
           <div className="flex max-w-6xl animate-fade-up flex-col items-center">
             <h1
               id="hero-title"
@@ -71,7 +71,7 @@ export function Hero() {
                 </span>
               ))}
             </h1>
-            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-8 px-9 lg:mt-10">
+            <ButtonLink to="/estoque" size="lg" variant="primary" className="mt-6 px-9 lg:mt-9">
               {hero.primaryCta}
               <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
             </ButtonLink>
