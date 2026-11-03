@@ -124,15 +124,16 @@ export const STOCK_GALLERIES: Record<string, PhotoSet> = {
 export const galleryFiles = (set: PhotoSet): string[] => set.numbers.map((n) => `${set.prefix}_(${n}).jpg`)
 
 /**
- * Banner principal: carro vermelho à noite (Pexels, sem atribuição obrigatória).
- * Se não carregar, tenta as alternativas vermelhas na ordem e, por fim, a
- * ilustração local — o banner nunca fica quebrado.
+ * Banner principal — fotos HORIZONTAIS verificadas (dimensões e enquadramento
+ * conferidos em contact sheet): carro inteiro, sem cortes. Pexels, sem
+ * atribuição obrigatória. (As anteriores, 14609318 e 17075639, eram retrato
+ * 2:3 e cortavam o carro.) Se não carregar, tenta as alternativas na ordem.
  */
 export const HERO_PHOTO: VehicleImage = {
-  ...pexelsImage(14609318, 'red-car-at-night', null, 'Carro vermelho à noite'),
+  ...pexelsImage(14277553, 'photo-of-an-expensive-red-car', null, 'Sedã esportivo vermelho em vista três-quartos'),
   alternates: [
-    pexelsImage(3729464, 'photo-of-red-car-parked', null, 'Carro vermelho estacionado'),
-    pexelsImage(17075639, 'red-sports-bmw-car', null, 'BMW esportivo vermelho'),
+    pexelsImage(3729464, 'photo-of-red-car-parked', null, 'Mercedes-AMG GT vermelho estacionado'),
+    pexelsImage(30180604, 'iconic-red-sports-car-in-paris-garage', null, 'Esportivo vermelho em garagem'),
   ],
   fallbackUrl: '/demo/hero-car.svg',
 }

@@ -104,7 +104,7 @@ Campos sensíveis (CPF, RG, CNH etc.) desligados em `FINANCING_FLAGS`. Nenhum da
 
 | Uso | Origem | Licença | Atribuição |
 | --- | --- | --- | --- |
-| Banner | Pexels 14609318 (alternativas 3729464, 17075639) | Licença Pexels | Não obrigatória |
+| Banner | Pexels 14277553 (alternativas 3729464, 30180604) — horizontais, conferidas | Licença Pexels | Não obrigatória |
 | Veículos de exemplo | Wikimedia Commons — séries de Damian B Oh (`src/data/stock-photos.ts`) | CC BY-SA 4.0 | Em `/informacoes-legais` |
 
 O ambiente de desenvolvimento não acessa Pexels/Wikimedia — confira as fotos no link publicado.
